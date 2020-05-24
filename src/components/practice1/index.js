@@ -88,7 +88,6 @@ const ExampleUserInput = props => {
     );
 };
 
-
 class ExampleUserOutputPropsBuilder {
     _className;
     _username;
@@ -152,7 +151,5 @@ const ExampleUserOutput = props => {
         </div>
     );
 };
-
-export default ExampleUserInput;
 
 export {ExampleUserInput, ExampleUserOutput};
