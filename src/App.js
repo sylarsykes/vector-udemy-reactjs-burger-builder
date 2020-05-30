@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../public/css/styles.css';
 
 import { ExampleUserInput, ExampleUserOutput } from './components/practice1';
 import { ExampleChar, ExampleValidation } from './components/practice2';
