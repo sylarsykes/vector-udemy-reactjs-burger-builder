@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import '../public/css/styles.css';
 
-import { ExampleUserInput, ExampleUserOutput } from './components/practice1';
-import { ExampleChar, ExampleValidation } from './components/practice2';
+import { ExampleUserInput, ExampleUserOutput } from '../components/Practice1';
+import { ExampleChar, ExampleValidation } from '../components/Practice2';
+import ErrorBoundary from '../components/common/ErrorBoundary';
 
 class App extends Component {
   state = {
@@ -26,7 +27,9 @@ class App extends Component {
       <div className="App">
         <ExampleUserInput type={'text'} className={'example-user-input'} style={ {boder: '2px solid red'} } changed={this.inputChangeHandler} currentName={this.state.userInput} />
         <ExampleUserOutput username={this.state.userInput} />
-        <ExampleValidation inputLength={this.state.userInput.length} />
+        <ErrorBoundary key={Math.round(Math.random() * 10)}>
+          <ExampleValidation inputLength={this.state.userInput.length}/>
+        </ErrorBoundary>
         {charList}
       </div>
     );
