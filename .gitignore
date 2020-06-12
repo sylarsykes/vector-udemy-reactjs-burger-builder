@@ -53,7 +53,6 @@ jspm_packages/
 /.pnp
 .pnp.js
 
-
 # TypeScript v1 declaration files
 typings/
 
@@ -115,3 +114,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Dependency installation
+package.lock.json
