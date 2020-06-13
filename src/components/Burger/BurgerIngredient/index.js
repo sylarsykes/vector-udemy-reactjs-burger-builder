@@ -143,39 +143,57 @@ const BreadBottomContainer = styled.div `
  */
 const AVAILABLE_BURGER_INGREDIENT_INGREDIENTS = {
     BREAD_TOP: {
+        label: 'Bread top',
         type: 'bread-top',
+        price: 0.4,
         container: <BreadTopContainer><SeedsLeftContainer/><SeedsRightContainer/></BreadTopContainer>
     },
     PICKLES: {
+        label: 'Pickles',
         type: 'pickles',
+        price: 0.3,
         container: <PicklesContainer />
     },
     BACON: {
+        label: 'Bacon',
         type: 'bacon',
+        price: 0.5,
         container: <BaconContainer />
     },
     SALAD: {
+        label: 'Salad',
         type: 'salad',
+        price: 0.5,
         container: <SaladContainer />
     },
     MEAT: {
+        label: 'Meat',
         type: 'meat',
+        price: 1,
         container: <MeatContainer />
     },
     VEGAN_MEAT: {
+        label: 'Vegan meat',
         type: 'vegan-meat',
+        price: 1.2,
         container: <VeganMeatContainer />
     },
     CHEESE: {
+        label: 'Cheese',
         type: 'cheese',
+        price: 0.4,
         container: <CheeseContainer />
     },
     VEGAN_CHEESE: {
+        label: 'Vegan cheese',
         type: 'vegan-cheese',
+        price: 0.6,
         container: <VeganCheeseContainer />
     },
     BREAD_BOTTOM: {
+        label: 'Bread bottom',
         type: 'bread-bottom',
+        price: 0.4,
         container: < BreadBottomContainer / >
     }
 };
