@@ -23,8 +23,8 @@ const BurgerContainer = styled.div`
     }
 
     @media (min-width: 1000px) and (min-height: 700px) {
-        width: 700px;
-        height: 600px;
+        width: 450px
+        height: 400px;
     }
 `;
 
@@ -49,6 +49,10 @@ const Burger = (props) => {
             transformedIngredients.push(transformedIngredient);
         }
     });
+
+    if (transformedIngredients.length === 0) {
+        transformedIngredients.push(<p>Please start adding ingredients!</p>);
+    }
 
     return (
         <BurgerContainer>

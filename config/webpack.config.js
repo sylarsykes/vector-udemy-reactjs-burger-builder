@@ -169,6 +169,6 @@ module.exports = {
         // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
         // You can remove this if you don't use Moment.js:
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        new UglifyJsPlugin(),
+        //new UglifyJsPlugin(),
     ]
 } 
