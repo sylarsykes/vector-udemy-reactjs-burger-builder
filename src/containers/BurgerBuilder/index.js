@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { ChildrenContainer } from '../../hoc';
+import ChildrenContainer from '../../hoc';
 import { Burger, AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, BuildControls,
         Modal, OrderSummary } from '../../components';
 

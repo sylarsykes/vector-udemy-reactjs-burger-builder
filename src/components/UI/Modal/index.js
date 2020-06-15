@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { ChildrenContainer } from '../../../hoc';
+import ChildrenContainer from '../../../hoc';
 import Backdrop from '../Backdrop';
 
 const ModalContainer = styled.div`
@@ -25,13 +25,32 @@ const ModalContainer = styled.div`
     }
 `;
 
-const Modal = (props) => (
-    <ChildrenContainer>
-        <Backdrop show={props.show} clickFuncCB={props.modalClosed} />
-        <ModalContainer show={props.show}>
-            {props.children}
-        </ModalContainer>
-    </ChildrenContainer>
-);
+class Modal extends Component {
+
+    /**
+     * @inheritdoc
+     * 
+     * @param {*} nextProps 
+     * @param {*} nextState 
+     */
+    shouldComponentUpdate = (nextProps, nextState) => nextProps.show !== this.props.show;
+
+    /**
+     * @inheritdoc
+     */
+    componentWillUpdate = () => console.log('[Modal] Will Update');
+
+    /**
+     * @inheritdoc
+     */
+    render = () => (
+        <ChildrenContainer>
+            <Backdrop show={this.props.show} clickFuncCB={this.props.modalClosed} />
+            <ModalContainer show={this.props.show}>
+                {this.props.children}
+            </ModalContainer>
+        </ChildrenContainer>
+    ); 
+}
 
 export default Modal;

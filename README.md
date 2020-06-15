@@ -13,6 +13,15 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 ## Available Scripts
 
 
+## Features
+
+### Containers
+
+
+### Components
+
+### High Order Components
+
 
 ## Dependencies
 
@@ -25,7 +34,8 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 * [babel/runtime](https://www.npmjs.com/package/@babel/runtime) babel's modular runtime helpers.
 * [babel-eslint](https://www.npmjs.com/package/babel-eslint) babel-eslint allows you to lint ALL valid Babel code with the fantastic [ESLint](https://eslint.org/)
 * [babel-jest](https://www.npmjs.com/package/babel-jest) [Babel jest](https://babeljs.io/) plugin.
-* [babel-loader]() This package allows transpiling JavaScript files using [Babel](https://babeljs.io/) and [webpack](https://webpack.js.org/)
+* [babel-loader](https://www.npmjs.com/package/babel-loader) This package allows transpiling JavaScript files using [Babel](https://babeljs.io/) and [webpack](https://webpack.js.org/)
+* [babel-plugin-styled-components](https://www.npmjs.com/package/babel-plugin-styled-components) This plugin is a highly recommended supplement to the base styled-components library
 * [case-sensitive-paths-webpack-plugin](https://www.npmjs.com/package/case-sensitive-paths-webpack-plugin) This Webpack plugin enforces the entire path of all required modules match the exact case of the actual path on disk.
 * [chalk](https://www.npmjs.com/package/chalk) Terminal string styling done right
 * [css-loader](https://www.npmjs.com/package/css-loader) The css-loader interprets @import and url() like import/require() and will resolve them.

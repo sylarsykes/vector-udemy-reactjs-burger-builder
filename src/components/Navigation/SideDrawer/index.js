@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { ChildrenContainer } from '../../../hoc';
+import ChildrenContainer from '../../../hoc';
 import { Logo, NavigationItems, Backdrop } from '../../';
 
 const SideDrawerContainer = styled.div`
