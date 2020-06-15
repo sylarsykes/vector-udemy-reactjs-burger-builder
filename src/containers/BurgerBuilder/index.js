@@ -162,7 +162,7 @@ export default class BurgerBuilder extends Component {
     purchaseContinueHandler = () => {
         alert('You continue!');
     }
-    
+ 
     render = () => (
         <ChildrenContainer>
             <Modal 
@@ -170,12 +170,13 @@ export default class BurgerBuilder extends Component {
                 modalClosed={this.purchaseCancelHandler}>
                 <OrderSummary
                     ingredients={this.state.ingredients}
+                    price={this.state.totalPrice.toFixed(2)}
                     purchaseCancelled={this.purchaseCancelHandler}
                     purchaseContinued={this.purchaseContinueHandler} />
             </Modal>
             <Burger ingredients={this.state.ingredients} />
             <BuildControls
-                price={this.state.totalPrice}
+                price={this.state.totalPrice.toFixed(2)}
                 purchasable={this.state.purchasable} 
                 ingredientAdded={this.addIngredientHandler}
                 ingredientRemoved={this.removeIngredientHandler}
