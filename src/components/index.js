@@ -3,7 +3,6 @@ import BurgerIngredient, { AVAILABLE_BURGER_INGREDIENT_INGREDIENTS } from './Bur
 import BuildControls from './Burger/BuildControls';
 import BuildControl from './Burger/BuildControls/BuildControl';
 import OrderSummary from './Burger/OrderSummary';
-import Layout from './Layout';
 import Logo from './Logo';
 import NavigationItem from './Navigation/NavigationItems/NavigationItem';
 import NavigationItems from './Navigation/NavigationItems';
@@ -15,9 +14,9 @@ import Button, { AvailableButtons } from './UI/Button';
 import ButtonGroup from './UI/ButtonGroup';
 import Backdrop from './UI/Backdrop';
 
-export { Burger, BurgerIngredient, AVAILABLE_BURGER_INGREDIENT_INGREDIENTS,
-    BuildControls, BuildControl, OrderSummary, 
-    Layout, Modal, Button,
-    AvailableButtons, ButtonGroup, Backdrop,
-    Logo, NavigationItem, NavigationItems,
-    SideDrawer, DrawerToggle, Toolbar };
+export { AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, AvailableButtons, Backdrop, 
+    BuildControl, BuildControls, Burger, 
+    BurgerIngredient, Button, ButtonGroup, 
+    DrawerToggle, Logo, Modal, 
+    NavigationItem, NavigationItems, OrderSummary, 
+    SideDrawer, Toolbar };

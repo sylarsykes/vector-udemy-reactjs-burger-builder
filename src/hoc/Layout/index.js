@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
-import { ChildrenContainer } from '../../hoc';
-import { SideDrawer, Toolbar } from '../';
+import  ChildrenContainer from '../';
+import { SideDrawer, Toolbar } from '../../components';
 
 const MainContainer = styled.main`
     margin-top: 72px;

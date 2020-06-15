@@ -1,4 +1,6 @@
 
 import ChildrenContainer from './ChildrenContainer';
+import Layout from './Layout';
 
-export { ChildrenContainer };
+export default ChildrenContainer;
+export { Layout };
