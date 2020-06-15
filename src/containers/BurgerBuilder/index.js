@@ -154,6 +154,8 @@ export default class BurgerBuilder extends Component {
     }
 
     purchaseCancelHandler = () => {
+        console.log('Cancel');
+
         this.setState({purchasing: false});
     }
 
@@ -163,7 +165,9 @@ export default class BurgerBuilder extends Component {
     
     render = () => (
         <ChildrenContainer>
-            <Modal show={this.state.purchasing}>
+            <Modal 
+                show={this.state.purchasing}
+                modalClosed={this.purchaseCancelHandler}>
                 <OrderSummary
                     ingredients={this.state.ingredients}
                     purchaseCancelled={this.purchaseCancelHandler}

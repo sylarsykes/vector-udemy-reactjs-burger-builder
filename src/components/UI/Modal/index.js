@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { ChildrenContainer } from '../../../hoc';
+import Backdrop from '../Backdrop';
 
 const ModalContainer = styled.div`
     position: fixed;
@@ -26,7 +27,7 @@ const ModalContainer = styled.div`
 
 const Modal = (props) => (
     <ChildrenContainer>
-
+        <Backdrop show={props.show} clickFuncCB={props.modalClosed} />
         <ModalContainer show={props.show}>
             {props.children}
         </ModalContainer>
