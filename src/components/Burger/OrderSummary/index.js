@@ -17,8 +17,6 @@ const OrderSummary = (props) => {
         );
     });
 
-    console.log(props);
-
     return (
         <ChildrenContainer>
             <h3>Your Order</h3>
@@ -26,6 +24,7 @@ const OrderSummary = (props) => {
             <ul>
                 {ingredientSummary}
             </ul>
+            <p><strong>Total Price: {props.price}</strong></p>
             <p>Continue to Checkout?</p>
             <Button buttonType={AvailableButtons.danger} clickFuncCB={props.purchaseCancelled}>CANCEL</Button>
             <Button buttonType={AvailableButtons.success} clickFuncCB={props.purchaseContinued}>CONTINUE</Button>
