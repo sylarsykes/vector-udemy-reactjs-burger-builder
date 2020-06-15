@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ChildrenContainer } from '../../../hoc';
+import { Button, AvailableButtons } from '../../';
 
 const OrderSummary = (props) => {
     const ingredientSummary = props.ingredients.map((ingredient, index) => {
@@ -14,7 +15,9 @@ const OrderSummary = (props) => {
                 <span>Count: {ingredient.count}</span>
             </li>
         );
-}); 
+    });
+
+    console.log(props);
 
     return (
         <ChildrenContainer>
@@ -24,6 +27,8 @@ const OrderSummary = (props) => {
                 {ingredientSummary}
             </ul>
             <p>Continue to Checkout?</p>
+            <Button buttonType={AvailableButtons.danger} clickFuncCB={props.purchaseCancelled}>CANCEL</Button>
+            <Button buttonType={AvailableButtons.success} clickFuncCB={props.purchaseContinued}>CONTINUE</Button>
         </ChildrenContainer>
     );
 };

@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { ButtonGroup } from '../../../';
+import { AvailableButtons } from '../../../UI/Button';
+
 const BuildControlContainer = styled.div `
     display: flex;
     justify-content: space-between;
@@ -38,37 +41,24 @@ const BuildControlLabelContainer = styled.div`
     width: 80px;
 `;
 
-const BuildControlButtonLess = styled.button`
-    background-color: #D39952;
-    color: white;
-
-    &:hover, :active {
-        background-color: #DAA972;
-        color: white;
-    }
-
-    &:disabled {
-        background-color: #DEE908;
-        color: black;
-        pointer-events: none;
-    }
-`;
-
-const BuildControlButtonMore = styled.button`
-    background-color: #8F5E1E;
-    color: white;
-
-    &:hover, :active {
-        background-color: #99703F;
-        color: white;
-    }
-`;
-
 const BuildControl = (props) => (
     <BuildControlContainer>
         <BuildControlLabelContainer>{props.label}</BuildControlLabelContainer>
-        <BuildControlButtonLess onClick={props.removed} disabled={!props.disabled.count}>Less -</BuildControlButtonLess>
-        <BuildControlButtonMore onClick={props.added} >More +</BuildControlButtonMore>
+        <ButtonGroup 
+            buttons={[
+                {
+                    text: 'Less -',
+                    buttonType: AvailableButtons.less,
+                    clickFuncCB: props.removed,
+                    disabled: !props.disabled.count
+                },
+                {
+                    text: 'More +',
+                    buttonType: AvailableButtons.more,
+                    clickFuncCB: props.added
+                }
+            ]} />
+
     </BuildControlContainer>
 );
 
