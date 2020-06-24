@@ -6,26 +6,28 @@ import { AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, BuildControl, Button,
 
 const controls = [
     { 
-        label: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.PICKLES.label,
-        type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.PICKLES
+        type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.PICKLES.type
     },
     {
-        label: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.BACON.label,
-        type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.BACON
+        type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.BACON.type
     },
     {
-        label: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.SALAD.label,
-        type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.SALAD
+        type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.SALAD.type
     },
     {
-        label: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.CHEESE.label,
-        type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.CHEESE
+        type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.CHEESE.type
     },
     {
-        label: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.MEAT.label,
-        type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.MEAT
+        type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.MEAT.type
     }
 ];
+
+/**
+  * Find ingredient by burgerIngredient
+  * 
+  * @param {*} type Available burger ingredient
+  */
+const findAvailableControlByType = (type) => controls.find((control) => control.type === type);
 
 const BuildControlsContainer = styled.div`
     width: 100%;
@@ -41,16 +43,25 @@ const BuildControlsContainer = styled.div`
 const BuildControls = (props) => (
     <BuildControlsContainer>
         <p>Current Price: <strong>{props.price}</strong></p>
-        {controls.map((control, index) => (
-            <BuildControl 
-                key={index} 
-                label={control.label} 
-                type={control.type}
-                added={() => props.ingredientAdded(control.type)}
-                removed={() => props.ingredientRemoved(control.type)}
-                disabled={props.disableBuildControl(control.type)}
-            />
-        ))}
+        {props.controls.map((control, index) => {
+                const availableControl = findAvailableControlByType(control.burgerIngredient.type);
+
+                if (availableControl) {
+                    return (
+                        <BuildControl 
+                            key={index} 
+                            label={control.burgerIngredient.label} 
+                            burgerIngredient={control.burgerIngredient}
+                            added={() => props.ingredientAdded(control.burgerIngredient)}
+                            removed={() => props.ingredientRemoved(control.burgerIngredient)}
+                            disabled={props.disableBuildControl(control.burgerIngredient)}
+                        />
+                    )
+                }
+
+                return '';
+            }
+        )}
 
         <Button
             buttonType={ AvailableButtons.order } 
