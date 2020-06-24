@@ -26,6 +26,8 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 ## Dependencies
 
 * [autoprefixer](https://www.npmjs.com/package/autoprefixer) [PostCSS](https://postcss.org/)  plugin to parse CSS and add vendor prefixes to CSS rules using values from Can I Use.
+* [axios](https://www.npmjs.com/package/axios) Promise based HTTP client for the browser and node.js
+* [axios-extensions](https://www.npmjs.com/package/axios-extensions) A non-invasive, simple, reliable collection of axios extension
 * [babel-core](https://www.npmjs.com/package/@babel/core) [Babel](https://babeljs.io/docs/en/next/babel-core.html) compiler core.
 * [babel/plugin-proposal-class-properties](https://www.npmjs.com/package/@babel/plugin-proposal-class-properties) This plugin transforms static class properties as well as properties declared with the property initializer syntax.
 * [babel/plugin-syntax-dynamic-import](https://www.npmjs.com/package/@babel/plugin-syntax-dynamic-import) Allow parsing of import()

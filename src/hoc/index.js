@@ -1,6 +1,7 @@
 
 import ChildrenContainer from './ChildrenContainer';
 import Layout from './Layout';
+import ErrorHandler from './ErrorHandler';
 
 export default ChildrenContainer;
-export { Layout };
+export { ErrorHandler, Layout };

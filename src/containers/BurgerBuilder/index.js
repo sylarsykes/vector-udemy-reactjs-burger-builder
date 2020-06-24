@@ -1,31 +1,35 @@
 import React, { Component } from 'react';
+import { v4 as uuidv4 } from "uuid";
+import ChildrenContainer, { ErrorHandler } from '../../hoc';
+import { 
+    Burger, AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, BURGER_INGREDIENTS_BASE_URL,
+    BurgerIngredientModelBuilder, BuildControls, Modal, ORDER_SUMMARY_BASE_URL, 
+    OrderSummaryComponent, Spinner
+} from '../../components';
+import axios, { BASE_URL } from '../../../config/axios';
 
-import ChildrenContainer from '../../hoc';
-import { Burger, AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, BuildControls,
-        Modal, OrderSummary } from '../../components';
-
-export default class BurgerBuilder extends Component {
+class BurgerBuilder extends Component {
     state = {
         // Available ingredients
         ingredients: [
             {
-                type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.PICKLES,
+                burgerIngredient: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.PICKLES,
                 count: 0
             },
             {
-                type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.BACON,
+                burgerIngredient: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.BACON,
                 count: 0
             },
             {
-                type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.SALAD,
+                burgerIngredient: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.SALAD,
                 count: 0
             },
             {
-                type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.CHEESE,
+                burgerIngredient: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.CHEESE,
                 count: 0
             },
             {
-                type: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.MEAT,
+                burgerIngredient: AVAILABLE_BURGER_INGREDIENT_INGREDIENTS.MEAT,
                 count: 0
             }
         ],
@@ -33,22 +37,63 @@ export default class BurgerBuilder extends Component {
         totalPrice: 4,
         // Burger is purchasable
         purchasable: false,
-        purchasing: false
+        purchasing: false,
+        loading: false,
+        error: false
+    }
+
+    componentDidMount = () => {
+        
+        axios.get(BASE_URL + BURGER_INGREDIENTS_BASE_URL)
+            .then( response => {
+                if (response && response.data) {
+                    const data = response.data;
+                    const ingredients = [];
+                    
+                    Object.keys(data).forEach((id) => {
+                        const ingredient = data[id];
+                        const burgerIngredient = new BurgerIngredientModelBuilder()
+                            .setId(id)
+                            .setType(ingredient.type)
+                            .setLabel(ingredient.label)
+                            .setPrice(ingredient.price)
+                            .setPosition(ingredient.position)
+                            .setCreateDate(ingredient.createDate)
+                            .setCreateUser(ingredient.createUser)
+                            .build();
+
+                        ingredients.push({
+                            burgerIngredient: burgerIngredient,
+                            count: 0
+                        });
+                    }) 
+
+                    this.setState({ 
+                        loading: false, 
+                        ingredients: ingredients.sort((a, b) => a.burgerIngredient.position > b.burgerIngredient.position) 
+                    });
+                } else {
+                    this.setState({ loading: false })
+                }
+            })
+            .catch(error => {
+                this.setState({ loading: false, error: true });
+            });
     }
 
     /**
-     * Find ingredient by type
+     * Find ingredient by burgerIngredient
      * 
-     * @param {*} type Available burger ingredient
+     * @param {*} burgerIngredient Available burger ingredient
      */
-    _findStateIngredientByType = (type) => this.state.ingredients.find((ingredient) => ingredient.type === type)
+    _findStateIngredientByType = (burgerIngredient) => this.state.ingredients.find((ingredient) => ingredient.burgerIngredient === burgerIngredient)
 
     /**
      * Find ingredient index by type
      * 
-     * @param {*} type Available burger ingredient 
+     * @param {*} burgerIngredient Available burger ingredient 
      */
-    _findStateIngredientIndexByType = (type) => this.state.ingredients.findIndex((ingredient) => ingredient.type === type)
+    _findStateIngredientIndexByType = (burgerIngredient) => this.state.ingredients.findIndex((ingredient) => ingredient.burgerIngredient === burgerIngredient)
 
     /**
      * Update purchase
@@ -59,7 +104,7 @@ export default class BurgerBuilder extends Component {
         let totalIngredients = 0;
         
         ingredients.forEach((ingredient) => {
-            if (ingredient.type && ingredient.count) {
+            if (ingredient.burgerIngredient && ingredient.count) {
                 totalIngredients += ingredient.count;
             }
         });
@@ -70,22 +115,22 @@ export default class BurgerBuilder extends Component {
     /**
      * Added ingredients of burger
      * 
-     * @param {*} type Available burger ingredient
+     * @param {*} burgerIngredient Available burger ingredient
      */
-    addIngredientHandler = (type) => {
-        const currentStateIngredient = this._findStateIngredientByType(type);
+    addIngredientHandler = (burgerIngredient) => {
+        const currentStateIngredient = this._findStateIngredientByType(burgerIngredient);
 
         if (currentStateIngredient) {
             const oldCount = currentStateIngredient.count;
             const updatedCount = oldCount + 1;
             const updatedIngredients = this.state.ingredients;
 
-            const currentStateIngredientIndex = this._findStateIngredientIndexByType(type);
+            const currentStateIngredientIndex = this._findStateIngredientIndexByType(burgerIngredient);
 
             if (currentStateIngredientIndex !== -1) {
                 updatedIngredients[currentStateIngredientIndex].count = updatedCount;
 
-                const priceAddition = currentStateIngredient.type.price;
+                const priceAddition = currentStateIngredient.burgerIngredient.price;
                 const oldTotalPrice = this.state.totalPrice;
                 const updatedToltalPrice = oldTotalPrice + priceAddition;
                 const updatedState = {
@@ -102,10 +147,10 @@ export default class BurgerBuilder extends Component {
     /**
      * Delete ingredients of burger
      * 
-     * @param {*} type Available burger ingredient
+     * @param {*} burgerIngredient Available burger ingredient
      */
-    removeIngredientHandler = (type) => {
-        const currentStateIngredient = this._findStateIngredientByType(type);
+    removeIngredientHandler = (burgerIngredient) => {
+        const currentStateIngredient = this._findStateIngredientByType(burgerIngredient);
 
         if (currentStateIngredient) {
             const oldCount = currentStateIngredient.count;
@@ -114,12 +159,12 @@ export default class BurgerBuilder extends Component {
                 const updatedCount = oldCount - 1;
                 const updatedIngredients = this.state.ingredients;
 
-                const currentStateIngredientIndex = this._findStateIngredientIndexByType(type);
-
+                const currentStateIngredientIndex = this._findStateIngredientIndexByType(burgerIngredient);
+                console.log(currentStateIngredientIndex);
                 if (currentStateIngredientIndex !== -1) {
                     updatedIngredients[currentStateIngredientIndex].count = updatedCount;
 
-                    const priceDeduction = currentStateIngredient.type.price;
+                    const priceDeduction = currentStateIngredient.burgerIngredient.price;
                     const oldTotalPrice = this.state.totalPrice;
                     const updatedToltalPrice = oldTotalPrice - priceDeduction;
                     const updatedState = {
@@ -137,10 +182,10 @@ export default class BurgerBuilder extends Component {
     /**
      * Disable build control
      * 
-     * @param {*} type Available burger ingredient
+     * @param {*} burgerIngredient Available burger ingredient
      */
-    disableBuidControlHandler = (type) => {
-        const currentStateIngredient = this._findStateIngredientByType(type);
+    disableBuidControlHandler = (burgerIngredient) => {
+        const currentStateIngredient = this._findStateIngredientByType(burgerIngredient);
 
         if (currentStateIngredient) {
             return currentStateIngredient;
@@ -153,36 +198,78 @@ export default class BurgerBuilder extends Component {
         this.setState({purchasing: true});
     }
 
-    purchaseCancelHandler = () => {
-        console.log('Cancel');
-
+    purchaseCancelHandler = () => {   
         this.setState({purchasing: false});
     }
 
     purchaseContinueHandler = () => {
-        alert('You continue!');
+        this.setState({ loading: true });
+        const order = {
+            ingredients: this.state.ingredients,
+            price: this.state.totalPrice,
+            customer: {
+                name: 'Max Schwarzmüller',
+                address: {
+                    street: 'Teststreet 1',
+                    zipCode: '41351',
+                    country: 'Germany'
+                },
+                email: 'test@test.com'
+            },
+            deliveryMethod: 'fastest'
+        }
+        axios.post(ORDER_SUMMARY_BASE_URL, order)
+            .then(response => {
+                this.setState({ loading: false, purchasing: false });
+            })
+            .catch(error => {
+                this.setState({ loading: false, purchasing: false });
+            });
     }
- 
-    render = () => (
-        <ChildrenContainer>
-            <Modal 
-                show={this.state.purchasing}
-                modalClosed={this.purchaseCancelHandler}>
-                <OrderSummary
-                    ingredients={this.state.ingredients}
-                    price={this.state.totalPrice.toFixed(2)}
-                    purchaseCancelled={this.purchaseCancelHandler}
-                    purchaseContinued={this.purchaseContinueHandler} />
-            </Modal>
-            <Burger ingredients={this.state.ingredients} />
-            <BuildControls
-                price={this.state.totalPrice.toFixed(2)}
-                purchasable={this.state.purchasable} 
-                ingredientAdded={this.addIngredientHandler}
-                ingredientRemoved={this.removeIngredientHandler}
-                ordered={this.purchaseHandler}
-                disableBuildControl={this.disableBuidControlHandler}
-            />
-        </ChildrenContainer>
-    );
+
+    render = () => {
+        let orderSummary = null;
+        let burger = this.state.error ? <p> Ingredients can 't be loaded!</p> : <Spinner />;
+        
+        if (this.state.ingredients) {
+            burger = (
+                <ChildrenContainer>
+                    <Burger key={uuidv4()} ingredients={this.state.ingredients} />
+                    <BuildControls
+                        price={this.state.totalPrice.toFixed(2)}
+                        controls={this.state.ingredients} 
+                        purchasable={this.state.purchasable} 
+                        ingredientAdded={this.addIngredientHandler}
+                        ingredientRemoved={this.removeIngredientHandler}
+                        ordered={this.purchaseHandler}
+                        disableBuildControl={this.disableBuidControlHandler}
+                    />
+                </ChildrenContainer>
+            );
+            orderSummary = (
+                    <OrderSummaryComponent
+                        ingredients={this.state.ingredients}
+                        price={this.state.totalPrice.toFixed(2)}
+                        purchaseCancelled={this.purchaseCancelHandler}
+                        purchaseContinued={this.purchaseContinueHandler} />
+            );
+        }
+
+        if (this.state.loading) {
+            orderSummary = (<Spinner />);
+        }
+        
+        return (
+            <ChildrenContainer>
+                <Modal 
+                    show={this.state.purchasing}
+                    modalClosed={this.purchaseCancelHandler}>
+                    {orderSummary}
+                </Modal>
+                {burger}
+            </ChildrenContainer>
+        );
+    }
 };
+
+export default ErrorHandler(BurgerBuilder, axios);
