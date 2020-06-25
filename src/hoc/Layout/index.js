@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import  ChildrenContainer from '../';
-import { SideDrawer, Toolbar } from '../../components';
+import { SideDrawerFC, ToolbarFC } from '../../components';
 
 const MainContainer = styled.main`
     margin-top: 72px;
@@ -23,8 +23,8 @@ class Layout extends Component {
 
     render = () => (
         <ChildrenContainer>
-            <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
-            <SideDrawer open={this.state.showSideDrawer} closed={this.sideDrawerClosedHandler} />
+            <ToolbarFC drawerToggleClicked={this.sideDrawerToggleHandler} />
+            <SideDrawerFC open={this.state.showSideDrawer} closed={this.sideDrawerClosedHandler} />
             <MainContainer>
                 {this.props.children}
             </MainContainer>
