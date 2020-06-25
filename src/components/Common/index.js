@@ -1,8 +1,13 @@
 import { 
     BaseModelBuilder, BaseAdminModelBuilder, BaseModel, 
-    BaseAdminModel } from './api';
+    BaseAdminModel, BaseModelCollection
+} from './api';
+
+import {
+    baseFindAllService
+} from './service';
 
 export { 
     BaseModelBuilder, BaseAdminModelBuilder, BaseModel, 
-    BaseAdminModel 
+    BaseAdminModel, BaseModelCollection, baseFindAllService 
 };

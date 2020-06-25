@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { v4 as uuidv4 } from "uuid";
 import ChildrenContainer, { ErrorHandler } from '../../hoc';
 import { 
-    Burger, AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, BURGER_INGREDIENTS_BASE_URL,
-    BurgerIngredientModelBuilder, BuildControls, Modal, ORDER_SUMMARY_BASE_URL, 
+    Burger, AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, burgerIingredientFindAllService, 
+    BuildControls, Modal, ORDER_SUMMARY_BASE_URL, 
     OrderSummaryComponent, Spinner
 } from '../../components';
-import axios, { BASE_URL } from '../../../config/axios';
+import axios from '../../../config/axios';
 
 class BurgerBuilder extends Component {
     state = {
@@ -42,43 +42,38 @@ class BurgerBuilder extends Component {
         error: false
     }
 
+    /**
+     * @inheritdoc
+     */
     componentDidMount = () => {
-        
-        axios.get(BASE_URL + BURGER_INGREDIENTS_BASE_URL)
-            .then( response => {
-                if (response && response.data) {
-                    const data = response.data;
-                    const ingredients = [];
-                    
-                    Object.keys(data).forEach((id) => {
-                        const ingredient = data[id];
-                        const burgerIngredient = new BurgerIngredientModelBuilder()
-                            .setId(id)
-                            .setType(ingredient.type)
-                            .setLabel(ingredient.label)
-                            .setPrice(ingredient.price)
-                            .setPosition(ingredient.position)
-                            .setCreateDate(ingredient.createDate)
-                            .setCreateUser(ingredient.createUser)
-                            .build();
+        const self = this;
 
+        // Success callback
+        const successFuncCB = (results) => {
+            if (results && results.results && results.results.length) {
+                const ingredients = [];
+                
+                results.results.sort((a, b) => a.position > b.position)
+                    .forEach((burgerIngredient) => {
                         ingredients.push({
                             burgerIngredient: burgerIngredient,
                             count: 0
-                        });
-                    }) 
+                        }); 
+                    }
+                );
 
-                    this.setState({ 
-                        loading: false, 
-                        ingredients: ingredients.sort((a, b) => a.burgerIngredient.position > b.burgerIngredient.position) 
-                    });
-                } else {
-                    this.setState({ loading: false })
-                }
-            })
-            .catch(error => {
-                this.setState({ loading: false, error: true });
-            });
+                self.setState({
+                    loading: results.loading,
+                    ingredients: ingredients,
+                    error: results.error
+                }); 
+            }
+        };
+
+        // Error callback
+        const errorFuncCB = (results) => self.setState({ loading: false, error: true });
+        
+        burgerIingredientFindAllService(successFuncCB, errorFuncCB);
     }
 
     /**
@@ -194,13 +189,9 @@ class BurgerBuilder extends Component {
         return null;
     }
 
-    purchaseHandler = () => {
-        this.setState({purchasing: true});
-    }
+    purchaseHandler = () => this.setState({purchasing: true});
 
-    purchaseCancelHandler = () => {   
-        this.setState({purchasing: false});
-    }
+    purchaseCancelHandler = () => this.setState({purchasing: false});
 
     purchaseContinueHandler = () => {
         this.setState({ loading: true });
@@ -229,6 +220,7 @@ class BurgerBuilder extends Component {
 
     render = () => {
         let orderSummary = null;
+
         let burger = this.state.error ? <p> Ingredients can 't be loaded!</p> : <Spinner />;
         
         if (this.state.ingredients) {

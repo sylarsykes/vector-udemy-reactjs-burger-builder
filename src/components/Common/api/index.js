@@ -17,6 +17,15 @@ class BaseAdminModel extends BaseModel {
     }
 }
 
+class BaseModelCollection extends Array {
+
+    constructor() {
+        super();
+
+        this.results = [];
+    }
+}
+
 class BaseModelBuilder {
 
     get id() {
@@ -81,4 +90,7 @@ class BaseAdminModelBuilder extends BaseModelBuilder {
     }
 }
 
-export { BaseModelBuilder, BaseAdminModelBuilder, BaseModel, BaseAdminModel };
+export { 
+    BaseModelBuilder, BaseAdminModelBuilder, BaseModel, 
+    BaseAdminModel, BaseModelCollection 
+};
