@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { v4 as uuidv4 } from "uuid";
 import ChildrenContainer, { ErrorHandler } from '../../hoc';
 import { 
-    Burger, AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, burgerIingredientFindAllService, 
-    BuildControls, Modal, ORDER_SUMMARY_BASE_URL, 
-    OrderSummaryComponent, Spinner
+    BurgerFC, AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, burgerIingredientFindAllService, 
+    BuildControlsFC, ModalComponent, ORDER_SUMMARY_BASE_URL, 
+    OrderSummaryComponent, SpinnerFC
 } from '../../components';
 import axios from '../../../config/axios';
 
@@ -221,13 +221,13 @@ class BurgerBuilder extends Component {
     render = () => {
         let orderSummary = null;
 
-        let burger = this.state.error ? <p> Ingredients can 't be loaded!</p> : <Spinner />;
+        let burger = this.state.error ? <p> Ingredients can 't be loaded!</p> : <SpinnerFC />;
         
         if (this.state.ingredients) {
             burger = (
                 <ChildrenContainer>
-                    <Burger key={uuidv4()} ingredients={this.state.ingredients} />
-                    <BuildControls
+                    <BurgerFC key={uuidv4()} ingredients={this.state.ingredients} />
+                    <BuildControlsFC
                         price={this.state.totalPrice.toFixed(2)}
                         controls={this.state.ingredients} 
                         purchasable={this.state.purchasable} 
@@ -248,16 +248,16 @@ class BurgerBuilder extends Component {
         }
 
         if (this.state.loading) {
-            orderSummary = (<Spinner />);
+            orderSummary = (<SpinnerFC />);
         }
         
         return (
             <ChildrenContainer>
-                <Modal 
+                <ModalComponent 
                     show={this.state.purchasing}
                     modalClosed={this.purchaseCancelHandler}>
                     {orderSummary}
-                </Modal>
+                </ModalComponent>
                 {burger}
             </ChildrenContainer>
         );

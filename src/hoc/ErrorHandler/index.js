@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Modal } from '../../components';
+import { ModalComponent } from '../../components';
 import ChildrenContainer from '../';
 
 const ErrorHandler = (WrappedComponent, axios) => {
@@ -32,11 +32,11 @@ const ErrorHandler = (WrappedComponent, axios) => {
 
         render = () => (
             <ChildrenContainer>
-                <Modal
+                <ModalComponent
                     show={this.state.error}
                     modalClosed={this.errorConfirmedHandler}>
                         {this.state.error ? this.state.error.message : null}
-                </Modal>
+                </ModalComponent>
                 <WrappedComponent {...this.props} />
             </ChildrenContainer>
         )

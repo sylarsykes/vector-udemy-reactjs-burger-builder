@@ -2,44 +2,35 @@ import {
     BaseModelBuilder, BaseAdminModelBuilder, BaseModel,
     BaseAdminModel, BaseModelCollection, baseFindAllService
 } from './Common';
-import Burger from './Burger';
 import { 
-    AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, BURGER_INGREDIENTS_BASE_URL, BurgerIngredientModelBuilder,
-    BurgerIngredientModel, BurgerIngredientComponent, burgerIingredientFindAllService
-} from './Burger/BurgerIngredient';
+    AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, BurgerFC, BuildControlsFC, 
+    BuildControlFC, BURGER_INGREDIENTS_BASE_URL, BurgerIngredientModelBuilder,
+    BurgerIngredientModel, BurgerIngredientComponent, burgerIingredientFindAllService,
+    AddressModelBuilder, AddressModel, CustomerModelBuilder,
+    CustomerModel, ORDER_SUMMARY_BASE_URL, OrderModelBuilder, 
+    OrderModel, OrderSummaryComponent
+} from './Burger';
+import { LogoFC} from './Logo';
 import { 
-    AddressModelBuilder, AddressModel, CustomerModelBuilder, 
-    CustomerModel 
-} from './Burger/Customer';
-import BuildControls from './Burger/BuildControls';
-import BuildControl from './Burger/BuildControls/BuildControl';
+    NavigationItemsFC, NavigationItemFC, SideDrawerFC,
+    DrawerToggleFC, ToolbarFC
+} from './Navigation';
 import {
-    ORDER_SUMMARY_BASE_URL, OrderModelBuilder, OrderModel, 
-    OrderSummaryComponent
-} from './Burger/OrderSummary';
-import Logo from './Logo';
-import NavigationItem from './Navigation/NavigationItems/NavigationItem';
-import NavigationItems from './Navigation/NavigationItems';
-import SideDrawer from './Navigation/SideDrawer';
-import DrawerToggle from './Navigation/SideDrawer/DrawerToggle';
-import Toolbar from './Navigation/Toolbar';
-import Modal from './UI/Modal';
-import Button, { AvailableButtons } from './UI/Button';
-import ButtonGroup from './UI/ButtonGroup';
-import Backdrop from './UI/Backdrop';
-import Spinner from './UI/Spinner';
+    BackdropFC, ButtonFC, AvailableButtons,
+    ButtonGroupFC, ModalComponent, SpinnerFC
+} from './UI';
 
 export { 
     AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, BURGER_INGREDIENTS_BASE_URL, AddressModelBuilder,
-    AddressModel, AvailableButtons, Backdrop, 
+    AddressModel, AvailableButtons, BackdropFC, 
     BaseModelBuilder, BaseAdminModelBuilder, BaseModel, 
     BaseAdminModel, BaseModelCollection, baseFindAllService,
-    BuildControl, BuildControls, Burger,  
+    BuildControlFC, BuildControlsFC, BurgerFC,  
     BurgerIngredientModel, BurgerIngredientModelBuilder, BurgerIngredientComponent, 
-    burgerIingredientFindAllService, Button, ButtonGroup, 
-    CustomerModel, CustomerModelBuilder, DrawerToggle, 
-    Logo, Modal, NavigationItem, 
-    NavigationItems, ORDER_SUMMARY_BASE_URL, OrderModelBuilder, 
-    OrderModel, OrderSummaryComponent, SideDrawer, 
-    Spinner, Toolbar 
+    burgerIingredientFindAllService, ButtonFC, ButtonGroupFC, 
+    CustomerModel, CustomerModelBuilder, DrawerToggleFC, 
+    LogoFC, ModalComponent, NavigationItemFC, 
+    NavigationItemsFC, ORDER_SUMMARY_BASE_URL, OrderModelBuilder, 
+    OrderModel, OrderSummaryComponent, SideDrawerFC, 
+    SpinnerFC, ToolbarFC 
 };
