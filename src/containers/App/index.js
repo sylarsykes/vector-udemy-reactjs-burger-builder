@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import { Layout } from '../../hoc';
-import { BurgerBuilder} from '../';
+import ChildrenContainer, { Layout } from '../../hoc';
+import { BurgerBuilder, Checkout } from '../';
 
+/**
+ * Application component
+ */
 class App extends Component {
-
+    /**
+     * @inheritdoc
+     */
     render = () => (
-        <div>
+        <ChildrenContainer>
             <Layout>
-                <BurgerBuilder />
+                <BrowserRouter>
+                    <Switch>
+                        <Route path="/checkout" component={ Checkout } />
+                        <Route path="/" component={ BurgerBuilder } />
+                    </Switch>
+                </BrowserRouter> 
             </Layout>
-        </div>
+        </ChildrenContainer>
     );
 };
 

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import ChildrenContainer, { ErrorHandler } from '../../hoc';
 import { 
     BurgerFC, AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, burgerIingredientFindAllService, 
-    BuildControlsFC, ModalComponent, ORDER_SUMMARY_BASE_URL, 
+    BuildControlsFC, ModalComponent, orderSummaryCreateService, 
     OrderSummaryComponent, SpinnerFC
 } from '../../components';
 import axios from '../../../config/axios';
@@ -50,10 +50,10 @@ class BurgerBuilder extends Component {
 
         // Success callback
         const successFuncCB = (results) => {
-            if (results && results.results && results.results.length) {
+            if (results && results.length) {
                 const ingredients = [];
                 
-                results.results.sort((a, b) => a.position > b.position)
+                results.sort((a, b) => a.position > b.position)
                     .forEach((burgerIngredient) => {
                         ingredients.push({
                             burgerIngredient: burgerIngredient,
@@ -63,16 +63,18 @@ class BurgerBuilder extends Component {
                 );
 
                 self.setState({
-                    loading: results.loading,
+                    loading: false,
                     ingredients: ingredients,
-                    error: results.error
+                    error: false
                 }); 
             }
         };
 
         // Error callback
         const errorFuncCB = (results) => self.setState({ loading: false, error: true });
-        
+
+        this.setState({ loading: true });
+
         burgerIingredientFindAllService(successFuncCB, errorFuncCB);
     }
 
@@ -194,7 +196,8 @@ class BurgerBuilder extends Component {
     purchaseCancelHandler = () => this.setState({purchasing: false});
 
     purchaseContinueHandler = () => {
-        this.setState({ loading: true });
+        /*this.setState({ loading: true });
+        
         const order = {
             ingredients: this.state.ingredients,
             price: this.state.totalPrice,
@@ -209,15 +212,33 @@ class BurgerBuilder extends Component {
             },
             deliveryMethod: 'fastest'
         }
-        axios.post(ORDER_SUMMARY_BASE_URL, order)
-            .then(response => {
-                this.setState({ loading: false, purchasing: false });
-            })
-            .catch(error => {
-                this.setState({ loading: false, purchasing: false });
-            });
+
+        const self = this;
+
+        const errorFuncCB = (error) => self.setState({ loading: false, purchasing: false });
+
+        const successFuncCB = (result) => self.setState({ loading: false, purchasing: false });
+
+        orderSummaryCreateService(order, successFuncCB, errorFuncCB);*/
+
+        const queryParams = [];
+        for (let i in this.state.ingredients) {
+            const ingredient = this.state.ingredients[i];
+
+            if (ingredient && ingredient.count) {
+                queryParams.push(encodeURIComponent(ingredient.burgerIngredient.type) + '=' + encodeURIComponent(ingredient.count));
+            }
+        }
+        const queryString = queryParams.join('&');
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        });
     }
 
+    /**
+     * @inheritdoc
+     */
     render = () => {
         let orderSummary = null;
 

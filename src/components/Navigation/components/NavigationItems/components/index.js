@@ -11,7 +11,7 @@ import { NavigationItemFC } from '../../../';
 const NavigationItemsFC = (props) => (
     <NavigationItemsUlContainer>
         <NavigationItemFC link="/" active>Burger builder</NavigationItemFC>
-        <NavigationItemFC link="/" >Checkout</NavigationItemFC>
+        <NavigationItemFC link="/checkout" >Checkout</NavigationItemFC>
     </NavigationItemsUlContainer>
 );
 
