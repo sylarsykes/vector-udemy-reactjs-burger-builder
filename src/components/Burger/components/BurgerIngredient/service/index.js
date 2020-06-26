@@ -1,3 +1,3 @@
-import burgerIingredientFindAllService from './find';
+import { burgerIingredientFindAllService, burgerIngredientFindByIdService } from './find';
 
-export { burgerIingredientFindAllService };
+export { burgerIingredientFindAllService, burgerIngredientFindByIdService };

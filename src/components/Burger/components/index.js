@@ -20,22 +20,31 @@ import {
 const BurgerFC = (props) => {
     const transformedIngredients = [];
 
-    props.ingredients.forEach((ingredient) => {
-        const transformedIngredient = [];
+    if (props.ingredients && props.ingredients.length) {
+        props.ingredients.forEach((ingredient) => {
+            const transformedIngredient = [];
 
-        if (ingredient.burgerIngredient && ingredient.count) {
-            for (let index = 0; index < ingredient.count; index++) {
-                transformedIngredient.push(
-                    <BurgerIngredientComponent 
-                        key={uuidv4()} 
-                        burgerIngredient={ingredient.burgerIngredient} 
-                        type={ingredient.burgerIngredient.type} />
-                );
+            if (ingredient.burgerIngredient && ingredient.count) {
+                for (let index = 0; index < ingredient.count; index++) {
+                    transformedIngredient.push( <
+                        BurgerIngredientComponent key = {
+                            uuidv4()
+                        }
+                        burgerIngredient = {
+                            ingredient.burgerIngredient
+                        }
+                        type = {
+                            ingredient.burgerIngredient.type
+                        }
+                        />
+                    );
+                }
+
+                transformedIngredients.push(transformedIngredient);
             }
-
-            transformedIngredients.push(transformedIngredient);
-        } 
-    });
+        });
+    }
+    
 
     if (transformedIngredients.length === 0) {
         transformedIngredients.push(<p key={uuidv4()}>Please start adding ingredients!</p>);

@@ -1,9 +1,9 @@
 import { 
-    baseFindAllService, baseFindByIdService, BURGER_INGREDIENTS_BASE_URL, 
-    BurgerIngredientModelBuilder, FindServiceParamsBuilder 
-} from '../../../../../';
+    baseFindAllService, baseFindByIdService, BURGER_BASE_URL, 
+    BurgerModelBuilder 
+} from '../../../';
 
-const BURGER_INGREDIENT_FIND_ALL_PATH = '.json';
+const BURGER_FIND_ALL_PATH = '.json';
 
 /**
  * Find all service
@@ -13,7 +13,7 @@ const BURGER_INGREDIENT_FIND_ALL_PATH = '.json';
  * @param {*} errorFuncCB
  *      Error callback to execute
  */
-const burgerIingredientFindAllService = (successFuncCB, errorFuncCB) => {
+const burgerFindAllService = (successFuncCB, errorFuncCB) => {
     // Callback for create new burger ingredient
     const builderModelFuncCB = (id, ingredient) => {
         const burgerIngredient = new BurgerIngredientModelBuilder()
@@ -29,16 +29,12 @@ const burgerIingredientFindAllService = (successFuncCB, errorFuncCB) => {
         return burgerIngredient;
     }
     
-    const serviceParams = new FindServiceParamsBuilder()
-        .setRequest({
-            path: BURGER_INGREDIENTS_BASE_URL + BURGER_INGREDIENT_FIND_ALL_PATH, 
-        })
-        .setBuilderModelFuncCB(builderModelFuncCB)
-        .setSuccessFuncCB(successFuncCB)
-        .setErrorFuncCB(errorFuncCB)
-        .build();
-    
-    baseFindAllService(serviceParams);
+    baseFindAllService({
+        path: BURGER_INGREDIENTS_BASE_URL + BURGER_INGREDIENT_FIND_ALL_PATH,
+        builderModelFuncCB: builderModelFuncCB,
+        successFuncCB: successFuncCB,
+        errorFuncCB: errorFuncCB
+    });
 
 };
 
@@ -61,22 +57,14 @@ const burgerIngredientFindByIdService = (id, successFuncCB, errorFuncCB) => {
         
         return burgerIngredient;
     }
-
-    const serviceParams = new FindServiceParamsBuilder()
-        .setParams({
-            id: id
-        })
-        .setRequest({
-            path: BURGER_INGREDIENT_FIND_BY_ID_PATH(id),
-        })
-        .setBuilderModelFuncCB(builderModelFuncCB)
-        .setSuccessFuncCB(successFuncCB)
-        .setErrorFuncCB(errorFuncCB)
-        .build();
-
-    baseFindByIdService(serviceParams);
+    
+    baseFindByIdService({
+        path: BURGER_INGREDIENTS_BASE_URL + '/' + BURGER_INGREDIENT_FIND_BY_ID_PATH(id),
+        id: id,
+        builderModelFuncCB: builderModelFuncCB,
+        successFuncCB: successFuncCB,
+        errorFuncCB: errorFuncCB
+    });
 }
 
-export { 
-    burgerIingredientFindAllService, burgerIngredientFindByIdService 
-};
+export { burgerIingredientFindAllService, burgerIngredientFindByIdService };

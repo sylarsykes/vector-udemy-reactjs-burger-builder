@@ -1,7 +1,6 @@
 import { BaseAdminModelBuilder, BaseAdminModel } from '../../../../';
 
-const BURGER_INGREDIENTS_BASE_URL = 'burger-ingredients.json';
-
+const BURGER_INGREDIENTS_BASE_URL = 'burger-ingredients';
 class BurgerIngredientModel extends BaseAdminModel {
 
     constructor(builder) {

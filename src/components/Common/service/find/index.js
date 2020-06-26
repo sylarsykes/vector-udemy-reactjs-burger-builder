@@ -3,14 +3,18 @@ import axios, { BASE_URL } from '../../../../../config/axios';
 /**
  * Default find all service
  * 
- * @param {*} request 
- *      An object with the structure:
- *          path: Path to service
- *          builderModelFuncCB: Callback for create object result
- *          successFuncCB: Success callback to execute
- *          errorFuncCB: Error callback to execute
+ * @param {FindServiceParams} serviceParams 
+ *     A FindServiceParams object with properties:
+ *          - request:               RequestInfo object
+ *          - successFuncCB:         Success callback
+ *          - errorFuncCB:           Error callback
+ *          - builderModelFuncCB:    Builder callback
+ *          - context:               Context for callbacks
+ * 
+ * @see FindServiceParams
  */
-const baseFindAllService = (request) => {
+const baseFindAllService = (serviceParams) => {
+    const { request, successFuncCB, errorFuncCB, builderModelFuncCB } = serviceParams
 
     const executeService = new Promise(async (resolve, reject) => {
         let response = null;
@@ -25,30 +29,70 @@ const baseFindAllService = (request) => {
     });
 
     executeService
-        .then(response => {
-            const successFuncCB = request.successFuncCB;
+        .then(response => {     
+            const results = [];
 
             if (response && response.data) {
                 const data = response.data;
-                const results = [];
-
+            
                 Object.keys(data).forEach((id) => {
                     const result = data[id];
-                    const builderModelFuncCB = request.builderModelFuncCB;
-                    const resultObject = builderModelFuncCB(id, result);
+                    
+                    const resultObject = (builderModelFuncCB) ? builderModelFuncCB(id, result) : result;
 
                     results.push(resultObject);
-                });
-                
-                successFuncCB({ loading: false, error: false, results: results });
-            } else {
-                successFuncCB({ loading: false, error: false, results: [] });
+                }); 
             }
+
+            successFuncCB(results);
         })
         .catch(error => {
-            const errorFuncCB = request.errorFuncCB; 
-            errorFuncCB({ loading: false, error: true });
+            errorFuncCB({ error: error });
         });
 };
 
-export { baseFindAllService };
+/**
+ * Default find all service
+ * 
+ * @param {FindServiceParams*} request 
+ *     A FindServiceParams object with properties:
+ *          - request:               RequestInfo object
+ *          - successFuncCB:         Success callback
+ *          - errorFuncCB:           Error callback
+ *          - builderModelFuncCB:    Builder callback
+ *          - params:                Object with extra properties
+ *          - context:               Context for callbackse
+ */
+const baseFindByIdService = (serviceParams) => {
+    const { request, successFuncCB, errorFuncCB, builderModelFuncCB, params } = serviceParams;
+
+    const executeService = new Promise(async (resolve, reject) => {
+        let response = null;
+
+        try {
+            response = await axios.get(BASE_URL + request.path);
+        } catch (error) {
+            reject(error);
+        }
+
+        resolve(response);
+    });
+
+    executeService
+        .then(response => {;
+            let result = null;
+
+            if (response && response.data) {
+                const data = response.data;
+
+                result = (builderModelFuncCB) ? builderModelFuncCB(params.id, data) : data;
+            }
+
+            successFuncCB(result);
+        })
+        .catch(error => {
+            errorFuncCB({ error: error });
+        }); 
+};
+
+export { baseFindAllService, baseFindByIdService };
