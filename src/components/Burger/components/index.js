@@ -1,12 +1,8 @@
 import React from 'react';
 import { v4 as uuidv4 } from "uuid";
-
 import { BurgerContainer } from '../styles';
-
-import { 
-    BurgerIngredientComponent, 
-    AVAILABLE_BURGER_INGREDIENT_INGREDIENTS 
-} from '../../';
+import { AVAILABLE_BURGER_INGREDIENT_INGREDIENTS } from '../../constants';
+import { BurgerIngredientComponent } from '../../components';
 
 /**
  * Burger functional component

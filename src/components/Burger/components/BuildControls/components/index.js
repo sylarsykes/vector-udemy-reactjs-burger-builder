@@ -1,14 +1,8 @@
 import React from 'react';
 import { v4 as uuidv4 } from "uuid";
 import { BuildControlsContainer }  from '../styles';
-
-import { 
-    AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, BuildControlFC 
-} from '../../../';
-
-import {
-    AvailableButtons, ButtonFC
-} from '../../../../UI';
+import { AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, AvailableButtons } from '../../../../constants';
+import { BuildControlFC, ButtonFC } from '../../../../functional-components';
 
 // Available controls
 const controls = [

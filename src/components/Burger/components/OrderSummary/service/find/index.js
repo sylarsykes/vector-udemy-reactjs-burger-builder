@@ -1,9 +1,9 @@
-import { 
-    baseFindAllService, baseFindByIdService, ORDER_SUMMARY_BASE_URL,
-    OrderModelBuilder, FindServiceParamsBuilder
-} from '../../../../../';
+import { ORDER_SUMMARY_BASE_URL } from '../../constants';
+import { OrderModelBuilder } from '../../api';
+import { baseFindAllService, baseFindByIdService, FindServiceParamsBuilder } from '../../../../../Common';
 
-const ORDER_SUMMARY_FIND_ALL_PATH = '.json';
+
+const ORDER_SUMMARY_FIND_ALL_PATH = ORDER_SUMMARY_BASE_URL + '.json';
 
 /**
  * Find all service
@@ -21,6 +21,11 @@ const orderSummaryFindAllService = (successFuncCB, errorFuncCB) => {
             .setPrice(orderSummary.price)
             .setDeliveryMethod(orderSummary.deliveryMethod)
             .setCustomer(orderSummary.customer)
+            .setIngredients(orderSummary.ingredients)
+            .setCreateDate(orderSummary.createDate)
+            .setCreateUser(orderSummary.createUser)
+            .setUpdateDate(orderSummary.updateDate)
+            .setUpdateUser(orderSummary.updateUser)
             .build();
         
         return order;
@@ -28,7 +33,7 @@ const orderSummaryFindAllService = (successFuncCB, errorFuncCB) => {
     
     const serviceParams = new FindServiceParamsBuilder()
         .setRequest({
-            path: ORDER_SUMMARY_BASE_URL + ORDER_SUMMARY_FIND_ALL_PATH,
+            path: ORDER_SUMMARY_FIND_ALL_PATH,
         })
         .setBuilderModelFuncCB(builderModelFuncCB)
         .setSuccessFuncCB(successFuncCB)
@@ -40,7 +45,7 @@ const orderSummaryFindAllService = (successFuncCB, errorFuncCB) => {
 
 /* eslint-disable no-template-curly-in-string */
 // eslint-disable-next-line no-eval
-const ORDER_SUMMARY_FIND_BY_ID_PATH = (id) => eval('`' + ORDER_SUMMARY_BASE_URL + ORDER_SUMMARY_FIND_ALL_PATH  + '/${id}`');
+const ORDER_SUMMARY_FIND_BY_ID_PATH = (id) => eval('`' + ORDER_SUMMARY_BASE_URL + '/${id}`');
 
 const orderSummaryFindByIdService = (id, successFuncCB, errorFuncCB) => {
     // Callback for create new order summary
@@ -51,8 +56,12 @@ const orderSummaryFindByIdService = (id, successFuncCB, errorFuncCB) => {
             .setDeliveryMethod(orderSummary.deliveryMethod)
             .setCustomer(orderSummary.customer)
             .setIngredients(orderSummary.ingredients)
-            .build()
-        
+            .setCreateDate(orderSummary.createDate)
+            .setCreateUser(orderSummary.createUser)
+            .setUpdateDate(orderSummary.updateDate)
+            .setUpdateUser(orderSummary.updateUser)
+            .build();
+
         return order;
     }
 
@@ -71,6 +80,4 @@ const orderSummaryFindByIdService = (id, successFuncCB, errorFuncCB) => {
     baseFindByIdService(serviceParams);
 }
 
-export { 
-    orderSummaryFindAllService, orderSummaryFindByIdService, ORDER_SUMMARY_FIND_ALL_PATH 
-};
+export { orderSummaryFindAllService, orderSummaryFindByIdService };

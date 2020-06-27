@@ -1,8 +1,7 @@
 import React from 'react';
-import { CheckoutSummaryContainer, CheckoutSummaryBurgerContainer} from '../styles';
-
-import { BurgerFC } from '../../../../Burger';
-import { ButtonFC, AvailableButtons } from '../../../../UI';
+import { CheckoutSummaryContainer, CheckoutSummaryBurgerContainer } from '../styles';
+import { AvailableButtons } from '../../../../constants';
+import { BurgerFC, ButtonFC } from '../../../../functional-components';
 
 /**
  * Checkout summary functional component
@@ -15,6 +14,7 @@ const CheckoutSummaryFC = (props) => (
         <CheckoutSummaryBurgerContainer>
             <BurgerFC ingredients={props.ingredients} />
         </CheckoutSummaryBurgerContainer>
+        <p><strong>Total Price: {props.totalPrice}</strong></p>
         <ButtonFC 
             buttonType={AvailableButtons.danger} 
             clickFuncCB={props.checkoutCancelled}>

@@ -1,8 +1,7 @@
 import React from 'react';
 import { NavigationItemsUlContainer } from '../styles';
-
-import { NavigationItemFC } from '../../../';
-
+import { NavigationItemFC } from '../../../../functional-components';
+import { BURGER_BUILDER_ROUTE, ORDERS_ROUTE } from '../../../../../containers/routes';
 /**
  * Navigations items functional component
  * 
@@ -10,8 +9,15 @@ import { NavigationItemFC } from '../../../';
  */
 const NavigationItemsFC = (props) => (
     <NavigationItemsUlContainer>
-        <NavigationItemFC link="/" active>Burger builder</NavigationItemFC>
-        <NavigationItemFC link="/checkout" >Checkout</NavigationItemFC>
+        <NavigationItemFC 
+            link={ BURGER_BUILDER_ROUTE } 
+            exact>
+                Burger builder
+        </NavigationItemFC>
+        <NavigationItemFC 
+            link={ ORDERS_ROUTE } >
+                Orders
+        </NavigationItemFC>
     </NavigationItemsUlContainer>
 );
 

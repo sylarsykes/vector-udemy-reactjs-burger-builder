@@ -1,7 +1,15 @@
-import { BaseModelBuilder, BaseModel } from '../../../../';
+import { BaseModelBuilder, BaseModel } from '../../../../api';
 
 /**
  * Address model
+ * 
+ * Properties:
+ *      - id
+ *      - street
+ *      - zipCode
+ *      - country
+ * 
+ * @see BaseModel
  */
 class AddressModel extends BaseModel {
 
@@ -16,6 +24,15 @@ class AddressModel extends BaseModel {
 
 /**
  * Customer model
+ * 
+ * Properties:
+ *      - id
+ *      - name
+ *      - surname
+ *      - email
+ *      - address
+ * 
+ * @see BaseModel
  */
 class CustomerModel extends BaseModel {
 
@@ -31,6 +48,8 @@ class CustomerModel extends BaseModel {
 
 /**
  * Address model builder
+ * 
+ * @see BaseModelBuilder
  */
 class AddressModelBuilder extends BaseModelBuilder {
 
@@ -68,6 +87,8 @@ class AddressModelBuilder extends BaseModelBuilder {
 
 /**
  * Customer model builder
+ * 
+ * @see BaseModelBuilder
  */
 class CustomerModelBuilder extends BaseModelBuilder {
 

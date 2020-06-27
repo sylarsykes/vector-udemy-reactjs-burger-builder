@@ -1,6 +1,17 @@
-import { BaseAdminModelBuilder, BaseAdminModel } from '../../../../';
+import { BaseAdminModelBuilder, BaseAdminModel } from '../../../../api';
 
-const BURGER_INGREDIENTS_BASE_URL = 'burger-ingredients';
+/**
+ * BurgerIngredient model
+ * 
+ * Properties:
+ *      - id
+ *      - label
+ *      - type
+ *      - price
+ *      - position
+ * 
+ * @see BaseAdminModel
+ */
 class BurgerIngredientModel extends BaseAdminModel {
 
     constructor(builder) {
@@ -13,13 +24,13 @@ class BurgerIngredientModel extends BaseAdminModel {
     }
 }
 
+/**
+ * BurgerIngredient model builder
+ * 
+ * @see BaseAdminModelBuilder
+ */
 class BurgerIngredientModelBuilder extends BaseAdminModelBuilder {
     
-    // eslint-disable-next-line no-useless-constructor
-    constructor() {
-        super();
-    }
-
     get type() {
         return this._type;
     }
@@ -63,4 +74,4 @@ class BurgerIngredientModelBuilder extends BaseAdminModelBuilder {
 }
 
 export default BurgerIngredientModel;
-export { BURGER_INGREDIENTS_BASE_URL, BurgerIngredientModelBuilder };
+export { BurgerIngredientModelBuilder };

@@ -1,10 +1,7 @@
-import { 
-    baseCreateService, ServiceParamsBuilder
-} from '../../../../../';
-
-import {
-    ORDER_SUMMARY_BASE_URL, OrderModelBuilder
-} from '../../';
+import { ORDER_SUMMARY_BASE_URL } from '../../constants';
+import { OrderModelBuilder } from '../../api';
+import { baseCreateService, ServiceParamsBuilder } from '../../../../../Common';
+import moment from 'moment';
 
 const ORDER_SUMMARY_CREATE_BASE_URL = ORDER_SUMMARY_BASE_URL + '.json';
 
@@ -21,7 +18,7 @@ const orderSummaryCreateService = (body, successFuncCB, errorFuncCB) => {
         .setPrice(body.price)
         .setCustomer(body.customer)
         .setIngredients(body.ingredients)
-        .setCreateDate(body.createDate)
+        .setCreateDate(moment().format('MMMM Do YYYY, h:mm:ss a'))
         .setCreateUser('admin-user')
         .build();
     

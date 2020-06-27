@@ -1,3 +1,9 @@
+/**
+ * Base model
+ * 
+ * Properties:
+ *      - id
+ */
 class BaseModel {
 
     constructor(builder) {
@@ -5,6 +11,16 @@ class BaseModel {
     }
 }
 
+/**
+ * BaseAdmin model
+ * 
+ * Properties:
+ *      - id
+ *      - createDate
+ *      - createUser
+ *      - updateDate
+ *      - updateUser
+ */
 class BaseAdminModel extends BaseModel {
 
     constructor(builder) {
@@ -17,6 +33,12 @@ class BaseAdminModel extends BaseModel {
     }
 }
 
+/**
+ * BaseModelCollection
+ * 
+ * Properties:
+ *      - results
+ */
 class BaseModelCollection extends Array {
 
     constructor() {
@@ -26,6 +48,9 @@ class BaseModelCollection extends Array {
     }
 }
 
+/**
+ * BaseModel builder
+ */
 class BaseModelBuilder {
 
     get id() {
@@ -42,12 +67,10 @@ class BaseModelBuilder {
     }
 }
 
+/**
+ * BaseAdminModel builder
+ */
 class BaseAdminModelBuilder extends BaseModelBuilder {
-
-    // eslint-disable-next-line no-useless-constructor
-    constructor() {
-        super();
-    }
 
     get createDate() {
         return this._createDate;

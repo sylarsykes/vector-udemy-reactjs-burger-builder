@@ -1,9 +1,6 @@
 import React from 'react';
-import {
-    NavigationItemContainer,
-    NavigationItemLinkContainer,
-    NavigationItemLinkActiveContainer
-} from '../styles';
+import { BrowserRouter, NavLink } from 'react-router-dom';
+import { NavigationItemContainer } from '../styles';
 
 /**
  * Navigation item functional component
@@ -14,11 +11,13 @@ import {
  */
 const NavigationItemFC = (props) => (
     <NavigationItemContainer>
-        {
-            props.active ? 
-                (<NavigationItemLinkActiveContainer href={props.link}>{props.children}</NavigationItemLinkActiveContainer>) : 
-                (<NavigationItemLinkContainer href={props.link}>{props.children}</NavigationItemLinkContainer>) 
-        }
+        <BrowserRouter>
+            <NavLink 
+                to={props.link}
+                exact={props.exact}>
+                    {props.children}
+            </NavLink> 
+        </BrowserRouter> 
     </NavigationItemContainer>
 );
 

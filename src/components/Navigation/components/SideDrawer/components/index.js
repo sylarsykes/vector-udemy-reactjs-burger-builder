@@ -1,10 +1,7 @@
 import React from 'react';
 import { SideDrawerContainer, SideDrawerLogoContainer  } from '../styles';
-
 import ChildrenContainer from '../../../../../hoc';
-import { LogoFC } from '../../../../Logo';
-import { BackdropFC } from '../../../../UI';
-import { NavigationItemsFC } from '../../../../Navigation';
+import { BackdropFC, LogoFC, NavigationItemsFC } from '../../../../functional-components';
 
 /**
  * SideDrawer functional component
@@ -16,20 +13,18 @@ import { NavigationItemsFC } from '../../../../Navigation';
  * 
  * @see Backdrop
  */
-const SideDrawerFC = (props) => {
-    return (
-        <ChildrenContainer>
-            <BackdropFC show={props.open} clickFuncCB={props.closed} />
-            <SideDrawerContainer show={props.open} >
-                <SideDrawerLogoContainer>
-                    <LogoFC />
-                </SideDrawerLogoContainer>
-                <nav>
-                    <NavigationItemsFC />
-                </nav>
-            </SideDrawerContainer>
-        </ChildrenContainer>
-    );
-};
+const SideDrawerFC = (props) => (
+    <ChildrenContainer>
+        <BackdropFC show={props.open} clickFuncCB={props.closed} />
+        <SideDrawerContainer show={props.open} >
+            <SideDrawerLogoContainer>
+                <LogoFC />
+            </SideDrawerLogoContainer>
+            <nav>
+                <NavigationItemsFC />
+            </nav>
+        </SideDrawerContainer>
+    </ChildrenContainer>
+);
 
 export default SideDrawerFC;

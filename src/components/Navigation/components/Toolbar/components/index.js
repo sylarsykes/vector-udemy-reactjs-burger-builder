@@ -2,9 +2,7 @@ import React from 'react';
 import { 
     ToolbarContainer, ToolbarLogoContainer, ToolbarNavigationItemsNavContainer 
 } from '../styles';
-
-import { LogoFC } from '../../../../Logo';
-import { DrawerToggleFC, NavigationItemsFC } from '../../../../Navigation';
+import { DrawerToggleFC, LogoFC, NavigationItemsFC } from '../../../../functional-components';
 
 /**
  * Toolbar functional component

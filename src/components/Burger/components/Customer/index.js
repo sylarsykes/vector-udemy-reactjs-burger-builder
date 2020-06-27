@@ -1,9 +1,11 @@
+import { CUSTOMERS_BASE_URL } from './constants';
 import { 
     AddressModelBuilder, AddressModel, CustomerModelBuilder, 
     CustomerModel 
 } from './api';
 
-export { 
+export {
+    CUSTOMERS_BASE_URL,
     AddressModelBuilder, AddressModel, CustomerModelBuilder, 
     CustomerModel 
 };

@@ -1,12 +1,21 @@
 import { 
     BaseAdminModelBuilder, BaseAdminModel, CustomerModelBuilder,
-    BurgerIngredientModelBuilder
-} from '../../../../';
-
-const ORDER_SUMMARY_BASE_URL = 'orders';
+    BurgerIngredientModel, BurgerIngredientModelBuilder
+} from '../../../../api';
 
 /**
  * Order model
+ * 
+ * Properties:
+ *      - id
+ *      - deliveryMethod
+ *      - price
+ *      - customer
+ *      - ingredients
+ * 
+ * @see BaseAdminModel
+ * @see Customer
+ * @see BurgerIngredient
  */
 class OrderModel extends BaseAdminModel {
 
@@ -21,7 +30,21 @@ class OrderModel extends BaseAdminModel {
 }
 
 /**
+ * Order ingredient model
+ */
+class OrderBurgerIngredientModel extends BurgerIngredientModel {
+
+    constructor(builder) {
+        super(builder);
+
+        this.amount = builder.amount;
+    }
+}
+
+/**
  * Order model builder
+ * 
+ * @see BaseAdminModelBuilder
  */
 class OrderModelBuilder extends BaseAdminModelBuilder {
 
@@ -69,11 +92,15 @@ class OrderModelBuilder extends BaseAdminModelBuilder {
 
         if (ingredients && ingredients.length) {
             ingredients.forEach(ingredient => {
-                if (ingredient.count) {
-                    const burgerIngredient = new BurgerIngredientModelBuilder()
-                        .setType(ingredient.burgerIngredient.type)
-                        .setLabel(ingredient.burgerIngredient.label)
-                        .setPrice(ingredient.burgerIngredient.price)
+                const count = ingredient.amount || ingredient.count;
+                const bIngredient = ingredient.burgerIngredient || ingredient;
+
+                if (count) {
+                    const burgerIngredient = new OrderBurgerIngredientModelBuilder()
+                        .setType(bIngredient.type)
+                        .setLabel(bIngredient.label)
+                        .setPrice(bIngredient.price)
+                        .setAmount(count)
                         .build();
 
                     burgerIngredients.push(burgerIngredient);
@@ -90,4 +117,26 @@ class OrderModelBuilder extends BaseAdminModelBuilder {
     }
 }
 
-export { ORDER_SUMMARY_BASE_URL, OrderModelBuilder, OrderModel };
+/**
+ * Order ingredient model builder
+ */
+class OrderBurgerIngredientModelBuilder extends BurgerIngredientModelBuilder {
+
+    get amount() {
+        return this._amount;
+    }
+
+    setAmount = (amount) => {
+        this._amount = amount;
+        return this;
+    }
+
+    build = () => {
+        return new OrderBurgerIngredientModel(this);
+    }
+}
+
+export { 
+    OrderModelBuilder, OrderModel, OrderBurgerIngredientModelBuilder, 
+    OrderBurgerIngredientModel 
+};
