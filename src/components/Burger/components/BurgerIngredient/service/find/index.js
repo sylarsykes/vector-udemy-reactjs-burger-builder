@@ -11,8 +11,10 @@ const BURGER_INGREDIENT_FIND_ALL_PATH = BURGER_INGREDIENTS_BASE_URL + '.json';
  *      Success callback to execute
  * @param {*} errorFuncCB
  *      Error callback to execute
+ * @param {*} config
+ *      Config axios object
  */
-const burgerIngredientFindAllService = (successFuncCB, errorFuncCB) => {
+const burgerIngredientFindAllService = (successFuncCB, errorFuncCB, config) => {
     // Callback for create new burger ingredient
     const builderModelFuncCB = (id, ingredient) => {
         const burgerIngredient = new BurgerIngredientModelBuilder()
@@ -30,7 +32,8 @@ const burgerIngredientFindAllService = (successFuncCB, errorFuncCB) => {
 
     const serviceParams = new FindServiceParamsBuilder()
         .setRequest({
-            path: BURGER_INGREDIENT_FIND_ALL_PATH
+            path: BURGER_INGREDIENT_FIND_ALL_PATH,
+            config: config
         })
         .setBuilderModelFuncCB(builderModelFuncCB)
         .setSuccessFuncCB(successFuncCB)

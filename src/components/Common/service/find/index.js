@@ -20,8 +20,8 @@ const baseFindAllService = (serviceParams) => {
         let response = null;
 
         try {
-            response = await axios.get(BASE_URL + request.path);
-        } catch (error) {
+            response = await axios.get(BASE_URL + request.path, request.config);
+        } catch (error) {          
             reject(error);
         }
 

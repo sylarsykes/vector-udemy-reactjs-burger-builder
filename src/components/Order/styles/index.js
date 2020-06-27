@@ -10,11 +10,11 @@ const OrderContainer = styled.div`
 `;
 
 const OrderIngredientSpanContainer = styled.span`
-    textTransform: capitalize,
-    display: inline-block,
-    margin: 0 8px,
-    border: 1px solid #ccc,
-    padding: 5px
+    textTransform: capitalize;
+    display: inline-block;
+    margin: 0 8px;
+    border: 1px solid #ccc;
+    padding: 5px;
 `;
 
 export { OrderContainer, OrderIngredientSpanContainer };

@@ -9,13 +9,14 @@ import {
 import { OrderFC, CheckoutSummaryFC } from './Order'
 import { 
     BackdropFC, ButtonFC, ButtonGroupFC, 
-    SpinnerFC
+    InputFC, SpinnerFC
 } from './UI';
 
 export {
     BuildControlFC, BuildControlsFC, BurgerFC,
     BackdropFC, ButtonFC, ButtonGroupFC,
-    CheckoutSummaryFC, DrawerToggleFC, LogoFC, 
-    NavigationItemFC, NavigationItemsFC, OrderFC, 
-    SideDrawerFC, SpinnerFC, ToolbarFC,
+    CheckoutSummaryFC, DrawerToggleFC, InputFC, 
+    LogoFC, NavigationItemFC, NavigationItemsFC, 
+    OrderFC, SideDrawerFC, SpinnerFC, 
+    ToolbarFC,
 };

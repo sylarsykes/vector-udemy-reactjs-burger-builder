@@ -127,7 +127,7 @@ class CustomerModelBuilder extends BaseModelBuilder {
         const addressBuilder = new AddressModelBuilder();
         const _address = addressBuilder
             .setStreet(address.street)
-            .setZipCode(address.zipcode)
+            .setZipCode(address.zipCode)
             .setCountry(address.country)
             .build();
 
