@@ -1,9 +1,11 @@
 import { 
     BackdropFC, ButtonFC, AvailableButtons,
-    ButtonGroupFC, ModalComponent, SpinnerFC
+    ButtonGroupFC, InputFC, AvailableInputs, 
+    ModalComponent, SpinnerFC
 } from './components';
 
 export {
     BackdropFC, ButtonFC, AvailableButtons,
-    ButtonGroupFC, ModalComponent, SpinnerFC
+    ButtonGroupFC, InputFC, AvailableInputs, 
+    ModalComponent, SpinnerFC
 };
