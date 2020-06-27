@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import  {
     BreadTopContainer, SeedsLeftContainer, SeedsRightContainer,
     PicklesContainer, BaconContainer, SaladContainer,
@@ -61,7 +60,9 @@ class BurgerIngredientComponent extends Component {
      * @param {*} type Available burger ingredient
      */
     _findAvailableBurgerIngredientByType = (type) => {
-        var availableBurgerIngredient = Object.keys(AVAILABLE_BURGER_INGREDIENT_INGREDIENTS).find((ingredient) => AVAILABLE_BURGER_INGREDIENT_INGREDIENTS[ingredient].type === type);
+        var availableBurgerIngredient = 
+            Object.keys(AVAILABLE_BURGER_INGREDIENT_INGREDIENTS)
+                .find((ingredient) => AVAILABLE_BURGER_INGREDIENT_INGREDIENTS[ingredient].type === type);
 
         if (availableBurgerIngredient) {
             return AVAILABLE_BURGER_INGREDIENT_INGREDIENTS[availableBurgerIngredient];
@@ -70,12 +71,15 @@ class BurgerIngredientComponent extends Component {
         return null;
     }
 
-
+    /**
+     * @inheritdoc
+     */
     render = () => {
         const { burgerIngredient, type } = this.props;
         const availabelBurgerIngredient = this._findAvailableBurgerIngredientByType(type);
         
-        return (burgerIngredient && availabelBurgerIngredient) ? availabelBurgerIngredient.container : null;
+        return (burgerIngredient && availabelBurgerIngredient) ? 
+            availabelBurgerIngredient.container : null;
     }
 }
 

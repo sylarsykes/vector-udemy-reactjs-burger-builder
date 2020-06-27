@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 
 import  ChildrenContainer from '../';
-import { SideDrawerFC, ToolbarFC } from '../../components';
+import { SideDrawerFC, ToolbarFC } from '../../components/functional-components';
 
 const MainContainer = styled.main`
     margin-top: 72px;
 `;
 
+/**
+ * Layout component
+ */
 class Layout extends Component {
     state = {
         showSideDrawer: false

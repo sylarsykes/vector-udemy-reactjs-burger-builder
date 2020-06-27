@@ -40,14 +40,4 @@ const NavigationItemContainer = styled.li`
     }
 `;
 
-const NavigationItemLinkContainer = styled.a`
-
-`;
-
-const NavigationItemLinkActiveContainer = styled.a`
-    color: #40A4C8;
-`;
-
-export {
-    NavigationItemContainer, NavigationItemLinkContainer, NavigationItemLinkActiveContainer
-};
+export { NavigationItemContainer };

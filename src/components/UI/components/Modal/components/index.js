@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { ModalContainer } from '../styles';
-
 import ChildrenContainer from '../../../../../hoc';
-import { BackdropFC } from '../../../';
+import { BackdropFC } from '../../../../functional-components';
 
 /**
  * Modal component

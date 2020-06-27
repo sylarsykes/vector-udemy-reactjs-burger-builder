@@ -1,7 +1,6 @@
 import React from 'react';
 import { ButtonGroupContainer } from '../styles';
-
-import { ButtonFC } from '../../../';
+import { ButtonFC } from '../../../../functional-components';
 
 /**
  * Button group functional component

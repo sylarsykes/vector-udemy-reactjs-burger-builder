@@ -1,6 +1,5 @@
 import React from 'react';
 import { LogoContainer } from '../styles';
-
 import { burgerLogo } from '../../../../public';
 
 /**

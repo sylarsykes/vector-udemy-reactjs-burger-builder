@@ -1,9 +1,9 @@
-import { 
-    baseFindAllService, baseFindByIdService, BURGER_BASE_URL, 
-    BurgerModelBuilder 
-} from '../../../';
+import { BURGER_BASE_URL } from '../../../constants';
+import { BurgerModelBuilder } from '../../../api';
+import { baseFindAllService, baseFindByIdService } from '../../../services';
+import { FindServiceParamsBuilder } from '../../../utils';
 
-const BURGER_FIND_ALL_PATH = '.json';
+const BURGER_FIND_ALL_PATH = BURGER_BASE_URL + '.json';
 
 /**
  * Find all service
@@ -15,56 +15,70 @@ const BURGER_FIND_ALL_PATH = '.json';
  */
 const burgerFindAllService = (successFuncCB, errorFuncCB) => {
     // Callback for create new burger ingredient
-    const builderModelFuncCB = (id, ingredient) => {
-        const burgerIngredient = new BurgerIngredientModelBuilder()
+    const builderModelFuncCB = (id, b) => {
+        const burger = new BurgerModelBuilder()
             .setId(id)
-            .setType(ingredient.type)
-            .setLabel(ingredient.label)
-            .setPrice(ingredient.price)
-            .setPosition(ingredient.position)
-            .setCreateDate(ingredient.createDate)
-            .setCreateUser(ingredient.createUser)
+            .setName(b.name)
+            .setPrice(b.price)
+            .setIngredients(b.ingredients)
+            .setCreateDate(b.createDate)
+            .setCreateUser(b.createUser)
             .build();
         
-        return burgerIngredient;
+        return burger;
     }
-    
-    baseFindAllService({
-        path: BURGER_INGREDIENTS_BASE_URL + BURGER_INGREDIENT_FIND_ALL_PATH,
-        builderModelFuncCB: builderModelFuncCB,
-        successFuncCB: successFuncCB,
-        errorFuncCB: errorFuncCB
-    });
 
+    const serviceParams = new FindServiceParamsBuilder()
+        .setRequest({
+            path: BURGER_FIND_ALL_PATH
+        })
+        .setBuilderModelFuncCB(builderModelFuncCB)
+        .setSuccessFuncCB(successFuncCB)
+        .setErrorFuncCB(errorFuncCB)
+        .build();
+
+    baseFindAllService(serviceParams);
 };
 
 /* eslint-disable no-template-curly-in-string */
 // eslint-disable-next-line no-eval
-const BURGER_INGREDIENT_FIND_BY_ID_PATH = (id) => eval('`' + BURGER_INGREDIENTS_BASE_URL + '/${id}`');
+const BURGER_FIND_BY_ID_PATH = (id) => eval('`' + BURGER_BASE_URL + '/${id}`');
 
-const burgerIngredientFindByIdService = (id, successFuncCB, errorFuncCB) => {
-   // Callback for create new burger ingredient
-    const builderModelFuncCB = (id, ingredient) => {
-        const burgerIngredient = new BurgerIngredientModelBuilder()
+/**
+ * Find by id service
+ * 
+ * @param {*} id 
+ * @param {*} successFuncCB 
+ * @param {*} errorFuncCB 
+ */
+const burgerFindByIdService = (id, successFuncCB, errorFuncCB) => {
+    // Callback for create new burger ingredient
+    const builderModelFuncCB = (id, b) => {
+        const burger = new BurgerModelBuilder()
             .setId(id)
-            .setType(ingredient.type)
-            .setLabel(ingredient.label)
-            .setPrice(ingredient.price)
-            .setPosition(ingredient.position)
-            .setCreateDate(ingredient.createDate)
-            .setCreateUser(ingredient.createUser)
+            .setName(b.name)
+            .setPrice(b.price)
+            .setIngredients(b.ingredients)
+            .setCreateDate(b.createDate)
+            .setCreateUser(b.createUser)
             .build();
-        
-        return burgerIngredient;
+
+        return burger;
     }
-    
-    baseFindByIdService({
-        path: BURGER_INGREDIENTS_BASE_URL + '/' + BURGER_INGREDIENT_FIND_BY_ID_PATH(id),
-        id: id,
-        builderModelFuncCB: builderModelFuncCB,
-        successFuncCB: successFuncCB,
-        errorFuncCB: errorFuncCB
-    });
+
+    const serviceParams = new FindServiceParamsBuilder()
+        .setParams({
+            id: id
+        })
+        .setRequest({
+            path: BURGER_FIND_BY_ID_PATH(id),
+        })
+        .setBuilderModelFuncCB(builderModelFuncCB)
+        .setSuccessFuncCB(successFuncCB)
+        .setErrorFuncCB(errorFuncCB)
+        .build();
+
+    baseFindByIdService(serviceParams);
 }
 
-export { burgerIingredientFindAllService, burgerIngredientFindByIdService };
+export { burgerFindAllService, burgerFindByIdService };

@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
-
-import { ModalComponent } from '../../components';
+import { ModalComponent } from '../../components/components';
 import ChildrenContainer from '../';
 
+/**
+ * Error handler component
+ * 
+ * @param {*} WrappedComponent 
+ * @param {*} axios 
+ */
 const ErrorHandler = (WrappedComponent, axios) => {
 
     return class extends Component {

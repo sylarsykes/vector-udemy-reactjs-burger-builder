@@ -1,7 +1,7 @@
 import React from 'react';
 import { BuildControlLabelContainer, BuildControlContainer } from '../styles';
-
-import { AvailableButtons, ButtonGroupFC } from '../../../../../../UI';
+import { AvailableButtons } from '../../../../../../constants';
+import { ButtonGroupFC } from '../../../../../../functional-components';
 
 /**
  * BuildControl functional component
@@ -31,7 +31,6 @@ const BuildControlFC = (props) => (
                     clickFuncCB: props.added
                 }
             ]} />
-
     </BuildControlContainer>
 );
 

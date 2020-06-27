@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { v4 as uuidv4 } from "uuid";
-
 import ChildrenContainer from '../../../../../hoc';
-import { ButtonFC, AvailableButtons } from '../../../../UI';
+import { AvailableButtons } from '../../../../constants';
+import { ButtonFC } from '../../../../functional-components';
 
 /**
  * Order summary component

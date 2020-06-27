@@ -1,6 +1,6 @@
 import { 
     BaseAdminModelBuilder, BaseAdminModel, BurgerIngredientModelBuilder
-} from '../../';
+} from '../../api';
 
 const BURGER_BASE_URL = 'burgers';
 
@@ -71,7 +71,6 @@ class BurgerModelBuilder extends BaseAdminModelBuilder {
     }
 
 }
-
 
 export { 
     BURGER_BASE_URL,  BurgerModel, BurgerModelBuilder 
