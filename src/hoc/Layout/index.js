@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-
 import  ChildrenContainer from '../';
 import { SideDrawerFC, ToolbarFC } from '../../components/functional-components';
 
@@ -16,14 +15,13 @@ class Layout extends Component {
         showSideDrawer: false
     }
 
-    sideDrawerClosedHandler = () => {
-        this.setState({showSideDrawer: false});
-    }
+    sideDrawerClosedHandler = () => this.setState({showSideDrawer: false});
 
-    sideDrawerToggleHandler = () => {
-        this.setState((prevState) => { return { showSideDrawer: !prevState.showSideDrawer};});
-    }
+    sideDrawerToggleHandler = () => this.setState((prevState) => { return { showSideDrawer: !prevState.showSideDrawer}; });
 
+    /**
+     * @inheritdoc
+     */
     render = () => (
         <ChildrenContainer>
             <ToolbarFC drawerToggleClicked={this.sideDrawerToggleHandler} />

@@ -2,7 +2,10 @@ import React from 'react';
 import { 
     ToolbarContainer, ToolbarLogoContainer, ToolbarNavigationItemsNavContainer 
 } from '../styles';
-import { DrawerToggleFC, LogoFC, NavigationItemsFC } from '../../../../functional-components';
+import { 
+    DrawerToggleFC, LogoFC, NavigationItemsFC,
+    SwitchLanguageFC
+} from '../../../../functional-components';
 
 /**
  * Toolbar functional component
@@ -17,6 +20,9 @@ const ToolbarFC = (props) => (
         <ToolbarLogoContainer>
             <LogoFC />
         </ToolbarLogoContainer>
+        <ToolbarNavigationItemsNavContainer>
+            <SwitchLanguageFC />
+        </ToolbarNavigationItemsNavContainer>
         <ToolbarNavigationItemsNavContainer>
             <NavigationItemsFC />
         </ToolbarNavigationItemsNavContainer>

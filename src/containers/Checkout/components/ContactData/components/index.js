@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import i18next from 'i18next';
+import { Translation } from "react-i18next";
 import { ContactDataContainer } from '../styles';
 import { BURGER_BUILDER_ROUTE } from '../../../../routes';
-import { AvailableButtons, AvailableInputs } from '../../../../../components/constants';
+import { 
+    AvailableButtons, AvailableInputs, AvailableInputInputTypes 
+} from '../../../../../components/constants';
 import { orderSummaryCreateService } from '../../../../../components/services';
 import { ButtonFC, InputFC, SpinnerFC } from '../../../../../components/functional-components';
-
 
 /**
  * Contact data component
@@ -19,21 +22,22 @@ class ContactData extends Component {
             name: {
                 elementType: AvailableInputs.input,
                 elementConfig: {
-                    type: 'text',
-                    placeholder: 'Your Name'
+                    type: AvailableInputInputTypes.text,
+                    placeholder: i18next.t('contactData:contactData.form.name.placeholder')
                 },
                 value: '',
                 validation: {
                     required: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMessage: i18next.t('contactData:contactData.form.name.errorMesssage')
             },
             surname: {
                 elementType: AvailableInputs.input,
                 elementConfig: {
-                    type: 'text',
-                    placeholder: 'Your Surname'
+                    type: AvailableInputInputTypes.text,
+                    placeholder: i18next.t('contactData:contactData.form.surname.placeholder')
                 },
                 value: '',
                 validation: {
@@ -45,8 +49,8 @@ class ContactData extends Component {
             email: {
                 elementType: AvailableInputs.input,
                 elementConfig: {
-                    type: 'email',
-                    placeholder: 'Your E-Mail'
+                    type: AvailableInputInputTypes.email,
+                    placeholder: i18next.t('contactData:contactData.form.email.placeholder')
                 },
                 value: '',
                 validation: {
@@ -54,26 +58,28 @@ class ContactData extends Component {
                     isEmail: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMessage: i18next.t('contactData:contactData.form.email.errorMessage')
             },
             street: {
                 elementType: AvailableInputs.input,
                 elementConfig: {
-                    type: 'text',
-                    placeholder: 'Street'
+                    type: AvailableInputInputTypes.text,
+                    placeholder: i18next.t('contactData:contactData.form.street.placeholder')
                 },
                 value: '',
                 validation: {
                     required: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMessage: i18next.t('contactData:contactData.form.street.errorMessage')
             },
             zipCode: {
                 elementType: AvailableInputs.input,
                 elementConfig: {
-                    type: 'text',
-                    placeholder: 'ZIP Code'
+                    type: AvailableInputInputTypes.text,
+                    placeholder: i18next.t('contactData:contactData.form.zipCode.placeholder')
                 },
                 value: '',
                 validation: {
@@ -83,27 +89,29 @@ class ContactData extends Component {
                     isNumeric: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMessage: i18next.t('contactData:contactData.form.zipCode.errorMessage')
             },
             country: {
                 elementType: AvailableInputs.input,
                 elementConfig: {
-                    type: 'text',
-                    placeholder: 'Country'
+                    type: AvailableInputInputTypes.text,
+                    placeholder: i18next.t('contactData:contactData.form.country.placeholder')
                 },
                 value: '',
                 validation: {
                     required: true
                 },
                 valid: false,
-                touched: false
+                touched: false,
+                errorMessage: i18next.t('contactData:contactData.form.country.errorMessage')
             },
             deliveryMethod: {
                 elementType: AvailableInputs.select,
                 elementConfig: {
                     options: [
-                        {value: 'fastest', displayValue: 'Fastest'},
-                        {value: 'cheapest', displayValue: 'Cheapest'}
+                        {value: 'fastest', displayValue: i18next.t('contactData:contactData.form.deliveryMethod.fastest')},
+                        {value: 'cheapest', displayValue: i18next.t('contactData:contactData.form.deliveryMethod.cheapest')}
                     ]
                 },
                 value: 'fastest',
@@ -115,6 +123,12 @@ class ContactData extends Component {
         loading: false
     }
 
+    /**
+     * Valid field
+     *  
+     * @param {*} value 
+     * @param {*} rules 
+     */
     checkValidity = (value, rules) => {
         let isValid = true;
         if (!rules) {
@@ -145,6 +159,20 @@ class ContactData extends Component {
 
         return isValid;
     }
+    
+    /**
+     * Get formData value
+     */
+    getFormData = () => {
+        const formData = {};
+        const orderForm = this.state.orderForm;
+
+        for (let formElementIdentifier in orderForm) {
+            formData[formElementIdentifier] = orderForm[formElementIdentifier].value;
+        }
+
+        return formData;
+    }
 
     /**
      * Create order
@@ -156,12 +184,7 @@ class ContactData extends Component {
 
         this.setState({ loading: true });
         
-        const formData = {};
-        const orderForm = this.state.orderForm;
-
-        for (let formElementIdentifier in orderForm) {
-            formData[formElementIdentifier] = orderForm[formElementIdentifier].value;
-        }
+        const formData = this.getFormData();
         
         const order = {
             ingredients: this.props.ingredients,
@@ -191,6 +214,12 @@ class ContactData extends Component {
         orderSummaryCreateService(order, successFuncCB, errorFuncCB);
     }
 
+    /**
+     * Change handler
+     * 
+     * @param {*} event 
+     * @param {*} inputIdentifier 
+     */
     inputChangedHandler = (event, inputIdentifier) => {
         const updatedOrderForm = {
             ...this.state.orderForm
@@ -210,6 +239,9 @@ class ContactData extends Component {
         this.setState({orderForm: updatedOrderForm, formIsValid: formIsValid});
     }
 
+    /**
+     * @inheritdoc
+     */
     render = () => {
         const formElementsArray = [];
         const orderForm = this.state.orderForm;
@@ -232,6 +264,7 @@ class ContactData extends Component {
                         invalid={!formElement.config.valid}
                         shouldValidate={formElement.config.validation}
                         touched={formElement.config.touched}
+                        errorMessage={formElement.config.errorMessage}
                         changed={(event) => this.inputChangedHandler(event, formElement.id)} />
                 ))}
                 <ButtonFC 
@@ -243,7 +276,11 @@ class ContactData extends Component {
         
         return (
             <ContactDataContainer>
-                <h4>Enter your Contact Data</h4>
+                <Translation>
+                    {
+                        (t, { i18next }) => <h4>{t('contactData:contactData.title')}</h4> 
+                    }
+                </Translation> 
                 {form}
             </ContactDataContainer>
         );

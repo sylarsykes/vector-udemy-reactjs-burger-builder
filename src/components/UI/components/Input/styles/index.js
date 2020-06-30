@@ -28,5 +28,10 @@ const InputContainer = styled.div`
     }
 `;
 
-export { InputContainer };
+const InputErrorMessagePContainer = styled.p`
+    color: red;
+    margin: 5px 0;
+`;
+
+export { InputContainer, InputErrorMessagePContainer };
 

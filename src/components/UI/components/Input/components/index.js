@@ -1,5 +1,5 @@
 import React from 'react';
-import { InputContainer } from '../styles';
+import { InputContainer, InputErrorMessagePContainer } from '../styles';
 
 const AvailableInputs = {
     default: 'input',
@@ -9,13 +9,34 @@ const AvailableInputs = {
 }
 
 /**
+ * @see https://www.w3schools.com/html/html_form_input_types.asp
+ */
+const AvailableInputInputTypes = {
+    checkbox: 'checkbox',
+    color: 'color',
+    date: 'date',
+    email: 'email',
+    number: 'number',
+    password: 'password',
+    radio: 'radio',
+    reset: 'reset',
+    tel: 'tel',
+    text: 'text',
+    url: 'url'
+}
+
+/**
  * Input functional component
  * 
  * @param {*} props 
  */
 const InputFC = (props) => {
     let inputElement = null;
-    const invalid = (props.invalid && props.shouldValidate && props.touched) ? true : false;
+
+    const invalid = (props.invalid && props.shouldValidate && props.touched);
+    const validationError = (props.invalid && props.touched && props.errorMessage) ? (
+        <InputErrorMessagePContainer>{props.errorMessage}</InputErrorMessagePContainer>
+    ) : '';
 
     switch (props.elementType) {
         case (AvailableInputs.textarea):
@@ -57,9 +78,10 @@ const InputFC = (props) => {
         <InputContainer invalid={invalid}>
             <label>{props.label}</label>
             {inputElement}
+            {validationError}
         </InputContainer>
     );
 };
 
 export default InputFC;
-export { AvailableInputs };
+export { AvailableInputs, AvailableInputInputTypes };

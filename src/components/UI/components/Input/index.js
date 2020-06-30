@@ -1,3 +1,5 @@
-import InputFC, { AvailableInputs } from './components';
+import InputFC, { AvailableInputs, AvailableInputInputTypes } from './components';
 
-export { AvailableInputs, InputFC };
+export { 
+    AvailableInputs, AvailableInputInputTypes, InputFC 
+};

@@ -14,7 +14,10 @@ const ErrorHandler = (WrappedComponent, axios) => {
         state = {
             error: null
         }
-
+        
+        /**
+         * @inheritdoc
+         */
         componentWillMount = () => {
             this.reqInterceptor = axios.interceptors.request.use((request) => {
                 this.setState({error: null});
@@ -26,15 +29,22 @@ const ErrorHandler = (WrappedComponent, axios) => {
             });
         }
 
+        /**
+         * @inheritdoc
+         */
         componentWillUnmount = () => {
             axios.interceptors.request.eject(this.reqInterceptor);
             axios.interceptors.response.eject(this.resInterceptor);
         }
 
-        errorConfirmedHandler = () => {
-            this.setState({error: null});
-        }
+        /**
+         * Error confirmed handler
+         */
+        errorConfirmedHandler = () => this.setState({error: null});
 
+        /**
+         * @inheritdoc
+         */
         render = () => (
             <ChildrenContainer>
                 <ModalComponent
