@@ -1,7 +1,10 @@
 import React from 'react';
 import { SideDrawerContainer, SideDrawerLogoContainer  } from '../styles';
 import ChildrenContainer from '../../../../../hoc';
-import { BackdropFC, LogoFC, NavigationItemsFC } from '../../../../functional-components';
+import { 
+    BackdropFC, LogoFC, NavigationItemsFC, 
+    SwitchLanguageFC 
+} from '../../../../functional-components';
 
 /**
  * SideDrawer functional component
@@ -20,6 +23,9 @@ const SideDrawerFC = (props) => (
             <SideDrawerLogoContainer>
                 <LogoFC />
             </SideDrawerLogoContainer>
+            <nav>
+                <SwitchLanguageFC />
+            </nav>
             <nav>
                 <NavigationItemsFC />
             </nav>

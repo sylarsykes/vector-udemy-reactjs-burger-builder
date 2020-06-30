@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component} from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import ChildrenContainer, { Layout } from '../../hoc';
-import { BurgerBuilder, Checkout, Orders } from '../';
 import { 
     BURGER_BUILDER_ROUTE, CHECKOUT_ROUTE, ORDERS_ROUTE 
 } from '../routes';
+import ChildrenContainer, { Layout } from '../../hoc';
+import { BurgerBuilder, Checkout, Orders } from '../';
 
 /**
  * Application component

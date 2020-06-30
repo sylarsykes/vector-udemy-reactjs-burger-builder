@@ -50,6 +50,8 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 * [eslint-plugin-react](https://www.npmjs.com/package/eslint-plugin-react) React specific linting rules for [ESLint](https://eslint.org/)
 * [file-loader](https://www.npmjs.com/package/file-loader) The file-loader resolves import/require() on a file into a url and emits the file into the output directory.
 * [fs-extra](https://www.npmjs.com/package/fs-extra) fs-extra adds file system methods that aren't included in the native fs module and adds promise support to the fs methods. It also uses graceful-fs to prevent EMFILE errors. It should be a drop in replacement for fs.
+* [moment](https://www.npmjs.com/package/moment) A lightweight JavaScript date library for parsing, validating, manipulating, and formatting dates.
+* [moment-timezone](https://www.npmjs.com/package/moment-timezone) IANA Time Zone Database + [Moment.js.](https://momentjs.com/)
 * [html-webpack-plugin]() This is a [webpack](https://webpack.js.org/) plugin that simplifies creation of HTML files to serve your webpack bundles. This is especially useful for webpack bundles that include a hash in the filename which changes every compilation. You can either let the plugin generate an HTML file for you, supply your own template using lodash templates or use your own loader.
 * [jest](https://www.npmjs.com/package/jest) Delightful JavaScript Testing.
 * [jest-styled-components](https://www.npmjs.com/package/jest-styled-components) A set of utilities for testing [Styled Components](https://styled-components.com/) with [Jest](https://jestjs.io/). This package improves the snapshot testing experience and provides a brand new matcher to make expectations on the style rules.
@@ -62,6 +64,7 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 * [react](https://www.npmjs.com/package/react) React is a JavaScript library for creating user interfaces.
 * [react-dev-utils](https://www.npmjs.com/package/react-dev-utils) This package includes some utilities used by [Create React App](https://github.com/facebook/create-react-app).
 * [react-dom](https://www.npmjs.com/package/react-dom) This package serves as the entry point to the DOM and server renderers for React. It is intended to be paired with the generic React package, which is shipped as react to npm.
+* [react-moment](https://www.npmjs.com/package/react-moment) React component for the [moment](https://momentjs.com/) date library.
 * [react-router-dom](https://www.npmjs.com/package/react-router-dom) DOM bindings for [React Router](https://reacttraining.com/react-router/).
 * [styled-components](https://www.npmjs.com/package/styled-components) Visual primitives for the component age. Use the best bits ES6 and CSS to style your apps without stress.
 * [sw-precache-webpack-plugin]() SWPrecacheWebpackPlugin is a [webpack](https://webpack.js.org/) plugin for using [service workers](https://github.com/goldhand/notes/blob/master/notes/service_workers.md) to cache your external project dependencies. It will generate a service worker file using [sw-precache](https://github.com/GoogleChromeLabs/sw-precache) and add it to your build directory.

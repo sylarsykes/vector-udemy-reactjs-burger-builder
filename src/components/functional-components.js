@@ -1,6 +1,7 @@
 import { 
     BurgerFC, BuildControlsFC, BuildControlFC,
 } from './Burger';
+import { SwitchLanguageFC } from './Language';
 import { LogoFC } from './Logo';
 import {
     NavigationItemsFC, NavigationItemFC, SideDrawerFC,
@@ -18,5 +19,5 @@ export {
     CheckoutSummaryFC, DrawerToggleFC, InputFC, 
     LogoFC, NavigationItemFC, NavigationItemsFC, 
     OrderFC, SideDrawerFC, SpinnerFC, 
-    ToolbarFC,
+    SwitchLanguageFC, ToolbarFC,
 };

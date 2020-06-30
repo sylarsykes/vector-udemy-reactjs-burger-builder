@@ -3,9 +3,12 @@ import {
     AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, BURGER_BASE_URL, BURGER_INGREDIENTS_BASE_URL,
     ORDER_SUMMARY_BASE_URL,
 } from './Burger';
-import { AvailableButtons, AvailableInputs} from './UI';
+import { 
+    AvailableButtons, AvailableInputs, AvailableInputInputTypes
+} from './UI';
 
 export { 
     AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, AvailableButtons, AvailableInputs, 
-    BURGER_BASE_URL, BURGER_INGREDIENTS_BASE_URL, ORDER_SUMMARY_BASE_URL
+    AvailableInputInputTypes, BURGER_BASE_URL, BURGER_INGREDIENTS_BASE_URL, 
+    ORDER_SUMMARY_BASE_URL
 };

@@ -1,0 +1,34 @@
+{
+   "contactData": {
+        "title": "Introduzca sus datos de contacto",
+        "form": {
+           "name": {
+               "placeholder": "Introduce tu nombre",
+               "errorMessage": "Es un campo obligatorio"
+           },
+           "surname": {
+               "placeholder": "Introduce tu/s apellido/s"
+           },
+           "email": {
+               "placeholder": "Introduce tu correo electrónico",
+               "errorMessage": "Introduce un correo electrónico válido"
+           },
+           "street": {
+               "placeholder": "Dirección",
+               "errorMessage": "Es un campo obligatorio"
+           },
+           "zipCode": {
+               "placeholder": "Zip code",
+               "errorMessage": "Debe introducir un número de 5 dígitos"
+           },
+           "country": {
+               "placeholder": "Country",
+               "errorMessage": "Es un campo obligatorio"
+           },
+           "deliveryMethod": {
+               "fastest": "Fastest",
+               "cheapest": "Cheapest"
+           }
+       }
+   }
+}
