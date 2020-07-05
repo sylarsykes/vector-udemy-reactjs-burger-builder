@@ -37,6 +37,7 @@
     "fs-extra": "^9.0.1",
     "i18next": "^19.5.1",
     "i18next-browser-languagedetector": "^5.0.0",
+    "i18next-multiload-backend-adapter": "^1.0.0",
     "i18next-webpack-backend": "^0.1.1",
     "i18next-xhr-backend": "^3.2.2",
     "moment": "^2.27.0",
