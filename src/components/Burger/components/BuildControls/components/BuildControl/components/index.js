@@ -23,7 +23,7 @@ const BuildControlFC = (props) => (
                     text: 'Less -',
                     buttonType: AvailableButtons.less,
                     clickFuncCB: props.removed,
-                    disabled: !props.disabled.count
+                    disabled: (!props.disabled) || (props.disabled && !props.disabled.count)
                 },
                 {
                     text: 'More +',
