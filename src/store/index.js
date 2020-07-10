@@ -1,9 +1,24 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { 
+    createStore, 
+    applyMiddleware, 
+    compose, 
+    combineReducers 
+} from 'redux';
 import { Provider } from 'react-redux';
-import reducer, { initialState } from '../reducers';
+import thunk from 'redux-thunk';
+import { burgerBuilderReducer, ordersReducer } from '../reducers';
 
-const useBurgerBuilderStore = createStore(reducer, initialState);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const rootReducer = combineReducers({
+    burgerBuilder: burgerBuilderReducer,
+    order: ordersReducer
+});
+
+const useBurgerBuilderStore = createStore(rootReducer, composeEnhancers(
+    applyMiddleware(thunk)
+));
 
 /**
  * Custom Store Provider

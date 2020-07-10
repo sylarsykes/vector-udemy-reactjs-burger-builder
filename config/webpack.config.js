@@ -4,6 +4,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin'),
     CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin'),
     WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin'),
     eslintFormatter = require('react-dev-utils/eslintFormatter'),
+    LodashModuleReplacementPlugin = require('lodash-webpack-plugin'),
     webpack = require('webpack'),
     paths = require('./paths'),
     path = require('path');
@@ -169,6 +170,8 @@ module.exports = {
         // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
         // You can remove this if you don't use Moment.js:
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        // https://www.npmjs.com/package/lodash-webpack-plugin
+        new LodashModuleReplacementPlugin(),
         //new UglifyJsPlugin(),
     ]
 } 

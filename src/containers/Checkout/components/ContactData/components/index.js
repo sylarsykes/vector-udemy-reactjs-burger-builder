@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import i18next from 'i18next';
 import { Translation } from "react-i18next";
 import { ContactDataContainer } from '../styles';
-import { BURGER_BUILDER_ROUTE } from '../../../../routes';
 import { 
     AvailableButtons, AvailableInputs, AvailableInputInputTypes 
 } from '../../../../../components/constants';
-import { orderSummaryCreateService } from '../../../../../components/services';
 import { ButtonFC, InputFC, SpinnerFC } from '../../../../../components/functional-components';
+import { purchaseBurger } from '../../../../../actions';
 
 /**
  * Contact data component
@@ -119,8 +119,7 @@ class ContactData extends Component {
                 valid: true
             }
         },
-        formIsValid: false,
-        loading: false
+        formIsValid: false
     }
 
     /**
@@ -182,13 +181,11 @@ class ContactData extends Component {
     orderHandler = (event) => {
         event.preventDefault();
 
-        this.setState({ loading: true });
-        
         const formData = this.getFormData();
         
         const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.totalPrice,
+            ingredients: this.props.ings,
+            price: this.props.price,
             customer: {
                 name: formData.name,
                 surname: formData.surname,
@@ -202,16 +199,7 @@ class ContactData extends Component {
             deliveryMethod: formData.deliveryMethod
         }
 
-        const self = this;
-
-        const errorFuncCB = (error) => self.setState({ loading: false });
-
-        const successFuncCB = (result) => {
-            self.setState({ loading: false });
-            self.props.history.push(BURGER_BUILDER_ROUTE);
-        }
-
-        orderSummaryCreateService(order, successFuncCB, errorFuncCB);
+        this.props.onOrderBurger(order);
     }
 
     /**
@@ -253,7 +241,7 @@ class ContactData extends Component {
             });
         }
 
-        const form = (this.state.loading) ? <SpinnerFC /> :
+        const form = (this.props.loading) ? <SpinnerFC /> :
             <form onSubmit={this.orderHandler }>
                 {formElementsArray.map(formElement => (
                     <InputFC 
@@ -287,4 +275,18 @@ class ContactData extends Component {
     }
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+    return {
+        ings: state.burgerBuilder.ingredients,
+        price: state.burgerBuilder.totalPrice,
+        loading: state.order.loading
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onOrderBurger: (orderData) => dispatch(purchaseBurger(orderData))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);
