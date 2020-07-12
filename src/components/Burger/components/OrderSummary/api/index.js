@@ -24,6 +24,7 @@ class OrderModel extends BaseAdminModel {
 
         this.deliveryMethod = builder.deliveryMethod;
         this.price = builder.price;
+        this.userId = builder.userId;
         this.customer = builder.customer;
         this.ingredients = builder.ingredients;
     }
@@ -63,6 +64,15 @@ class OrderModelBuilder extends BaseAdminModelBuilder {
 
     setPrice = (price) => {
         this._price = price;
+        return this;
+    }
+
+    get userId() {
+        return this._userId;
+    }
+
+    setUserId = (userId) => {
+        this._userId = userId;
         return this;
     }
 

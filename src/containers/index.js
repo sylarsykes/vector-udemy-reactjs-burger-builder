@@ -1,16 +1,16 @@
 import App from './App';
-import { BurgerBuilder } from './BurgerBuilder';
-import { 
-    // Constants
-    // Components
-    Checkout, ContactData
-} from './Checkout';
-import { Orders } from './Orders';
 
 export default App;
-export { 
-    // Constants
-    // Components
-    BurgerBuilder, Checkout, ContactData, 
-    Orders 
-};
+
+export {
+    Auth, Logout
+} from './Auth';
+export {
+    BurgerBuilder
+} from './BurgerBuilder';
+export {
+    Checkout, ContactData
+} from './Checkout';
+export {
+    Orders
+} from './Orders';

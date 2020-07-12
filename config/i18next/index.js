@@ -35,7 +35,7 @@ i18next
             interpolation: {
                 escapeValue: false
             },
-            ns: ['common', 'navigationItems', 'contactData'],
+            ns: ['common', 'navigationItems', 'burgerBuilder', 'contactData'],
             backend: {
                 backend: WebpackBackend,
                 backendOption: {

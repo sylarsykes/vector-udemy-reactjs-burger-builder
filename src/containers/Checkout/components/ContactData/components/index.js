@@ -196,10 +196,11 @@ class ContactData extends Component {
                     country: formData.country
                 },
             },
-            deliveryMethod: formData.deliveryMethod
+            deliveryMethod: formData.deliveryMethod,
+            userId: this.props.userId
         }
 
-        this.props.onOrderBurger(order);
+        this.props.onOrderBurger(order, this.props.token);
     }
 
     /**
@@ -258,7 +259,11 @@ class ContactData extends Component {
                 <ButtonFC 
                     buttonType={AvailableButtons.success} 
                     disabled={!this.state.formIsValid}>
-                        ORDER
+                        <Translation>
+                            {
+                                (t, { i18next }) => t('contactData:contactData.order') 
+                            }
+                        </Translation>  
                 </ButtonFC>  
             </form>;
         
@@ -279,13 +284,15 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token,
+        userId: state.auth.userId
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onOrderBurger: (orderData) => dispatch(purchaseBurger(orderData))
+        onOrderBurger: (orderData, token) => dispatch(purchaseBurger(orderData, token))
     };
 };
 

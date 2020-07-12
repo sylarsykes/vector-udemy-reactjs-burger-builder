@@ -4,6 +4,7 @@ const ADD_INGREDIENT = 'ADD_INGREDIENT';
 const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 const SET_INGREDIENTS = 'SET_INGREDIENTS';
 const FETCH_INGREDIENTS_FAILED = 'FETCH_INGREDIENTS_FAILED';
+const CALCULATE_TOTAL_PRICE = 'CALCULATE_TOTAL_PRICE';
 
 /**
  * Add ingredient action
@@ -40,7 +41,7 @@ const removeIngredient = (burgerIngredient) => {
 const setIngredients = (ingredients) => {
     return {
         type: SET_INGREDIENTS,
-        ingredients: ingredients
+        ingredients
     };
 };
 
@@ -75,11 +76,18 @@ const initIngridients = () => dispatch => burgerIngredientFindAllService(
     (results) => dispatch(fetchIngredientsFailed())
 );
 
+const calculateTotalPrice = (totalPrice) => {
+    return {
+        type: CALCULATE_TOTAL_PRICE,
+        totalPrice
+    }
+};
+
 export {
     // CONSTANTS
     ADD_INGREDIENT, REMOVE_INGREDIENT, SET_INGREDIENTS,
-    FETCH_INGREDIENTS_FAILED, 
+    FETCH_INGREDIENTS_FAILED, CALCULATE_TOTAL_PRICE, 
     // ACTIONS
     addIngredient, removeIngredient, setIngredients,
-    fetchIngredientsFailed, initIngridients
+    fetchIngredientsFailed, initIngridients, calculateTotalPrice
 };

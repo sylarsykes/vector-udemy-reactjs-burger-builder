@@ -27,7 +27,7 @@ const SideDrawerFC = (props) => (
                 <SwitchLanguageFC />
             </nav>
             <nav>
-                <NavigationItemsFC />
+                <NavigationItemsFC isAuthenticated={props.isAuth} />
             </nav>
         </SideDrawerContainer>
     </ChildrenContainer>

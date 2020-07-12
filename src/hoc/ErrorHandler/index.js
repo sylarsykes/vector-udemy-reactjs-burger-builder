@@ -18,7 +18,7 @@ const ErrorHandler = (WrappedComponent, axios) => {
         /**
          * @inheritdoc
          */
-        componentWillMount = () => {
+        componentDidMount = () => {
             this.reqInterceptor = axios.interceptors.request.use((request) => {
                 this.setState({error: null});
                 return request;

@@ -1,10 +1,20 @@
 export {
     // CONSTANTS
+    AUTH_START, AUTH_SUCCESS, AUTH_FAIL,
+    AUTH_LOGOUT, SET_AUTH_REDIRECT_PATH,
+    // ACTIONS
+    authStart, authSuccess, authFail,
+    logout, checkAuthTimeout, auth,
+    setAuthRedirectPath, authCheckState
+} from './Auth';
+
+export {
+    // CONSTANTS
     ADD_INGREDIENT, REMOVE_INGREDIENT, SET_INGREDIENTS,
-    FETCH_INGREDIENTS_FAILED, 
+    FETCH_INGREDIENTS_FAILED, CALCULATE_TOTAL_PRICE,
     // ACTIONS
     addIngredient, removeIngredient, setIngredients,
-    fetchIngredientsFailed, initIngridients
+    fetchIngredientsFailed, initIngridients, calculateTotalPrice
 } from './BurgerBuilder';
 
 export {
