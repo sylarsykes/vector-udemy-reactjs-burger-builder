@@ -1,6 +1,2 @@
-import { BurgerIngredientComponent, OrderSummaryComponent } from './Burger';
-import { ModalComponent } from './UI';
-
-export {
-    BurgerIngredientComponent, ModalComponent, OrderSummaryComponent
-};
+export { BurgerIngredientComponent, OrderSummaryComponent } from './Burger';
+export { ModalComponent } from './UI';

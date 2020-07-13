@@ -1,8 +1,8 @@
-import {
+export {
     BaseModelBuilder, BaseAdminModelBuilder, BaseModel,
     BaseAdminModel, BaseModelCollection
 } from './Common';
-import { 
+export { 
     AddressModel, AddressModelBuilder, BurgerModel, 
     BurgerModelBuilder, BurgerIngredientModel, BurgerIngredientModelBuilder,
     CustomerModel, CustomerModelBuilder, OrderModelBuilder, 
@@ -10,10 +10,5 @@ import {
 } from './Burger';
 
 export {
-    AddressModelBuilder, AddressModel, BaseModelBuilder, 
-    BaseAdminModelBuilder, BaseModel, BaseAdminModel, 
-    BaseModelCollection, BurgerModel, BurgerModelBuilder,
-    BurgerIngredientModel, BurgerIngredientModelBuilder, CustomerModel, 
-    CustomerModelBuilder, OrderModelBuilder, OrderModel, 
-    OrderBurgerIngredientModelBuilder, OrderBurgerIngredientModel
-};
+    UserModel, UserModelBuilder
+} from './User';

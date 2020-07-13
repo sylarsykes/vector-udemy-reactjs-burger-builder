@@ -43,15 +43,20 @@ const purchaseBurgerStart = () => {
 /**
  * Create order data
  * 
- * @param {*} orderData 
+ * @param {*} orderData
+ * @param {*} token
  */
-const purchaseBurger = (orderData) => dispatch => {
+const purchaseBurger = (orderData, token) => dispatch => {
     dispatch(purchaseBurgerStart());
 
-    orderSummaryCreateService(orderData,
-        (result) => dispatch(purchaseBurgerSuccess(result)),
-        (error) => dispatch(purchaseBurgerFail(error))
-    );
+    const options = {
+        body: orderData,
+        token,
+        successFuncCB: (result) => dispatch(purchaseBurgerSuccess(result)),
+        errorFuncCB: (error) => dispatch(purchaseBurgerFail(error))
+    };
+
+    orderSummaryCreateService(options);
 };
 
 /**

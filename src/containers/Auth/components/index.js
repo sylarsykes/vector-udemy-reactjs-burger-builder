@@ -196,7 +196,7 @@ class Auth extends Component {
                     <ButtonFC btnType={AvailableButtons.success}>SUBMIT</ButtonFC>
                 </form>
                 <ButtonFC 
-                    clicked={this.switchAuthModeHandler}
+                    clickFuncCB={this.switchAuthModeHandler}
                     btnType={AvailableButtons.danger}>SWITCH TO {this.state.isSignup ? 'SIGNIN' : 'SIGNUP'}</ButtonFC>
             </AuthContainer>
         );

@@ -12,6 +12,7 @@ import axios, { BASE_URL } from '../../../../../config/axios';
  *          - context:               Context for callbacks
  * 
  * @see FindServiceParams
+ * @see https://console.firebase.google.com/u/0/project/vector-udemy-burger-builder/database/vector-udemy-burger-builder/rules
  */
 const baseFindAllService = (serviceParams) => {
     const { request, successFuncCB, errorFuncCB, builderModelFuncCB } = serviceParams

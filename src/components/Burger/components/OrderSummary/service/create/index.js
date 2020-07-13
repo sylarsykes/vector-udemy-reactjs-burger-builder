@@ -9,11 +9,16 @@ const ORDERS_SUMMARY_CREATE_SECURE_BASE_URL = ORDER_SUMMARY_CREATE_BASE_URL + '?
 /**
  * Create order service
  * 
- * @param {*} body 
- * @param {*} successFuncCB 
- * @param {*} errorFuncCB 
+ * @param {object} options
+ *      Contains the next properties 
+ *          - body
+ *          - token 
+ *          - successFuncCB 
+ *          - errorFuncCB 
  */
-export const orderSummaryCreateService = (body, successFuncCB, errorFuncCB, token) => {
+export const orderSummaryCreateService = (options) => {
+    const { body, token, successFuncCB, errorFuncCB } = options;
+
     const orderSummary = new OrderModelBuilder()
         .setDeliveryMethod(body.deliveryMethod)
         .setPrice(body.price)

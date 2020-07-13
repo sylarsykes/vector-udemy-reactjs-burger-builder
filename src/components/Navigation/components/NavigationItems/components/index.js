@@ -14,20 +14,23 @@ const NavigationItemsFC = (props) => (
     <NavigationItemsUlContainer>
         <NavigationItemFC 
             link={ BURGER_BUILDER_ROUTE } 
-            exact>
+            exact={true}>
                 Burger builder
         </NavigationItemFC>
         {props.isAuthenticated ? <NavigationItemFC 
-            link={ ORDERS_ROUTE } >
+            link={ ORDERS_ROUTE }
+            exact={true}>
                 Orders
         </NavigationItemFC> : null}
         {!props.isAuthenticated ?
             <NavigationItemFC 
-                link={ AUTH_ROUTE } >
+                link={ AUTH_ROUTE } 
+                exact={true}>
                 Authenticate
             </NavigationItemFC> :
             <NavigationItemFC 
-                link={ LOGOUT_ROUTE } >
+                link={ LOGOUT_ROUTE } 
+                exact={true}>
                 Logout
             </NavigationItemFC>} 
     </NavigationItemsUlContainer>
