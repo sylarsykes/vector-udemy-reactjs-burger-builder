@@ -1,6 +1,6 @@
 import { 
     ADD_INGREDIENT, REMOVE_INGREDIENT, FETCH_INGREDIENTS_FAILED,
-    SET_INGREDIENTS 
+    SET_INGREDIENTS, CALCULATE_TOTAL_PRICE
 } from '../../../actions';
 import { AVAILABLE_BURGER_INGREDIENT_INGREDIENTS } from '../../../components/constants';
 import { updateObject } from '../../';
@@ -64,10 +64,11 @@ const addIngredient = (state, action) => {
             const oldTotalPrice = state.totalPrice;
             const updatedToltalPrice = oldTotalPrice + priceAddition;
 
-            return updateObject(state, {
+            const updatedState = updateObject(state, {
                 ingredients: updatedIngredients,
-                totalPrice: updatedToltalPrice
             });
+        
+            return calculateTotalPrice(updatedState, { price: updatedToltalPrice, digit: 2}); 
         }
     }
 
@@ -100,10 +101,11 @@ const removeIngredient = (state, action) => {
             const oldTotalPrice = state.totalPrice;
             const updatedToltalPrice = oldTotalPrice - priceDeduction;
 
-            return updateObject(state, {
+            const updatedState = updateObject(state, {
                 ingredients: updatedIngredients,
-                totalPrice: updatedToltalPrice
             });
+        
+            return calculateTotalPrice(updatedState, { price: updatedToltalPrice, digit: 2}); 
         }
     }
 
@@ -118,13 +120,11 @@ const removeIngredient = (state, action) => {
  * @param {*} action
  *      Object with action and parameters
  */
-const setIngredients = (state, action) => {
-    return updateObject(state, {
-        ingredients: action.ingredients,
-        totalPrice: 4,
-        error: false
-    });
-};
+const setIngredients = (state, action) => updateObject(state, {
+    ingredients: action.ingredients,
+    totalPrice: 4,
+    error: false
+});
 
 /**
  * Error callback in fetch ingredients
@@ -134,11 +134,21 @@ const setIngredients = (state, action) => {
  * @param {*} action
  *      Object with action and parameters
  */
-const fetchIngredientsFailed = (state, action) => {
-    return updateObject(state, {
-        error: true
-    });
-};
+const fetchIngredientsFailed = (state, action) => updateObject(state, {
+    error: true
+});
+
+/**
+ * Update totalPrice
+ * 
+ * @param {*} state
+ *      Object with state ingredients 
+ * @param {*} action
+ *      Object with action and parameters
+ */
+const calculateTotalPrice = (state, action) => updateObject(state, {
+    totalPrice: _.round(_.toNumber(action.price), action.digit)
+});
 
 /**
  * BurgerBuilder reducer
@@ -159,6 +169,8 @@ export const burgerBuilderReducer = (state = burgerBuilderInitialState, action) 
             return setIngredients(state, action);
         case FETCH_INGREDIENTS_FAILED:
             return fetchIngredientsFailed(state, action);
+        case CALCULATE_TOTAL_PRICE:
+            return calculateTotalPrice(state, action);
         default:
             return state;
     }

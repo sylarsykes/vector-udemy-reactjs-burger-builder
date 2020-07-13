@@ -1,4 +1,6 @@
-import { orderSummaryFindAllService, orderSummaryCreateService } from '../../../components/services';
+import { 
+    orderSummaryFindAllService, orderSummaryFindAllByUserService, orderSummaryCreateService 
+} from '../../../components/services';
 
 const PURCHASE_BURGER_START = 'PURCHASE_BURGER_START';
 const PURCHASE_BURGER_SUCCESS = 'PURCHASE_BURGER_SUCCESS';
@@ -41,15 +43,20 @@ const purchaseBurgerStart = () => {
 /**
  * Create order data
  * 
- * @param {*} orderData 
+ * @param {*} orderData
+ * @param {*} token
  */
-const purchaseBurger = (orderData) => dispatch => {
+const purchaseBurger = (orderData, token) => dispatch => {
     dispatch(purchaseBurgerStart());
 
-    orderSummaryCreateService(orderData,
-        (result) => dispatch(purchaseBurgerSuccess(result)),
-        (error) => dispatch(purchaseBurgerFail(error))
-    );
+    const options = {
+        body: orderData,
+        token,
+        successFuncCB: (result) => dispatch(purchaseBurgerSuccess(result)),
+        errorFuncCB: (error) => dispatch(purchaseBurgerFail(error))
+    };
+
+    orderSummaryCreateService(options);
 };
 
 /**
@@ -70,7 +77,7 @@ const purchaseInit = () => {
 const fetchOrdersSuccess = (orders) => {
     return {
         type: FETCH_ORDERS_SUCCESS,
-        orders: orders
+        orders
     };
 };
 
@@ -83,7 +90,7 @@ const fetchOrdersSuccess = (orders) => {
 const fetchOrdersFail = (error) => {
     return {
         type: FETCH_ORDERS_FAIL,
-        error: error
+        error
     };
 };
 
@@ -96,19 +103,33 @@ const fetchOrdersStart = () => {
 /**
  * Fetch all orders
  */
-const fetchOrders = () => dispatch => {
+const fetchOrders = (token, userId) => dispatch => {
     dispatch(fetchOrdersStart());
 
-    orderSummaryFindAllService(
-        (results) => {
-            if (results && results.length) {
-                const orders = results.sort((a, b) => a.createDate > b.createDate).map((order) => order);
+    if (!token && !userId) {
+        orderSummaryFindAllService(
+            (results) => {
+                if (results && results.length) {
+                    const orders = results.sort((a, b) => a.createDate > b.createDate).map((order) => order);
 
-                dispatch(fetchOrdersSuccess(orders));
-            }
-        },
-        (error) => dispatch(fetchOrdersFail(error))
-    );
+                    dispatch(fetchOrdersSuccess(orders));
+                }
+            },
+            (error) => dispatch(fetchOrdersFail(error))
+        );
+    } else {
+        orderSummaryFindAllByUserService(token, userId,
+            (results) => {
+                if (results && results.length) {
+                    const orders = results.sort((a, b) => a.createDate > b.createDate).map((order) => order);
+
+                    dispatch(fetchOrdersSuccess(orders));
+                }
+            },
+            (error) => dispatch(fetchOrdersFail(error))
+        );
+    }
+    
 };
 
 export {

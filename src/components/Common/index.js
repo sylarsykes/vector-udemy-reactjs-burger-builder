@@ -1,18 +1,11 @@
-import { 
+export { 
     BaseModelBuilder, BaseAdminModelBuilder, BaseModel, 
     BaseAdminModel, BaseModelCollection
 } from './api';
 
-import {
+export {
     baseCreateService, baseFindAllService, baseFindByIdService,
+    basePostService,
     ServiceParams, FindServiceParams, ServiceParamsBuilder, 
     FindServiceParamsBuilder, RequestInfo, RequestInfoBuilder
 } from './service';
-
-export { 
-    BaseModelBuilder, BaseAdminModelBuilder, BaseModel, 
-    BaseAdminModel, BaseModelCollection, baseCreateService,
-    baseFindAllService, baseFindByIdService, ServiceParams, 
-    FindServiceParams, ServiceParamsBuilder, FindServiceParamsBuilder,
-    RequestInfo, RequestInfoBuilder
-};

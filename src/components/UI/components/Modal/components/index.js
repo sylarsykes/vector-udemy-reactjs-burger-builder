@@ -19,11 +19,6 @@ class ModalComponent extends Component {
     /**
      * @inheritdoc
      */
-    componentWillUpdate = () => console.log('[Modal] Will Update');
-
-    /**
-     * @inheritdoc
-     */
     render = () => (
         <ChildrenContainer>
             <BackdropFC show={this.props.show} clickFuncCB={this.props.modalClosed} />

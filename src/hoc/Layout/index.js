@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import  ChildrenContainer from '../';
 import { SideDrawerFC, ToolbarFC } from '../../components/functional-components';
@@ -24,13 +25,24 @@ class Layout extends Component {
      */
     render = () => (
         <ChildrenContainer>
-            <ToolbarFC drawerToggleClicked={this.sideDrawerToggleHandler} />
-            <SideDrawerFC open={this.state.showSideDrawer} closed={this.sideDrawerClosedHandler} />
+            <ToolbarFC
+                isAuth={this.props.isAuthenticated} 
+                drawerToggleClicked={this.sideDrawerToggleHandler} />
+            <SideDrawerFC
+                isAuth={this.props.isAuthenticated} 
+                open={this.state.showSideDrawer} 
+                closed={this.sideDrawerClosedHandler} />
             <MainContainer>
                 {this.props.children}
             </MainContainer>
         </ChildrenContainer>
     )
-} 
+}
 
-export default Layout;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.token !== null
+    };
+};
+
+export default connect(mapStateToProps)(Layout);

@@ -1,14 +1,13 @@
 import baseCreateService from './create';
-import {
+import basePostService from './default';
+export {
     baseFindAllService, baseFindByIdService
 } from './find';
-import {
+export {
     ServiceParams, FindServiceParams, ServiceParamsBuilder, 
     FindServiceParamsBuilder, RequestInfo, RequestInfoBuilder
 } from './utils';
 
 export { 
-    baseCreateService, baseFindAllService, baseFindByIdService,
-    ServiceParams, FindServiceParams, ServiceParamsBuilder,
-    FindServiceParamsBuilder, RequestInfo, RequestInfoBuilder
+    baseCreateService, basePostService
 };

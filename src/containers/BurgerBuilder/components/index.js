@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from "uuid";
+import { Translation } from "react-i18next";
 import { CHECKOUT_ROUTE } from '../../routes';
 import ChildrenContainer, { ErrorHandler } from '../../../hoc';
 import { 
@@ -10,7 +11,7 @@ import { ModalComponent, OrderSummaryComponent } from '../../../components/compo
 import axios from '../../../../config/axios';
 import { 
     addIngredient, removeIngredient, initIngridients,
-    purchaseInit
+    purchaseInit, calculateTotalPrice
 } from '../../../actions';
 
 /*
@@ -82,11 +83,6 @@ class BurgerBuilder extends Component {
     }
 
     /**
-     * Calculate total price
-     */
-    calculateTotalPriceHandler = () => Number.parseFloat(this.props.price).toFixed(2)
-
-    /**
      * Enable purchasing
      */
     purchaseHandler = () => this.setState({purchasing: true});
@@ -110,14 +106,18 @@ class BurgerBuilder extends Component {
     render = () => {
         let orderSummary = null;
 
-        let burger = this.props.error ? <p> Ingredients can 't be loaded!</p> : <SpinnerFC />;
+        let burger = this.props.error ? <Translation>
+                    {
+                        (t, { i18next }) => <p>{t('burgerBuilder:burgerBuilder.error')}</p> 
+                    }
+                </Translation> : <SpinnerFC />;
 
         if (this.props.ings) {
             burger = (
                 <ChildrenContainer>
                     <BurgerFC key={uuidv4()} ingredients={this.props.ings} />
                     <BuildControlsFC
-                        price={this.calculateTotalPriceHandler()}
+                        price={this.props.price}
                         controls={this.props.ings} 
                         purchasable={this.updatePurchaseState(this.props.ings)} 
                         ingredientAdded={this.props.onIngredientAdded}
@@ -130,7 +130,7 @@ class BurgerBuilder extends Component {
             orderSummary = (
                     <OrderSummaryComponent
                         ingredients={this.props.ings}
-                        price={this.calculateTotalPriceHandler()}
+                        price={this.props.price}
                         purchaseCancelled={this.purchaseCancelHandler}
                         purchaseContinued={this.purchaseContinueHandler} />
             );
@@ -162,7 +162,8 @@ const mapDispatchToProps = dispatch => {
         onIngredientAdded: (burgerIngredient) => dispatch(addIngredient(burgerIngredient)),
         onIngredientRemoved: (burgerIngredient) => dispatch(removeIngredient(burgerIngredient)),
         onInitIngredients: () => dispatch(initIngridients()),
-        onInitPurchase: () => dispatch(purchaseInit())
+        onInitPurchase: () => dispatch(purchaseInit()),
+        onCalculateTotalPrice: (price, digit) => dispatch(calculateTotalPrice({ price, digit }))
     }
 }
 

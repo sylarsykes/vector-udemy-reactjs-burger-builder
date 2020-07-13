@@ -1,34 +1,35 @@
 {
-   "contactData": {
-       "title": "Enter your Contact Data",
-       "form": {
-           "name": {
-               "placeholder": "Enter your name",
-               "errorMessage": "This is required field"
-           },
-           "surname": {
-               "placeholder": "Enter your surname"
-           },
-           "email": {
-               "placeholder": "Enter your email",
-               "errorMessage": "Enter an email valid"
-           },
-           "street": {
-               "placeholder": "Street",
-               "errorMessage": "This is required field"
-           },
-           "zipCode": {
-               "placeholder": "Zip code",
-               "errorMessage": "You must enter a 5-digit numerical value"
-           },
-           "country": {
-               "placeholder": "Country",
-               "errorMessage": "This is required field"
-           },
-           "deliveryMethod": {
-               "fastest": "Fastest",
-               "cheapest": "Cheapest"
-           }
-       }
-   }
+    "contactData": {
+        "title": "Enter your Contact Data",
+        "form": {
+            "name": {
+                "placeholder": "Enter your name",
+                "errorMessage": "This is required field"
+            },
+            "surname": {
+                "placeholder": "Enter your surname"
+            },
+            "email": {
+                "placeholder": "Enter your email",
+                "errorMessage": "Enter an email valid"
+            },
+            "street": {
+                "placeholder": "Street",
+                "errorMessage": "This is required field"
+            },
+            "zipCode": {
+                "placeholder": "Zip code",
+                "errorMessage": "You must enter a 5-digit numerical value"
+            },
+            "country": {
+                "placeholder": "Country",
+                "errorMessage": "This is required field"
+            },
+            "deliveryMethod": {
+                "fastest": "Fastest",
+                "cheapest": "Cheapest"
+            }
+        },
+        "order": "ORDER"
+    }
 }

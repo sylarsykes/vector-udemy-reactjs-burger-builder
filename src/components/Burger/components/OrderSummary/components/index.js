@@ -9,8 +9,6 @@ import { ButtonFC } from '../../../../functional-components';
  */
 class OrderSummaryComponent extends Component {
 
-    componentWillUpdate = () => console.log('[Order Summary] Will Update');
-
     /**
      * @inheritdoc
      */

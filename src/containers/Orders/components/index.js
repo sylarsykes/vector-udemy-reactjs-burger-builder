@@ -22,7 +22,7 @@ class Orders extends Component {
     /**
      * @inheritdoc
      */
-    componentDidMount = () => this.props.onFetchOrders();
+    componentDidMount = () => this.props.onFetchOrders(this.props.token, this.props.userId);
 
     /**
      * @inheritdoc
@@ -51,13 +51,15 @@ class Orders extends Component {
 const mapStateToProps = state => {
     return {
         orders: state.order.orders,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token,
+        userId: state.auth.userId
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: () => dispatch(fetchOrders())
+        onFetchOrders: (token, userId) => dispatch(fetchOrders(token, userId))
     };
 };
 

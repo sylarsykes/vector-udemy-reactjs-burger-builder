@@ -7,5 +7,5 @@ export const updateObject = (oldObject, updatedProperties) => {
 };
 
 export {
-    burgerBuilderReducer, ordersReducer
+    authReducer, burgerBuilderReducer, ordersReducer
 } from './containers';

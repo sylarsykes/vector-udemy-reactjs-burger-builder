@@ -16,7 +16,8 @@ import {
 import { 
     ORDER_SUMMARY_BASE_URL, OrderModelBuilder, OrderModel, 
     OrderBurgerIngredientModelBuilder, OrderBurgerIngredientModel, OrderSummaryComponent, 
-    orderSummaryFindAllService, orderSummaryFindByIdService, orderSummaryCreateService
+    orderSummaryFindAllService, orderSummaryFindAllByUserService, orderSummaryFindByIdService, 
+    orderSummaryCreateService
 } from './components/OrderSummary';
 
 export { 
@@ -29,5 +30,5 @@ export {
     CustomerModel, ORDER_SUMMARY_BASE_URL, OrderModelBuilder, 
     OrderModel, OrderBurgerIngredientModelBuilder, OrderBurgerIngredientModel, 
     OrderSummaryComponent, orderSummaryFindAllService, orderSummaryFindByIdService, 
-    orderSummaryCreateService
+    orderSummaryFindAllByUserService, orderSummaryCreateService
 };

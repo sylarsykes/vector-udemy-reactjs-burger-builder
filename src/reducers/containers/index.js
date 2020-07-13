@@ -1,4 +1,8 @@
 export {
+    authReducer
+} from './Auth'
+
+export {
     burgerBuilderReducer
 } from './BurgerBuilder';
 

@@ -24,7 +24,7 @@ const ToolbarFC = (props) => (
             <SwitchLanguageFC />
         </ToolbarNavigationItemsNavContainer>
         <ToolbarNavigationItemsNavContainer>
-            <NavigationItemsFC />
+            <NavigationItemsFC isAuthenticated={props.isAuth} />
         </ToolbarNavigationItemsNavContainer>
     </ToolbarContainer>
 );

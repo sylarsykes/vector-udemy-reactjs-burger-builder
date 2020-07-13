@@ -4,12 +4,14 @@ import {
     OrderBurgerIngredientModel  
 } from './api';
 import { 
-    orderSummaryFindAllService, orderSummaryFindByIdService, orderSummaryCreateService 
+    orderSummaryFindAllService, orderSummaryFindAllByUserService, orderSummaryFindByIdService, 
+    orderSummaryCreateService
 } from './service';
 import OrderSummaryComponent from './components';
 
 export { 
     ORDER_SUMMARY_BASE_URL, OrderModelBuilder, OrderModel, 
     OrderBurgerIngredientModelBuilder, OrderBurgerIngredientModel, OrderSummaryComponent, 
-    orderSummaryFindAllService, orderSummaryFindByIdService, orderSummaryCreateService
+    orderSummaryFindAllService, orderSummaryFindAllByUserService, orderSummaryFindByIdService, 
+    orderSummaryCreateService
 };

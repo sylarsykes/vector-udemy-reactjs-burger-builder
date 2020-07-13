@@ -7,11 +7,14 @@ import {
 } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { burgerBuilderReducer, ordersReducer } from '../reducers';
+import { 
+    authReducer, burgerBuilderReducer, ordersReducer 
+} from '../reducers';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
+    auth: authReducer,
     burgerBuilder: burgerBuilderReducer,
     order: ordersReducer
 });
