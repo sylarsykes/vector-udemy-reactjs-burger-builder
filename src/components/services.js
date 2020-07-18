@@ -5,7 +5,7 @@ export {
 export { 
     burgerFindAllService, burgerFindByIdService, burgerIngredientFindAllService, 
     burgerIngredientFindByIdService, orderSummaryFindAllService, orderSummaryFindByIdService,
-    orderSummaryCreateService, orderSummaryFindAllByUserService
+    orderSummaryCreateService,
 } from './Burger';
 export {
     usersCreateService, usersVerifyService

@@ -55,7 +55,7 @@ const baseFindAllService = (serviceParams) => {
 /**
  * Default find all service
  * 
- * @param {FindServiceParams*} request 
+ * @param {FindServiceParams} request 
  *     A FindServiceParams object with properties:
  *          - request:               RequestInfo object
  *          - successFuncCB:         Success callback

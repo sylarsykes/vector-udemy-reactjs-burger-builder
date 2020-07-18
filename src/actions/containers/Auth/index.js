@@ -8,6 +8,10 @@ const AUTH_LOGOUT = 'AUTH_LOGOUT';
 
 const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
 
+const LOCAL_STORATEGE_SET_TOKEN = 'token';
+const LOCAL_STORATEGE_SET_EXPIRATION_DATE = 'expirationDate';
+const LOCAL_STORAGE_SET_USERID = 'userId';
+
 /**
  * Start authentication action
  */
@@ -49,9 +53,9 @@ const authFail = (error) => {
  * Logout action
  */
 const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expirationDate');
-    localStorage.removeItem('userId');
+    localStorage.removeItem(LOCAL_STORATEGE_SET_TOKEN);
+    localStorage.removeItem(LOCAL_STORATEGE_SET_EXPIRATION_DATE);
+    localStorage.removeItem(LOCAL_STORAGE_SET_USERID);
 
     return {
         type: AUTH_LOGOUT
@@ -88,9 +92,9 @@ const auth = (email, password, isSignup) => dispatch => {
             console.log(result);
 
             const expirationDate = new Date(new Date().getTime() + result.expiresIn * 1000);
-            localStorage.setItem('token', result.idToken);
-            localStorage.setItem('expirationDate', expirationDate);
-            localStorage.setItem('userId', result.localId);
+            localStorage.setItem(LOCAL_STORATEGE_SET_TOKEN, result.idToken);
+            localStorage.setItem(LOCAL_STORATEGE_SET_EXPIRATION_DATE, expirationDate);
+            localStorage.setItem(LOCAL_STORAGE_SET_USERID, result.localId);
 
             dispatch(authSuccess(result.idToken, result.localId));
             dispatch(checkAuthTimeout(result.expiresIn));
@@ -121,15 +125,15 @@ const setAuthRedirectPath = (path) => {
  * Check authentication state
  */
 const authCheckState = () => dispatch => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem(LOCAL_STORATEGE_SET_TOKEN);
     if (!token) {
         dispatch(logout());
     } else {
-        const expirationDate = new Date(localStorage.getItem('expirationDate'));
+        const expirationDate = new Date(localStorage.getItem(LOCAL_STORATEGE_SET_EXPIRATION_DATE));
         if (expirationDate <= new Date()) {
             dispatch(logout());
         } else {
-            const userId = localStorage.getItem('userId');
+            const userId = localStorage.getItem(LOCAL_STORAGE_SET_USERID);
             dispatch(authSuccess(token, userId));
             dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));
         } 

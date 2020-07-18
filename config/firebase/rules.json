@@ -1,0 +1,12 @@
+{
+    "rules": {
+        "burger-ingredients": {
+            ".indexOn": ["position", "createDate"]
+        },
+        "orders": {
+            ".indexOn": ["userId", "createDate"]
+        },
+        ".read": true,
+        ".write": true
+    }
+}
