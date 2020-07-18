@@ -2,7 +2,7 @@ import {
     AUTH_START, AUTH_SUCCESS, AUTH_FAIL,
     AUTH_LOGOUT, SET_AUTH_REDIRECT_PATH,
 } from '../../../actions';
-import { updateObject } from '../../';
+import { updateObject } from '../../../components/utils';
 import { BURGER_BUILDER_ROUTE } from '../../../containers/routes'
 
 const initialState = {

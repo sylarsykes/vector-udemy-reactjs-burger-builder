@@ -1,4 +1,5 @@
 import BuildControlsFC from './components';
-import { BuildControlFC } from './components/BuildControl';
 
-export { BuildControlsFC, BuildControlFC };
+export { BuildControlFC } from './components/BuildControl';
+
+export { BuildControlsFC };

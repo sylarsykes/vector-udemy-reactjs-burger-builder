@@ -5,3 +5,4 @@ import ErrorHandler from './ErrorHandler';
 
 export default ChildrenContainer;
 export { ErrorHandler, Layout };
+export { AsyncComponent } from './AsyncComponent';

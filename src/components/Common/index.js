@@ -9,3 +9,5 @@ export {
     ServiceParams, FindServiceParams, ServiceParamsBuilder, 
     FindServiceParamsBuilder, RequestInfo, RequestInfoBuilder
 } from './service';
+
+export { updateObject, checkValidity } from './utils';

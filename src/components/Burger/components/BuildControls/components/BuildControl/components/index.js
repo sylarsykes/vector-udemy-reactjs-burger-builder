@@ -6,7 +6,7 @@ import { ButtonGroupFC } from '../../../../../../functional-components';
 /**
  * BuildControl functional component
  * 
- * @param {*} props
+ * @param {object} props
  *      Object with the structure:
  *          label Lable text
  *          burgerIngredient Burger ingredient model

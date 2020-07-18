@@ -1,6 +1,14 @@
 {
     "presets": [
-        ["@babel/preset-env", { "targets": { "node": 6 } }],
+        ["@babel/preset-env", { 
+            "targets": { 
+                "node": 6,
+                "browsers": [
+                    "> 1%",
+                    "last 2 versions"
+                ] 
+            } 
+        }],
         "@babel/preset-react"
     ],
     "plugins": [
@@ -9,4 +17,4 @@
         "babel-plugin-styled-components",
         "lodash"
     ]
-}
+    }

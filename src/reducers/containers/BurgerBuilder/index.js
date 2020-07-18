@@ -3,7 +3,7 @@ import {
     SET_INGREDIENTS, CALCULATE_TOTAL_PRICE
 } from '../../../actions';
 import { AVAILABLE_BURGER_INGREDIENT_INGREDIENTS } from '../../../components/constants';
-import { updateObject } from '../../';
+import { updateObject } from '../../../components/utils';
 import _ from 'lodash';
 
 /**

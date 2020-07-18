@@ -3,7 +3,7 @@ import {
     PURCHASE_BURGER_FAIL, FETCH_ORDERS_START, FETCH_ORDERS_FAIL,
     FETCH_ORDERS_SUCCESS 
 } from '../../../actions';
-import { updateObject } from '../../';
+import { updateObject } from '../../../components/utils';
 
 const initialState = {
     orders: [],

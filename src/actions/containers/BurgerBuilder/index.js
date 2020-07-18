@@ -9,7 +9,7 @@ const CALCULATE_TOTAL_PRICE = 'CALCULATE_TOTAL_PRICE';
 /**
  * Add ingredient action
  *  
- * @param {*} burgerIngredient
+ * @param {object} burgerIngredient
  *      Object burgerIngredient for add 
  */
 const addIngredient = (burgerIngredient) => {
@@ -22,7 +22,7 @@ const addIngredient = (burgerIngredient) => {
 /**
  * Remove ingredient action
  * 
- * @param {*} burgerIngredient
+ * @param {object} burgerIngredient
  *      Object burgerIngredient for remove 
  */
 const removeIngredient = (burgerIngredient) => {
@@ -35,7 +35,7 @@ const removeIngredient = (burgerIngredient) => {
 /**
  * Set ingredients action
  * 
- * @param {*} ingredients
+ * @param {Array} ingredients
  *      List of ingredients to set 
  */
 const setIngredients = (ingredients) => {
@@ -76,6 +76,11 @@ const initIngridients = () => dispatch => burgerIngredientFindAllService(
     (results) => dispatch(fetchIngredientsFailed())
 );
 
+/**
+ * Calculate total price action
+ *  
+ * @param {number} totalPrice 
+ */
 const calculateTotalPrice = (totalPrice) => {
     return {
         type: CALCULATE_TOTAL_PRICE,
