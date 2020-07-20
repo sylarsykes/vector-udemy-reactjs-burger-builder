@@ -2,9 +2,11 @@ import {
     orderSummaryFindAllService, orderSummaryCreateService
 } from '../../../components/services';
 
+const PURCHASE_BURGER = 'PURCHASE_BURGER';
 const PURCHASE_BURGER_START = 'PURCHASE_BURGER_START';
 const PURCHASE_BURGER_SUCCESS = 'PURCHASE_BURGER_SUCCESS';
 const PURCHASE_BURGER_FAIL = 'PURCHASE_BURGER_FAIL';
+const FETCH_ORDERS = 'FETCH_ORDERS';
 const PURCHASE_INIT = 'PURCHASE_INIT';
 const FETCH_ORDERS_START = 'FETCH_ORDERS_START';
 const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
@@ -47,17 +49,12 @@ const purchaseBurgerStart = () => {
  * @param {object} orderData
  * @param {string} token
  */
-const purchaseBurger = (orderData, token) => dispatch => {
-    dispatch(purchaseBurgerStart());
-
-    const options = {
-        body: orderData,
-        token,
-        successFuncCB: (result) => dispatch(purchaseBurgerSuccess(result)),
-        errorFuncCB: (error) => dispatch(purchaseBurgerFail(error))
+const purchaseBurger = (orderData, token) => {
+    return {
+        type: PURCHASE_BURGER,
+        orderData,
+        token
     };
-
-    orderSummaryCreateService(options);
 };
 
 /**
@@ -104,33 +101,19 @@ const fetchOrdersStart = () => {
 /**
  * Fetch all orders
  */
-const fetchOrders = (token, userId) => dispatch => {
-    dispatch(fetchOrdersStart());
-
-    const options = {
-        successFuncCB: (results) => {
-            if (results && results.length) {
-                const orders = results.sort((a, b) => a.createDate > b.createDate).map((order) => order);
-
-                dispatch(fetchOrdersSuccess(orders));
-            }
-        },
-        errorFuncCB: (error) => dispatch(fetchOrdersFail(error))
-    };
-
-    if (token && userId) {
-        options.token = token;
-        options.userId = userId
+const fetchOrders = (token, userId) => {
+    return {
+        type: FETCH_ORDERS,
+        token,
+        userId
     }
-    
-    orderSummaryFindAllService(options);
 };
 
 export {
     // CONSTANTS
-    PURCHASE_BURGER_START, PURCHASE_BURGER_SUCCESS,
-    PURCHASE_BURGER_FAIL, PURCHASE_INIT, FETCH_ORDERS_START,
-    FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAIL,
+    PURCHASE_BURGER, PURCHASE_BURGER_START, PURCHASE_BURGER_SUCCESS,
+    PURCHASE_BURGER_FAIL, PURCHASE_INIT, FETCH_ORDERS, 
+    FETCH_ORDERS_START, FETCH_ORDERS_SUCCESS, FETCH_ORDERS_FAIL,
     // ACTIONS
     purchaseBurgerSuccess, purchaseBurgerFail, purchaseBurgerStart,
     purchaseBurger, purchaseInit, fetchOrdersSuccess, 

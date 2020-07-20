@@ -1,4 +1,7 @@
+import _ from 'lodash';
+import { call } from 'redux-saga/effects';
 import axios, { BASE_URL } from '../../../../../config/axios';
+import { responseServiceErrorFuncCB, responseServiceErrorGeneratorFuncCB } from '../default';
 
 /**
  * Default find all service
@@ -15,7 +18,7 @@ import axios, { BASE_URL } from '../../../../../config/axios';
  * @see https://console.firebase.google.com/u/0/project/vector-udemy-burger-builder/database/vector-udemy-burger-builder/rules
  */
 const baseFindAllService = (serviceParams) => {
-    const { request, successFuncCB, errorFuncCB, builderModelFuncCB } = serviceParams
+    const { request, successFuncCB, errorFuncCB, builderModelFuncCB } = serviceParams;
 
     const executeService = new Promise(async (resolve, reject) => {
         let response = null;
@@ -31,26 +34,66 @@ const baseFindAllService = (serviceParams) => {
 
     executeService
         .then(response => {     
-            const results = [];
+            let results = [];
 
             if (response && response.data) {
                 const data = response.data;
-            
-                Object.keys(data).forEach((id) => {
+                
+                results = _.map(_.keys(data), function(id) {
                     const result = data[id];
-                    
-                    const resultObject = (builderModelFuncCB) ? builderModelFuncCB(id, result) : result;
 
-                    results.push(resultObject);
+                    return (builderModelFuncCB) ? builderModelFuncCB(id, result) : result;
                 }); 
             }
 
             successFuncCB(results);
         })
-        .catch(error => {
-            errorFuncCB({ error: error });
-        });
+        .catch(error => responseServiceErrorFuncCB({ response: { data: { error: error }}}, errorFuncCB));
 };
+
+/**
+ * Default find all service
+ * 
+ * @param {FindServiceParams} serviceParams 
+ *     A FindServiceParams object with properties:
+ *          - request:               RequestInfo object
+ *          - successFuncCB:         Success callback
+ *          - errorFuncCB:           Error callback
+ *          - builderModelFuncCB:    Builder callback
+ *          - context:               Context for callbacks
+ * 
+ * @see FindServiceParams
+ * @see https://console.firebase.google.com/u/0/project/vector-udemy-burger-builder/database/vector-udemy-burger-builder/rules
+ */
+const baseFindAllGeneratorFuncService = function* (serviceParams) {
+    const { request, successFuncCB, errorFuncCB, builderModelFuncCB } = serviceParams;
+
+    let response = null;
+
+    try {
+        response = yield axios.get(BASE_URL + request.path, request.config);
+
+        if (response && response.data) {
+            const data = response.data;
+
+            const results = _.map(_.keys(data), function (id) {
+                const result = data[id];
+                let r = result;
+                
+                if (builderModelFuncCB) {
+                    r = builderModelFuncCB(id, result);
+                }
+                
+                return r;
+            });
+
+            yield call(successFuncCB, results);
+        }
+
+    } catch (error) {
+        yield call(responseServiceErrorGeneratorFuncCB, { response: { data: { error: error }}}, errorFuncCB);
+    }
+}
 
 /**
  * Default find all service
@@ -91,9 +134,9 @@ const baseFindByIdService = (serviceParams) => {
 
             successFuncCB(result);
         })
-        .catch(error => {
-            errorFuncCB({ error: error });
-        }); 
+        .catch(error => responseServiceErrorFuncCB({ response: { data: { error: error }}}, errorFuncCB));
 };
 
-export { baseFindAllService, baseFindByIdService };
+export { 
+    baseFindAllService, baseFindAllGeneratorFuncService, baseFindByIdService 
+};

@@ -8,12 +8,12 @@ import { OrderContainer, OrderIngredientSpanContainer} from '../styles';
  */
 const OrderFC = (props) => {
 
-    const ingredientOutput = props.ingredients.map(ingredient => {
+    const ingredientOutput = (props && props.ingredients) ? props.ingredients.map(ingredient => {
         return <OrderIngredientSpanContainer
             key={ingredient.label}>
                 {ingredient.label} ({ingredient.amount})
             </OrderIngredientSpanContainer>;
-    });
+    }) : '';
 
     return (
         <OrderContainer>

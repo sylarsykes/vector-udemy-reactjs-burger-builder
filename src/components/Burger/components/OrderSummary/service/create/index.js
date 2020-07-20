@@ -1,6 +1,9 @@
+import { call } from 'redux-saga/effects';
 import { ORDER_SUMMARY_BASE_URL } from '../../constants';
 import { OrderModelBuilder } from '../../api';
-import { baseCreateService, ServiceParamsBuilder } from '../../../../../Common';
+import { 
+    baseCreateService, baseCreateGeneratorFuncService, ServiceParamsBuilder 
+} from '../../../../../Common';
 import moment from 'moment';
 
 const ORDER_SUMMARY_CREATE_BASE_URL = ORDER_SUMMARY_BASE_URL + '.json';
@@ -39,4 +42,29 @@ export const orderSummaryCreateService = (options) => {
         .build();
 
     baseCreateService(serviceParams);
+}
+
+export const orderSummaryCreateGeneratorFuncService = function* (options) {
+    const { body, token, successFuncCB, errorFuncCB } = options;
+
+    const orderSummary = yield new OrderModelBuilder()
+        .setDeliveryMethod(body.deliveryMethod)
+        .setPrice(body.price)
+        .setUserId(body.userId)
+        .setCustomer(body.customer)
+        .setIngredients(body.ingredients)
+        .setCreateDate(moment().format('MMMM Do YYYY, h:mm:ss a'))
+        .setCreateUser('admin-user')
+        .build();
+    
+    const serviceParams = yield new ServiceParamsBuilder()
+        .setRequest({
+            path: (!token) ? ORDER_SUMMARY_CREATE_BASE_URL : ORDERS_SUMMARY_CREATE_SECURE_BASE_URL + token,
+            body: orderSummary
+        })
+        .setSuccessFuncCB(successFuncCB)
+        .setErrorFuncCB(errorFuncCB)
+        .build();
+    
+    yield call(baseCreateGeneratorFuncService, serviceParams);
 }
