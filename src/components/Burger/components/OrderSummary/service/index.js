@@ -1,5 +1,6 @@
-export { orderSummaryCreateService } from './create';
+export { 
+    orderSummaryCreateService, orderSummaryCreateGeneratorFuncService 
+} from './create';
 export {
-    orderSummaryFindAllService,
-    orderSummaryFindByIdService
+    orderSummaryFindAllService, orderSummaryFindAllGeneratorFuncService, orderSummaryFindByIdService
 } from './find';

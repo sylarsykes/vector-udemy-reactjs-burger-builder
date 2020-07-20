@@ -1,7 +1,10 @@
+import { call } from 'redux-saga/effects';
 import { ORDER_SUMMARY_BASE_URL } from '../../constants';
 import { OrderModelBuilder } from '../../api';
-import { baseFindAllService, baseFindByIdService, FindServiceParamsBuilder } from '../../../../../Common';
-
+import { 
+    baseFindAllService, baseFindAllGeneratorFuncService, baseFindByIdService, 
+    FindServiceParamsBuilder 
+} from '../../../../../Common';
 
 const ORDER_SUMMARY_FIND_ALL_PATH = ORDER_SUMMARY_BASE_URL + '.json';
 const ORDER_SUMMARY_FIND_ALL_SECURE_PATH = ORDER_SUMMARY_FIND_ALL_PATH + '?auth=';
@@ -48,6 +51,42 @@ const orderSummaryFindAllService = (options) => {
 
     baseFindAllService(serviceParams);
 };
+
+const orderSummaryFindAllGeneratorFuncService = function* (options) {
+    const { token, userId, successFuncCB, errorFuncCB } = options;
+
+    // Callback for create new burger ingredient
+    const builderModelFuncCB = function (id, orderSummary) {
+        const order = new OrderModelBuilder()
+            .setId(id)
+            .setPrice(orderSummary.price)
+            .setDeliveryMethod(orderSummary.deliveryMethod)
+            .setCustomer(orderSummary.customer)
+            .setIngredients(orderSummary.ingredients)
+            .setCreateDate(orderSummary.createDate)
+            .setCreateUser(orderSummary.createUser)
+            .setUpdateDate(orderSummary.updateDate)
+            .setUpdateUser(orderSummary.updateUser)
+            .build();
+        
+        return order;
+    }
+
+    const path = (token && userId) ? 
+        ORDER_SUMMARY_FIND_ALL_SECURE_PATH + token + '&orderBy="userId"&equalTo="' + userId + '"' : 
+        ORDER_SUMMARY_FIND_ALL_PATH;
+    
+    const serviceParams = yield new FindServiceParamsBuilder()
+        .setRequest({
+            path,
+        })
+        .setBuilderModelFuncCB(builderModelFuncCB)
+        .setSuccessFuncCB(successFuncCB)
+        .setErrorFuncCB(errorFuncCB)
+        .build();
+    
+    yield call(baseFindAllGeneratorFuncService, serviceParams);
+}
 
 /* eslint-disable no-template-curly-in-string */
 // eslint-disable-next-line no-eval
@@ -96,5 +135,5 @@ const orderSummaryFindByIdService = (id, successFuncCB, errorFuncCB) => {
 }
 
 export { 
-    orderSummaryFindAllService, orderSummaryFindByIdService 
+    orderSummaryFindAllService, orderSummaryFindAllGeneratorFuncService, orderSummaryFindByIdService
 };

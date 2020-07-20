@@ -5,24 +5,20 @@ import {
     BURGER_BUILDER_ROUTE, CHECKOUT_ROUTE, ORDERS_ROUTE,
     AUTH_ROUTE, LOGOUT_ROUTE
 } from '../routes';
-import ChildrenContainer, { Layout, AsyncComponent} from '../../hoc';
-import { BurgerBuilder } from '../';
+import ChildrenContainer, { Layout, AsyncComponent } from '../../hoc';
+import { BurgerBuilder, Logout} from '../';
 import { authCheckState } from '../../actions';
 
 const AsyncAuthComponent = AsyncComponent(() => { 
-    return import('../Auth'); 
-});
-
-const AsyncLogoutComponent = AsyncComponent(() => {
-    return import('../Auth/components/Logout');
+    return import('../Auth/components'); 
 });
 
 const AsyncCheckoutComponent = AsyncComponent(() => {
-    return import('../Checkout');
+    return import('../Checkout/components');
 });
 
 const AsyncOrdersComponent = AsyncComponent(() => {
-    return import('../Orders');
+    return import('../Orders/components');
 });
 
 /**
@@ -51,7 +47,8 @@ class App extends Component {
                 <Switch>
                     <Route path={CHECKOUT_ROUTE} component={AsyncCheckoutComponent} />
                     <Route path={ORDERS_ROUTE} component={AsyncOrdersComponent} />
-                    <Route path={LOGOUT_ROUTE} component={AsyncLogoutComponent} />
+                    <Route path={LOGOUT_ROUTE} component={Logout} />
+                    <Route path={ AUTH_ROUTE } component={AsyncAuthComponent} />
                     <Route path={BURGER_BUILDER_ROUTE} exact component={BurgerBuilder} />
                     <Redirect to={BURGER_BUILDER_ROUTE} />
                 </Switch>  

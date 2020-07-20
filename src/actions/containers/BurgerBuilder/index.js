@@ -1,5 +1,4 @@
-import { burgerIngredientFindAllService } from '../../../components/services';
-
+const INIT_INGREDIENTS = 'INIT_INGREDIENTS';
 const ADD_INGREDIENT = 'ADD_INGREDIENT';
 const REMOVE_INGREDIENT = 'REMOVE_INGREDIENT';
 const SET_INGREDIENTS = 'SET_INGREDIENTS';
@@ -58,23 +57,11 @@ const fetchIngredientsFailed = () => {
  * Init ingredients action
  * Fetch ingredientes
  */
-const initIngridients = () => dispatch => burgerIngredientFindAllService(
-    // Success callback
-    (results) => {
-        const ingredients = [];
-
-        results.sort((a, b) => a.position > b.position)
-            .forEach((burgerIngredient) => {
-                ingredients.push({
-                    burgerIngredient: burgerIngredient,
-                    count: 0
-                });
-            });
-            dispatch(setIngredients(ingredients));
-    },
-    // Error callback
-    (results) => dispatch(fetchIngredientsFailed())
-);
+const initIngridients = () => {
+    return {
+        type: INIT_INGREDIENTS
+    }
+};
 
 /**
  * Calculate total price action
@@ -90,7 +77,7 @@ const calculateTotalPrice = (totalPrice) => {
 
 export {
     // CONSTANTS
-    ADD_INGREDIENT, REMOVE_INGREDIENT, SET_INGREDIENTS,
+    INIT_INGREDIENTS, ADD_INGREDIENT, REMOVE_INGREDIENT, SET_INGREDIENTS,
     FETCH_INGREDIENTS_FAILED, CALCULATE_TOTAL_PRICE, 
     // ACTIONS
     addIngredient, removeIngredient, setIngredients,

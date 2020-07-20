@@ -1,4 +1,9 @@
 import axios from '../../../../../config/axios';
+import { 
+    responseServiceSuccessFuncCB, responseServiceErrorFuncCB,
+    responseServiceSuccessGeneratorFuncCB, responseServiceErrorGeneratorFuncCB 
+} from '../default';
+import { call } from 'redux-saga/effects';
 
 /**
  * Create service
@@ -28,20 +33,33 @@ const baseCreateService = (serviceParams) => {
     });
 
     executeService
-        .then(response => {
-            let result = null;
-
-            if (response && response.data) {
-                const data = response.data;
-
-                result = {
-                    id: data.name
-                }
-            }
-            
-            successFuncCB(result);
-        })
-        .catch(error => errorFuncCB({ error: true }) );
+        .then(response => responseServiceSuccessFuncCB(response, successFuncCB))
+        .catch(error => responseServiceErrorFuncCB({response: { data: { error: true }}}, errorFuncCB));
 }
 
-export default baseCreateService;
+/**
+ * Create service generator func
+ * 
+ * @param {ServiceParams} serviceParams 
+ *     A ServiceParams object with properties:
+ *          - request   RequestInfo object
+ *          - successFuncCB Success callback
+ *          - errorFuncCB Error callback
+ *          - context   Context for callbacks
+ * 
+ * @see ServiceParams 
+ */
+const baseCreateGeneratorFuncService = function* (serviceParams) {
+    const { request, successFuncCB, errorFuncCB } = serviceParams;
+    
+    let response = null;
+
+    try {
+        response = yield axios.post(request.path, request.body);
+        yield call(responseServiceSuccessGeneratorFuncCB, response, successFuncCB);
+    } catch (error) {
+        yield call(responseServiceErrorGeneratorFuncCB, {response: { data: { error: true }}}, errorFuncCB);
+    } 
+}
+
+export { baseCreateService, baseCreateGeneratorFuncService };

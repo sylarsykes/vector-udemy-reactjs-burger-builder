@@ -1,16 +1,14 @@
 
-import { usersCreateService, usersVerifyService } from '../../../components/services';
-
 const AUTH_START = 'AUTH_START';
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
 const AUTH_FAIL = 'AUTH_FAIL';
 const AUTH_LOGOUT = 'AUTH_LOGOUT';
+const AUTH_USER = 'AUTH_USER';
+const AUTH_CHECK_STATE = 'AUTH_CHECK_STATE';
+const AUTH_CHECK_TIMEOUT = 'AUTH_CHECK_TIMEOUT';
+const AUTH_INITIATE_LOGOUT = 'AUTH_INITIATE_LOGOUT';
 
 const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
-
-const LOCAL_STORATEGE_SET_TOKEN = 'token';
-const LOCAL_STORATEGE_SET_EXPIRATION_DATE = 'expirationDate';
-const LOCAL_STORAGE_SET_USERID = 'userId';
 
 /**
  * Start authentication action
@@ -53,10 +51,12 @@ const authFail = (error) => {
  * Logout action
  */
 const logout = () => {
-    localStorage.removeItem(LOCAL_STORATEGE_SET_TOKEN);
-    localStorage.removeItem(LOCAL_STORATEGE_SET_EXPIRATION_DATE);
-    localStorage.removeItem(LOCAL_STORAGE_SET_USERID);
+    return {
+        type: AUTH_INITIATE_LOGOUT
+    };
+};
 
+const logoutSucceed = () => {
     return {
         type: AUTH_LOGOUT
     };
@@ -68,8 +68,12 @@ const logout = () => {
  * @param {number} expirationTime
  *      Expiration time 
  */
-const checkAuthTimeout = (expirationTime) => dispatch => 
-    setTimeout(() => dispatch(logout()) , expirationTime * 1000);
+const checkAuthTimeout = (expirationTime) => {
+    return {
+        type: AUTH_CHECK_TIMEOUT,
+        expirationTime
+    }
+}
 
 /**
  * Authentication
@@ -79,35 +83,14 @@ const checkAuthTimeout = (expirationTime) => dispatch =>
  * @param {boolean} isSignup
  * 
  */
-const auth = (email, password, isSignup) => dispatch => {
-    dispatch(authStart());
-
-    const options = {
-        body:{
-            email,
-            password,
-            returnSecureToken: true
-        },
-        successFuncCB: (result) => {
-            console.log(result);
-
-            const expirationDate = new Date(new Date().getTime() + result.expiresIn * 1000);
-            localStorage.setItem(LOCAL_STORATEGE_SET_TOKEN, result.idToken);
-            localStorage.setItem(LOCAL_STORATEGE_SET_EXPIRATION_DATE, expirationDate);
-            localStorage.setItem(LOCAL_STORAGE_SET_USERID, result.localId);
-
-            dispatch(authSuccess(result.idToken, result.localId));
-            dispatch(checkAuthTimeout(result.expiresIn));
-        },
-        errorFuncCB: (error) => dispatch(authFail(error.error))
-    };
-
-    if (!isSignup) {
-        usersVerifyService(options);
-    } else {
-        usersCreateService(options);
+const auth = (email, password, isSignup) => {
+    return {
+        type: AUTH_USER,
+        email,
+        password,
+        isSignup
     }
-};
+}
 
 /**
  * Set authentication redirect path
@@ -124,28 +107,19 @@ const setAuthRedirectPath = (path) => {
 /**
  * Check authentication state
  */
-const authCheckState = () => dispatch => {
-    const token = localStorage.getItem(LOCAL_STORATEGE_SET_TOKEN);
-    if (!token) {
-        dispatch(logout());
-    } else {
-        const expirationDate = new Date(localStorage.getItem(LOCAL_STORATEGE_SET_EXPIRATION_DATE));
-        if (expirationDate <= new Date()) {
-            dispatch(logout());
-        } else {
-            const userId = localStorage.getItem(LOCAL_STORAGE_SET_USERID);
-            dispatch(authSuccess(token, userId));
-            dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000 ));
-        } 
+const authCheckState = () => {
+    return {
+        type: AUTH_CHECK_STATE
     }
-};
+}
 
 export {
     // CONSTANTS
     AUTH_START, AUTH_SUCCESS, AUTH_FAIL,
-    AUTH_LOGOUT, SET_AUTH_REDIRECT_PATH,
+    AUTH_LOGOUT, AUTH_CHECK_STATE, AUTH_CHECK_TIMEOUT,
+    AUTH_INITIATE_LOGOUT, AUTH_USER, SET_AUTH_REDIRECT_PATH,
     // ACTIONS
     authStart, authSuccess, authFail,
-    logout, checkAuthTimeout, auth,
-    setAuthRedirectPath, authCheckState
+    logout, logoutSucceed, checkAuthTimeout, 
+    auth, setAuthRedirectPath, authCheckState
 };

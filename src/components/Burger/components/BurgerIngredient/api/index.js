@@ -73,5 +73,4 @@ class BurgerIngredientModelBuilder extends BaseAdminModelBuilder {
 
 }
 
-export default BurgerIngredientModel;
-export { BurgerIngredientModelBuilder };
+export { BurgerIngredientModel, BurgerIngredientModelBuilder };

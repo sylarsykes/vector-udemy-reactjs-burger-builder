@@ -11,9 +11,7 @@ export const AsyncComponent = (importComponent) => {
          */
         componentDidMount = () =>
             importComponent()
-                .then(cmp => {
-                    this.setState({component: cmp.default});
-                });
+                .then(cmp => this.setState({component: cmp.default}));
         
         /**
          * @inheritdoc

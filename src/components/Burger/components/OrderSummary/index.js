@@ -1,15 +1,16 @@
-import { ORDER_SUMMARY_BASE_URL } from './constants';
-import { 
+import OrderSummaryComponent from './components';
+
+export { ORDER_SUMMARY_BASE_URL } from './constants';
+export { 
     OrderModelBuilder, OrderModel, OrderBurgerIngredientModelBuilder, 
     OrderBurgerIngredientModel  
 } from './api';
-import { 
-    orderSummaryFindAllService, orderSummaryFindByIdService, orderSummaryCreateService
+export { 
+    orderSummaryFindAllService, orderSummaryFindAllGeneratorFuncService, orderSummaryFindByIdService, 
+    orderSummaryCreateService, orderSummaryCreateGeneratorFuncService
 } from './service';
-import OrderSummaryComponent from './components';
+
 
 export { 
-    ORDER_SUMMARY_BASE_URL, OrderModelBuilder, OrderModel, 
-    OrderBurgerIngredientModelBuilder, OrderBurgerIngredientModel, OrderSummaryComponent, 
-    orderSummaryFindAllService, orderSummaryFindByIdService, orderSummaryCreateService
+    OrderSummaryComponent
 };

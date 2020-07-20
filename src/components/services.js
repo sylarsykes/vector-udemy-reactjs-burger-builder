@@ -1,12 +1,17 @@
 export {
-    baseCreateService, baseFindAllService, baseFindByIdService,
-    basePostService
+    responseServiceSuccessFuncCB, responseServiceSuccessGeneratorFuncCB,
+    responseServiceErrorFuncCB, responseServiceErrorGeneratorFuncCB,
+    basePostService, basePostGeneratorFuncService,
+    baseCreateService, baseCreateGeneratorFuncService, baseUpdateService, 
+    baseFindAllService, baseFindAllGeneratorFuncService, baseFindByIdService
 } from './Common';
 export { 
     burgerFindAllService, burgerFindByIdService, burgerIngredientFindAllService, 
-    burgerIngredientFindByIdService, orderSummaryFindAllService, orderSummaryFindByIdService,
-    orderSummaryCreateService,
+    burgerIngredientFindAllGeneratorFuncService, burgerIngredientFindByIdService, 
+    orderSummaryFindAllService, orderSummaryFindAllGeneratorFuncService,
+    orderSummaryFindByIdService, orderSummaryCreateService, orderSummaryCreateGeneratorFuncService
 } from './Burger';
 export {
-    usersCreateService, usersVerifyService
+    usersCreateService, usersVerifyService,
+    usersCreateGeneratorFuncService, usersVerifyGeneratorFuncService
 } from './User';

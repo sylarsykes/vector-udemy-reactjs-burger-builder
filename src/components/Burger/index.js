@@ -7,7 +7,7 @@ export { burgerFindAllService, burgerFindByIdService } from './service';
 export { 
     AVAILABLE_BURGER_INGREDIENT_INGREDIENTS, BURGER_INGREDIENTS_BASE_URL, BurgerIngredientModelBuilder,
     BurgerIngredientModel, BurgerIngredientComponent, burgerIngredientFindAllService,
-    burgerIngredientFindByIdService
+    burgerIngredientFindAllGeneratorFuncService, burgerIngredientFindByIdService
 } from './components/BurgerIngredient';
 export { BuildControlsFC, BuildControlFC } from './components/BuildControls'
 export { 
@@ -17,8 +17,8 @@ export {
 export { 
     ORDER_SUMMARY_BASE_URL, OrderModelBuilder, OrderModel, 
     OrderBurgerIngredientModelBuilder, OrderBurgerIngredientModel, OrderSummaryComponent, 
-    orderSummaryFindAllService, orderSummaryFindByIdService, 
-    orderSummaryCreateService
+    orderSummaryFindAllService, orderSummaryFindAllGeneratorFuncService, orderSummaryFindByIdService,
+    orderSummaryCreateService, orderSummaryCreateGeneratorFuncService
 } from './components/OrderSummary';
 
 export { 

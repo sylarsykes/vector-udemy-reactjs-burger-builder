@@ -38,34 +38,35 @@ const findAvailableControlByType = (type) => controls.find((control) => control.
  * 
  * @see BuildControlFC
  */
-const BuildControlsFC = (props) => (
-    <BuildControlsContainer>
-        <p>Current Price: <strong>{props.price}</strong></p>
-        {props.controls.map((control) => {
-                const availableControl = findAvailableControlByType(control.burgerIngredient.type);
+const BuildControlsFC = (props) => {
+    const controls = (props && props.controls) ? props.controls.map((control) => {
+        const availableControl = (control && control.burgerIngredient && control.burgerIngredient.type) ? findAvailableControlByType(control.burgerIngredient.type) : null;
 
-                if (availableControl) {
-                    return (
-                        <BuildControlFC 
-                            key={uuidv4()} 
-                            label={control.burgerIngredient.label} 
-                            burgerIngredient={control.burgerIngredient}
-                            added={() => props.ingredientAdded(control.burgerIngredient)}
-                            removed={() => props.ingredientRemoved(control.burgerIngredient)}
-                            disabled={props.disableBuildControl(control.burgerIngredient)}
-                        />
-                    )
-                }
+        if (availableControl) {
+            return ( <BuildControlFC key = {uuidv4()}
+                label = {control.burgerIngredient.label}
+                burgerIngredient = {control.burgerIngredient}
+                added = {() => props.ingredientAdded(control.burgerIngredient)}
+                removed = {() => props.ingredientRemoved(control.burgerIngredient)}
+                disabled = {props.disableBuildControl(control.burgerIngredient)}
+                />
+            )
+        }
 
-                return '';
-            }
-        )}
+        return '';
+    }) : '';
 
-        <ButtonFC
-            buttonType={ AvailableButtons.order } 
-            disabled={!props.purchasable}
-            clickFuncCB={props.ordered}>Order Now</ButtonFC>
-    </BuildControlsContainer>
-);
+    return (
+        <BuildControlsContainer>
+            <p>Current Price: <strong>{props.price}</strong></p>
+            {controls}
+
+            <ButtonFC
+                buttonType={ AvailableButtons.order } 
+                disabled={!props.purchasable}
+                clickFuncCB={props.ordered}>Order Now</ButtonFC>
+        </BuildControlsContainer>
+    );
+}
 
 export default BuildControlsFC;

@@ -4,8 +4,11 @@ export {
 } from './api';
 
 export {
-    baseCreateService, baseFindAllService, baseFindByIdService,
-    basePostService,
+    baseCreateService, baseCreateGeneratorFuncService, baseUpdateService, 
+    baseFindAllGeneratorFuncService, baseFindAllService, baseFindByIdService, 
+    responseServiceSuccessFuncCB, responseServiceSuccessGeneratorFuncCB,
+    responseServiceErrorFuncCB, responseServiceErrorGeneratorFuncCB, 
+    basePostService, basePostGeneratorFuncService,
     ServiceParams, FindServiceParams, ServiceParamsBuilder, 
     FindServiceParamsBuilder, RequestInfo, RequestInfoBuilder
 } from './service';

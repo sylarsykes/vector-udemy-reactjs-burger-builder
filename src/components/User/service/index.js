@@ -1,1 +1,4 @@
-export { usersCreateService, usersVerifyService } from './create';
+export { 
+    usersCreateService, usersVerifyService,
+    usersCreateGeneratorFuncService, usersVerifyGeneratorFuncService
+} from './create';
