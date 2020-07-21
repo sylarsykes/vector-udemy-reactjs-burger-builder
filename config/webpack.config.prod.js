@@ -1,5 +1,6 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin'),
-    MiniCssExtractPlugin = require('mini-css-extract-plugin'),
+const HtmlWebPackPlugin = require("html-webpack-plugin"),
+    MiniCssExtractPlugin = require("mini-css-extract-plugin"),
+    OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin"),
     UglifyJsPlugin = require('uglifyjs-webpack-plugin'),
     CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin'),
     WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin'),
@@ -9,7 +10,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin'),
     paths = require('./paths'),
     path = require('path');
 
-const environment = process.env.NODE_ENV || 'development';
+const environment = process.env.NODE_ENV || 'production';
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
 const publicPath = '/';
@@ -18,7 +19,7 @@ module.exports = {
     mode: environment,
     // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
     // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
-    devtool: 'cheap-module-source-map',
+    devtool: 'node',
     //devtool: 'inline-source-map',
     // These are the "entry points" to our application.
     // This means they will be the "root" imports that are included in JS bundle.
@@ -44,7 +45,7 @@ module.exports = {
         // changing JS code would still trigger a refresh.
     ],
     output: {
-        path: path.join(__dirname, '../dist'),
+        path: path.join(__dirname, '../build'),
         // Add /* filename */ comments to generated require()s in the output
         pathinfo: true,
         // This does not produce a real file. It's just the virtual path that is
@@ -55,16 +56,6 @@ module.exports = {
         publicPath: publicPath,
         // Point sourcemap entries to original disk location (format as URL on Windows)
         devtoolModuleFilenameTemplate: info => path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
-    },
-    watch: true,
-    devServer: {
-        inline: true,
-        watchContentBase: true,
-        contentBase: path.resolve(__dirname, '../dist'),
-        host: 'localhost',
-        historyApiFallback: true,
-        open: true,
-        port: 3000,
     },
     resolve: {
         // These are the reasonable defaults supported by the Node ecosystem.
@@ -112,16 +103,11 @@ module.exports = {
                 test: /\.css$/,
                 exclude: /node_modules/,
                 use: [
-                    {
-                        loader: MiniCssExtractPlugin.loader,
-                        options: {
-                            hmr: environment === 'development',
-                        },
-                    },
+                    MiniCssExtractPlugin.loader,
                     { 
                         loader: 'css-loader', 
                         options: { 
-                            sourceMap: true 
+                            sourceMap: false 
                         } 
                     },
                     { 
@@ -130,7 +116,7 @@ module.exports = {
                             config: { 
                                 path: path.join(path.join(__dirname, './'), 'postcssconfig.js') 
                             }, 
-                            sourceMap: true
+                            sourceMap: false
                         } 
                     },
                 ]
@@ -157,6 +143,7 @@ module.exports = {
             template: path.join(path.join(__dirname, '../public/css'), 'styles.css'),
             filename: 'styles.css'
         }),
+        new OptimizeCssAssetsPlugin(),
         // Add module names to factory functions so they appear in browser profiler.
         new webpack.NamedModulesPlugin(),
         // This is necessary to emit hot updates (currently CSS only):
@@ -177,7 +164,7 @@ module.exports = {
         // You can remove this if you don't use Moment.js:
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new webpack.DefinePlugin({
-            ENV: JSON.stringify({ env: { development: true } }),
+            ENV: JSON.stringify({ env: { production: true } }),
         }),
         // https://www.npmjs.com/package/lodash-webpack-plugin
         new LodashModuleReplacementPlugin(),

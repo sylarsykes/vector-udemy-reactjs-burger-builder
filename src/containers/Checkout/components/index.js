@@ -15,11 +15,6 @@ import { ContactData } from '../';
 class Checkout extends Component {
 
     /**
-     * Calculate total price
-     */
-    calculateTotalPriceHandler = (totalPrice) => Number.parseFloat(totalPrice).toFixed(2)
-
-    /**
      * Execute history back
      */
     checkoutCancelledHandler = () => this.props.history.goBack()
@@ -41,7 +36,7 @@ class Checkout extends Component {
                     {purchasedRedirect}
                     <CheckoutSummaryFC 
                         ingredients={this.props.ings}
-                        totalPrice={this.calculateTotalPriceHandler(this.props.price)} 
+                        totalPrice={this.props.price} 
                         checkoutCancelled={this.checkoutCancelledHandler}
                         checkoutContinued={this.checkoutContinuedHandler}
                     />
