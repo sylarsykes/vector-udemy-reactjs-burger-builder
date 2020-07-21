@@ -1,5 +1,5 @@
 
-const rootDir = '<rootDir>/';
+const rootDir = '../../';
 const configDir = rootDir + 'config/';
 const configJestDir = configDir + 'jest/';
 const nodeModulesDir = rootDir + 'node_modules/';
@@ -12,7 +12,7 @@ module.exports = {
     // for this file and it's never required in the test suite. 
     // https://jestjs.io/docs/en/configuration#collectcoveragefrom-array
     collectCoverageFrom: [
-        "src/**/*.{js,jsx}"
+        sourceDir + "**/*.{js,jsx}"
     ],
     // A list of paths to modules that run some code to configure or set up the testing environment. 
     // Each setupFile will be run once per test file. Since every test runs in its own environment, 
@@ -26,8 +26,7 @@ module.exports = {
     // of .test or .spec (e.g. Component.test.js or Component.spec.js). It will also find files called test.js or spec.js.
     // https://jestjs.io/docs/en/configuration#testmatch-arraystring
     testMatch: [
-        sourceDir + "**/__tests__/**/*.js?(x)",
-        sourceDir + "**/?(*.)(spec|test).js?(x)"
+        sourceDir + "__tests__/components/**/*?(*.)(spec|test).js?(x)",
     ],
     // The test environment that will be used for testing. The default environment in Jest is a browser-like environment through jsdom. 
     // If you are building a node service, you can use the node option to use a node-like environment instead.
@@ -40,9 +39,7 @@ module.exports = {
     // A transformer is a module that provides a synchronous function for transforming source files. 
     // https://jestjs.io/docs/en/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
     transform: {
-        "^.+\\.(js|jsx)$": nodeModulesDir + "babel-jest",
-        "^.+\\.css$": configJestDir + "cssTransform.js",
-        "^(?!.*\\.(js|jsx|css|json)$)": configJestDir + "fileTransform.js"
+        '.js$': __dirname + '/babel-transformer.jest.js' 
     },
     // An array of regexp pattern strings that are matched against all source file paths before transformation. 
     // If the test path matches any of the patterns, it will not be transformed.

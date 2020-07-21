@@ -5,9 +5,16 @@ Development of the "Burger Builder" application of the reactjs course of Vector 
 
 * Run `npm install` in the extracted folder
 * Run `npm start` to view the project. Open [http://localhost:3000](http://localhost:3000) to view it in the browser. 
-* Run `npm test` launches the test runner in the interactive watch mode.<br />
+* Run `npm run test` launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 * Run `npm run build` Builds the app for production to the `build` folder.
+* Run `npm run firebase:login` Login into firebase with google user
+* Run `npm run firebase:init` Init firebase configuration. Proceed:
+** Which Firebase CLI features do you want to set up for this folder? Press Space to select features, then Enter to confirm your choices. Select Hosting: Configure and deploy Firebase Hosting sites
+** What do you want to use as your public directory? build
+** Configure as a single-page app (rewrite all urls to /index.html)? y
+** File build/index.html already exists. Overwrite? N
+* Run `npm run firebase:deploy` Deploy app in firebase. Open [https://vector-udemy-burger-builder.web.app/](https://vector-udemy-burger-builder.web.app/) to view it in the browser.
 * Run `npm run eject` This command will remove the single build dependency from your project.
 
 ## Available Scripts

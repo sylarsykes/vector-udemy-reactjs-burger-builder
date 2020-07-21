@@ -1,5 +1,5 @@
 {
-  "name": "vector-udemy-reactjs-burger-builder",
+  "name": "@sylarsykessoft/vector-udemy-reactjs-burger-builder",
   "description": "Development of the 'Burger Builder' application of the reactjs course of Vector Academy.",
   "version": "0.1.0",
   "private": false,
@@ -43,6 +43,7 @@
     "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
     "promise": "^8.1.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
@@ -67,11 +68,14 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.10.2",
+    "babel-7-jest": "^21.3.3",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.0.1",
     "babel-loader": "^8.1.0",
     "babel-plugin-lodash": "^3.3.4",
     "babel-plugin-styled-components": "^1.10.7",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "eslint-loader": "^4.0.2",
     "eslint-plugin-flowtype": "^5.1.3",
     "eslint-plugin-import": "^2.20.2",
@@ -80,6 +84,7 @@
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.0.1",
+    "jest-enzyme": "^7.1.2",
     "jest-styled-components": "^7.0.2",
     "lodash-webpack-plugin": "^0.11.5",
     "mini-css-extract-plugin": "^0.9.0",
@@ -90,6 +95,7 @@
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
     "react-dev-utils": "^10.2.1",
+    "react-test-renderer": "^16.13.1",
     "style-loader": "^1.2.1",
     "styled-components": "^5.1.1",
     "sw-precache-webpack-plugin": "^1.0.0",
@@ -103,8 +109,13 @@
   },
   "scripts": {
     "start": "webpack-dev-server --open --mode development --config=./config/webpack.config.js --env.development=true",
-    "build": "webpack-dev-server --open --mode production --config=./config/webpack.config.js --env.production=true",
-    "test": "node scripts/test.js --config ./config/jest/jest.config.js --env=jsdom"
+    "build": "webpack --config=./config/webpack.config.prod.js --env.production=true",
+    "firebase:login": "firebase login",
+    "firebase:init": "firebase init",
+    "firebase:deploy": "firebase deploy",
+    "test": "jest --watch --config ./config/jest/jest.config.js",
+    "watch": "webpack --progress --watch",
+    "server": "webpack-dev-server --open"
   },
   "babel": {
     "extends": "./config/.babelrc"
