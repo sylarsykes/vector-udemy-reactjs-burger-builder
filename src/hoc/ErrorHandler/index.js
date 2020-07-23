@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ModalComponent } from '../../components/components';
 import ChildrenContainer from '../';
+import { useHttpErrorHandler } from '../../components/hooks'
 
 /**
  * Error handler component
@@ -9,53 +10,21 @@ import ChildrenContainer from '../';
  * @param {*} axios 
  */
 const ErrorHandler = (WrappedComponent, axios) => {
+    return (props) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const [error, clearError] = useHttpErrorHandler(axios);
 
-    return class extends Component {
-        state = {
-            error: null
-        }
-        
-        /**
-         * @inheritdoc
-         */
-        componentDidMount = () => {
-            this.reqInterceptor = axios.interceptors.request.use((request) => {
-                this.setState({error: null});
-                return request;
-            });
-
-            this.resInterceptor = axios.interceptors.response.use((response) => response, error => {
-                this.setState({error: error});
-            });
-        }
-
-        /**
-         * @inheritdoc
-         */
-        componentWillUnmount = () => {
-            axios.interceptors.request.eject(this.reqInterceptor);
-            axios.interceptors.response.eject(this.resInterceptor);
-        }
-
-        /**
-         * Error confirmed handler
-         */
-        errorConfirmedHandler = () => this.setState({error: null});
-
-        /**
-         * @inheritdoc
-         */
-        render = () => (
+        return (
             <ChildrenContainer>
                 <ModalComponent
-                    show={this.state.error}
-                    modalClosed={this.errorConfirmedHandler}>
-                        {this.state.error ? this.state.error.message : null}
+                    show={error}
+                    modalClosed={clearError}>
+                        {error ? error.message : null}
                 </ModalComponent>
-                <WrappedComponent {...this.props} />
+                <WrappedComponent {...props} />
             </ChildrenContainer>
-        )
-    }
+        );
+    };
 };
 
 export default ErrorHandler;

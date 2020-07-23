@@ -1,6 +1,3 @@
-import { 
-    orderSummaryFindAllService, orderSummaryCreateService
-} from '../../../components/services';
 
 const PURCHASE_BURGER = 'PURCHASE_BURGER';
 const PURCHASE_BURGER_START = 'PURCHASE_BURGER_START';
