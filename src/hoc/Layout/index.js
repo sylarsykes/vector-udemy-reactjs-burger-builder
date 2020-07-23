@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import  ChildrenContainer from '../';
@@ -11,32 +11,33 @@ const MainContainer = styled.main`
 /**
  * Layout component
  */
-class Layout extends Component {
-    state = {
-        showSideDrawer: false
-    }
+const Layout = (props) => {
+    
+    const [sideDrawerIsVisible, setSideDrawerIsVisible] = useState(false);
 
-    sideDrawerClosedHandler = () => this.setState({showSideDrawer: false});
+    const sideDrawerClosedHandler = () => setSideDrawerIsVisible(false);
 
-    sideDrawerToggleHandler = () => this.setState((prevState) => { return { showSideDrawer: !prevState.showSideDrawer}; });
+    const sideDrawerToggleHandler = () => setSideDrawerIsVisible(!sideDrawerIsVisible);
+    
+    const { isAuthenticated, children } = props;
 
     /**
      * @inheritdoc
      */
-    render = () => (
+    return (
         <ChildrenContainer>
             <ToolbarFC
-                isAuth={this.props.isAuthenticated} 
-                drawerToggleClicked={this.sideDrawerToggleHandler} />
+                isAuth={isAuthenticated} 
+                drawerToggleClicked={sideDrawerToggleHandler} />
             <SideDrawerFC
-                isAuth={this.props.isAuthenticated} 
-                open={this.state.showSideDrawer} 
-                closed={this.sideDrawerClosedHandler} />
+                isAuth={isAuthenticated} 
+                open={sideDrawerIsVisible} 
+                closed={sideDrawerClosedHandler} />
             <MainContainer>
-                {this.props.children}
+                {children}
             </MainContainer>
         </ChildrenContainer>
-    )
+    );
 }
 
 const mapStateToProps = state => {

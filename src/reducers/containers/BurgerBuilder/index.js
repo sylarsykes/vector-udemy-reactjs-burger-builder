@@ -147,7 +147,7 @@ const fetchIngredientsFailed = (state, action) => updateObject(state, {
  *      Object with action and parameters
  */
 const calculateTotalPrice = (state, action) => updateObject(state, {
-    totalPrice: _.round(_.toNumber(action.price), action.digit)
+    totalPrice: _.round(_.toNumber(action.totalPrice.price), action.totalPrice.digit)
 });
 
 /**

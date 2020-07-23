@@ -4,6 +4,10 @@ export {
 } from './api';
 
 export {
+    useHttpErrorHandler
+} from './hooks'
+
+export {
     baseCreateService, baseCreateGeneratorFuncService, baseUpdateService, 
     baseFindAllGeneratorFuncService, baseFindAllService, baseFindByIdService, 
     responseServiceSuccessFuncCB, responseServiceSuccessGeneratorFuncCB,

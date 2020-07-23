@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from "uuid";
 import ChildrenContainer, { ErrorHandler } from '../../../hoc';
@@ -13,39 +13,32 @@ import { fetchOrders } from '../../../actions'
  *      - orders: List of orders
  *      - loading: Show or hide SpinnerFC
  */
-class Orders extends Component {
-    /*state = {
-        orders: [],
-        loading: false
-    }*/
+const Orders = (props) => {
+    const { onFetchOrders, loading, orders, token, userId } = props;
 
-    /**
-     * @inheritdoc
-     */
-    componentDidMount = () => this.props.onFetchOrders(this.props.token, this.props.userId);
+    // Get user orders
+    useEffect(() => {
+        onFetchOrders(token, userId);
+    }, [
+        onFetchOrders,
+        token,
+        userId
+    ]);
 
-    /**
-     * @inheritdoc
-     */
-    render = () => {
-        let orders = <SpinnerFC />;
+    const ordersOutput = (!loading) ? orders.map(order => (
+            <OrderFC 
+                key={uuidv4()}
+                ingredients={order.ingredients}
+                price={order.price} />
+        )) : (<SpinnerFC />);
 
-        if (!this.props.loading) {
-            orders = this.props.orders.map(order => (
-                <OrderFC 
-                    key={uuidv4()}
-                    ingredients={order.ingredients}
-                    price={order.price} />
-            )); 
-        } 
-        return ( 
-            <ChildrenContainer>
-                <div>
-                    {orders}
-                </div>
-            </ChildrenContainer>
-        );
-    }
+    return ( 
+        <ChildrenContainer>
+            <div>
+                {ordersOutput}
+            </div>
+        </ChildrenContainer>
+    );
 }
 
 const mapStateToProps = state => {

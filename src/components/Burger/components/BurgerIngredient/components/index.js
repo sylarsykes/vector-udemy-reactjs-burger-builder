@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import  {
     BreadTopContainer, SeedsLeftContainer, SeedsRightContainer,
@@ -52,14 +52,14 @@ const AVAILABLE_BURGER_INGREDIENT_INGREDIENTS = {
 /**
  * Burger ingredient component
  */
-class BurgerIngredientComponent extends Component {
+const BurgerIngredientComponent = (props) => {
     
     /**
      * Find ingredient by burgerIngredient
      * 
      * @param {*} type Available burger ingredient
      */
-    _findAvailableBurgerIngredientByType = (type) => {
+    const _findAvailableBurgerIngredientByType = (type) => {
         var availableBurgerIngredient = 
             Object.keys(AVAILABLE_BURGER_INGREDIENT_INGREDIENTS)
                 .find((ingredient) => AVAILABLE_BURGER_INGREDIENT_INGREDIENTS[ingredient].type === type);
@@ -69,18 +69,13 @@ class BurgerIngredientComponent extends Component {
         }
 
         return null;
-    }
+    };
 
-    /**
-     * @inheritdoc
-     */
-    render = () => {
-        const { burgerIngredient, type } = this.props;
-        const availabelBurgerIngredient = this._findAvailableBurgerIngredientByType(type);
-        
-        return (burgerIngredient && availabelBurgerIngredient) ? 
+    const { burgerIngredient, type } = props;
+    const availabelBurgerIngredient = _findAvailableBurgerIngredientByType(type);
+
+    return (burgerIngredient && availabelBurgerIngredient) ? 
             availabelBurgerIngredient.container : null;
-    }
 }
 
 // Prop types of burger ingredient
