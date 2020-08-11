@@ -2,8 +2,10 @@ import { put, call } from 'redux-saga/effects';
 import { 
     purchaseBurgerStart, purchaseBurgerSuccess, purchaseBurgerFail,
     fetchOrdersStart, fetchOrdersSuccess, fetchOrdersFail 
-} from '../../../actions';
-import { orderSummaryCreateGeneratorFuncService, orderSummaryFindAllGeneratorFuncService } from '../../../components/services'
+} from '../../../actions/containers/Orders';
+import { 
+    orderSummaryCreateGeneratorFuncService, orderSummaryFindAllGeneratorFuncService 
+} from '../../../services/Orders';
 
 export function* purchaseBurgerSaga(action) {
     yield put(purchaseBurgerStart());
@@ -26,8 +28,7 @@ export function* fetchOrdersSaga(action) {
     yield put(fetchOrdersStart());
 
     const options = {
-        token: action.token,
-        userId: action.userId,
+        authenticatedUser: action.authenticatedUser,
         successFuncCB: function* (results) {
             if (results && results.length) {
                 const orders = yield results.sort((a, b) => a.createDate > b.createDate).map((order) => order);
@@ -41,5 +42,4 @@ export function* fetchOrdersSaga(action) {
     }
 
     yield call(orderSummaryFindAllGeneratorFuncService, options);
-
 }

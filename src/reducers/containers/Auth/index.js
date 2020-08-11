@@ -6,8 +6,7 @@ import { updateObject } from '../../../components/utils';
 import { BURGER_BUILDER_ROUTE } from '../../../containers/routes'
 
 const initialState = {
-    token: null,
-    userId: null,
+    authenticatedUser: null,
     error: null,
     loading: false,
     authRedirectPath: BURGER_BUILDER_ROUTE
@@ -19,8 +18,7 @@ const authStart = (state, action) => updateObject(state, {
 });
 
 const authSuccess = (state, action) => updateObject( state, { 
-    token: action.idToken,
-    userId: action.userId,
+    authenticatedUser: action.authenticatedUser,
     error: null,
     loading: false
 });
@@ -31,8 +29,7 @@ const authFail = (state, action) => updateObject(state, {
 });
 
 const authLogout = (state, action) => updateObject(state, {
-    token: null,
-    userId: null
+    authenticatedUser: null
 });
 
 const setAuthRedirectPath = (state, action) => updateObject(state, {

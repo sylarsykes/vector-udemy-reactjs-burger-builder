@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from "uuid";
-import _ from 'lodash';
+import { find, isFunction} from 'lodash';
 import { Translation } from "react-i18next";
 import { CHECKOUT_ROUTE, AUTH_ROUTE } from '../../routes';
 import ChildrenContainer, { ErrorHandler } from '../../../hoc';
@@ -36,7 +36,13 @@ const BurgerBuilder = (props) => {
     const ings = useSelector(state => state.burgerBuilder.ingredients);
     const price = useSelector(state => state.burgerBuilder.totalPrice);
     const error = useSelector(state => state.burgerBuilder.error);
-    const isAuthenticated = useSelector(state => state.auth.token !== null);
+    const isAuthenticated = useSelector(state => {
+        const { authenticatedUser } = state.auth;
+        const validate = authenticatedUser !== null 
+            && isFunction(authenticatedUser.isAuthenticated)
+            && authenticatedUser.isAuthenticated();
+        return validate;
+    });
 
     const onIngredientAdded = (burgerIngredient) => dispatch(addIngredient(burgerIngredient));
     const onIngredientRemoved = (burgerIngredient) => dispatch(removeIngredient(burgerIngredient));
@@ -79,7 +85,7 @@ const BurgerBuilder = (props) => {
      * @param {*} burgerIngredient Available burger ingredient
      */
     const disableBuildControlHandler = (burgerIngredient) => {
-        const currentStateIngredient = _.find(ings, (ingredient) => ingredient.burgerIngredient === burgerIngredient);
+        const currentStateIngredient = find(ings, (ingredient) => ingredient.burgerIngredient === burgerIngredient);
 
         if (currentStateIngredient) {
             return currentStateIngredient;

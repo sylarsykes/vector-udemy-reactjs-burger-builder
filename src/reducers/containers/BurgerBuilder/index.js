@@ -4,7 +4,7 @@ import {
 } from '../../../actions';
 import { AVAILABLE_BURGER_INGREDIENT_INGREDIENTS } from '../../../components/constants';
 import { updateObject } from '../../../components/utils';
-import _ from 'lodash';
+import { find, findIndex, round, toNumber } from 'lodash';
 
 /**
  * Inital state
@@ -48,9 +48,9 @@ const burgerBuilderInitialState = {
  */
 const addIngredient = (state, action) => {
     const ingredients = state.ingredients;
-    const currentStateIngredient = _.find(ingredients, (ingredient) => ingredient.burgerIngredient === action.burgerIngredient);
+    const currentStateIngredient = find(ingredients, (ingredient) => ingredient.burgerIngredient === action.burgerIngredient);
 
-    const currentStateIngredientIndex = _.findIndex(ingredients, (ingredient) => ingredient.burgerIngredient === action.burgerIngredient);
+    const currentStateIngredientIndex = findIndex(ingredients, (ingredient) => ingredient.burgerIngredient === action.burgerIngredient);
     
     if (currentStateIngredient) {
         const oldCount = currentStateIngredient.count;
@@ -85,9 +85,9 @@ const addIngredient = (state, action) => {
  */
 const removeIngredient = (state, action) => {
     const ingredients = state.ingredients;
-    const currentStateIngredient = _.find(ingredients, (ingredient) => ingredient.burgerIngredient === action.burgerIngredient);
+    const currentStateIngredient = find(ingredients, (ingredient) => ingredient.burgerIngredient === action.burgerIngredient);
 
-    const currentStateIngredientIndex = _.findIndex(ingredients, (ingredient) => ingredient.burgerIngredient === action.burgerIngredient);
+    const currentStateIngredientIndex = findIndex(ingredients, (ingredient) => ingredient.burgerIngredient === action.burgerIngredient);
 
     if (currentStateIngredient) {
         const oldCount = currentStateIngredient.count;
@@ -147,7 +147,7 @@ const fetchIngredientsFailed = (state, action) => updateObject(state, {
  *      Object with action and parameters
  */
 const calculateTotalPrice = (state, action) => updateObject(state, {
-    totalPrice: _.round(_.toNumber(action.totalPrice.price), action.totalPrice.digit)
+    totalPrice: round(toNumber(action.price), action.digit)
 });
 
 /**

@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import i18next from 'i18next';
-import { Translation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
+import { isEmpty, map, sortBy } from 'lodash';
 import { ContactDataContainer } from '../styles';
 import { 
     AvailableButtons, AvailableInputs, AvailableInputInputTypes 
 } from '../../../../../components/constants';
+import { ErrorHandler } from '../../../../../hoc';
+import axios from '../../../../../../config/axios';
+import { AvailableSituationsOrders, AvailableDeliveryMethodOrders } from '../../../../../api/Orders';
 import { ButtonFC, InputFC, SpinnerFC } from '../../../../../components/functional-components';
+import { CountriesSelect } from '../../../../../components/Countries';
 import { purchaseBurger } from '../../../../../actions';
-import { updateObject, checkValidity } from '../../../../../components/utils';
+import { updateObject, checkValidity } from '../../../../../utils';
 
 /**
  * Contact data component
@@ -18,14 +22,26 @@ import { updateObject, checkValidity } from '../../../../../components/utils';
  *      - loading Show or hide SpinnerFC
  */
 const ContactData = (props) => {
-    const { onOrderBurger, ings, price, token, userId, loading } = props;
+    const { onOrderBurger, ings, price, authenticatedUser, loading, countries } = props;
+    const { t, i18n } = useTranslation('contactData');
 
-    const [orderForm, setOrderForm] = useState({
+    let optionsSelectCountries = (!isEmpty(countries)) ? sortBy(map(countries, (country) => {
+        const { language } = i18n;
+
+        return {
+            value: country.code,
+            displayValue: (language 
+                && country.existsTranslatedNameFromTranslationsByCountryCode(language)) ? 
+                    country.getTranslatedNameFromTranslationsByCountryCode(language) : country.name
+        }
+    }), [(option) => option.displayValue]) : [];
+
+    const orderFormInitialState = {
         name: {
             elementType: AvailableInputs.input,
             elementConfig: {
                 type: AvailableInputInputTypes.text,
-                placeholder: i18next.t('contactData:contactData.form.name.placeholder')
+                placeholder: t('contactData.form.name.placeholder')
             },
             value: '',
             validation: {
@@ -33,13 +49,13 @@ const ContactData = (props) => {
             },
             valid: false,
             touched: false,
-            errorMessage: i18next.t('contactData:contactData.form.name.errorMesssage')
+            errorMessage: t('contactData.form.name.errorMesssage')
         },
         surname: {
             elementType: AvailableInputs.input,
             elementConfig: {
                 type: AvailableInputInputTypes.text,
-                placeholder: i18next.t('contactData:contactData.form.surname.placeholder')
+                placeholder: t('contactData.form.surname.placeholder')
             },
             value: '',
             validation: {
@@ -52,7 +68,7 @@ const ContactData = (props) => {
             elementType: AvailableInputs.input,
             elementConfig: {
                 type: AvailableInputInputTypes.email,
-                placeholder: i18next.t('contactData:contactData.form.email.placeholder')
+                placeholder: t('contactData.form.email.placeholder')
             },
             value: '',
             validation: {
@@ -61,13 +77,13 @@ const ContactData = (props) => {
             },
             valid: false,
             touched: false,
-            errorMessage: i18next.t('contactData:contactData.form.email.errorMessage')
+            errorMessage: t('contactData.form.email.errorMessage')
         },
         street: {
             elementType: AvailableInputs.input,
             elementConfig: {
                 type: AvailableInputInputTypes.text,
-                placeholder: i18next.t('contactData:contactData.form.street.placeholder')
+                placeholder: t('contactData.form.street.placeholder')
             },
             value: '',
             validation: {
@@ -75,13 +91,41 @@ const ContactData = (props) => {
             },
             valid: false,
             touched: false,
-            errorMessage: i18next.t('contactData:contactData.form.street.errorMessage')
+            errorMessage: t('contactData.form.street.errorMessage')
         },
-        zipCode: {
+        city: {
             elementType: AvailableInputs.input,
             elementConfig: {
                 type: AvailableInputInputTypes.text,
-                placeholder: i18next.t('contactData:contactData.form.zipCode.placeholder')
+                placeholder: 'City'
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: false,
+            errorMessage: t('contactData.form.street.errorMessage')
+        },
+        state: {
+            elementType: AvailableInputs.input,
+            elementConfig: {
+                type: AvailableInputInputTypes.text,
+                placeholder: 'State'
+            },
+            value: '',
+            validation: {
+                required: true
+            },
+            valid: false,
+            touched: false,
+            errorMessage: t('contactData.form.street.errorMessage')
+        },
+        postalCode: {
+            elementType: AvailableInputs.input,
+            elementConfig: {
+                type: AvailableInputInputTypes.text,
+                placeholder: t('contactData.form.zipCode.placeholder')
             },
             value: '',
             validation: {
@@ -92,13 +136,12 @@ const ContactData = (props) => {
             },
             valid: false,
             touched: false,
-            errorMessage: i18next.t('contactData:contactData.form.zipCode.errorMessage')
+            errorMessage: t('contactData.form.zipCode.errorMessage')
         },
-        country: {
-            elementType: AvailableInputs.input,
+        /*country: {
+            elementType: AvailableInputs.select,
             elementConfig: {
-                type: AvailableInputInputTypes.text,
-                placeholder: i18next.t('contactData:contactData.form.country.placeholder')
+                options: optionsSelectCountries
             },
             value: '',
             validation: {
@@ -106,21 +149,28 @@ const ContactData = (props) => {
             },
             valid: false,
             touched: false,
-            errorMessage: i18next.t('contactData:contactData.form.country.errorMessage')
-        },
+            errorMessage: t('contactData.form.country.errorMessage')
+        },*/
         deliveryMethod: {
             elementType: AvailableInputs.select,
             elementConfig: {
-                options: [
-                    {value: 'fastest', displayValue: i18next.t('contactData:contactData.form.deliveryMethod.fastest')},
-                    {value: 'cheapest', displayValue: i18next.t('contactData:contactData.form.deliveryMethod.cheapest')}
+                options: [{
+                        value: AvailableDeliveryMethodOrders.FASTEST,
+                        displayValue: t('contactData.form.deliveryMethod.fastest')
+                    },
+                    {
+                        value: AvailableDeliveryMethodOrders.CHEAPEST,
+                        displayValue: t('contactData.form.deliveryMethod.cheapest')
+                    }
                 ]
             },
-            value: 'fastest',
+            value: AvailableDeliveryMethodOrders.FASTEST,
             validation: {},
             valid: true
         }
-    });
+    }
+
+    const [orderForm, setOrderForm] = useState(orderFormInitialState);
 
     const [formIsValid, setFormIsValid] = useState(false);
     
@@ -146,25 +196,31 @@ const ContactData = (props) => {
         event.preventDefault();
 
         const formData = getFormData();
-        
+
+        // Create order
         const order = {
+            situation: AvailableSituationsOrders.RECEIVED,
+            deliveryMethod: formData.deliveryMethod,
             ingredients: ings,
-            price: price,
+            subtotalPrice: price,
+            deliveryFee: 1.99,
+            totalPrice: price + 1.99,
             customer: {
                 name: formData.name,
                 surname: formData.surname,
                 email: formData.email,
                 address: {
                     street: formData.street,
-                    zipCode: formData.zipCode,
+                    city: formData.city,
+                    state: formData.state,
+                    postalCode: formData.zipCode,
                     country: formData.country
                 },
             },
-            deliveryMethod: formData.deliveryMethod,
-            userId: userId
+            customerUserId: authenticatedUser.userUID
         }
 
-        onOrderBurger(order, token);
+        onOrderBurger(order, authenticatedUser.token);
     }
 
     /**
@@ -215,24 +271,18 @@ const ContactData = (props) => {
                     errorMessage={formElement.config.errorMessage}
                     changed={(event) => inputChangedHandler(event, formElement.id)} />
             ))}
+
+            <CountriesSelect />
             <ButtonFC 
                 buttonType={AvailableButtons.success} 
                 disabled={!formIsValid}>
-                    <Translation>
-                        {
-                            (t, { i18next }) => t('contactData:contactData.order') 
-                        }
-                    </Translation>  
+                    {t('contactData.order')} 
             </ButtonFC>  
         </form>;
     
     return (
         <ContactDataContainer>
-            <Translation>
-                {
-                    (t, { i18next }) => <h4>{t('contactData:contactData.title')}</h4> 
-                }
-            </Translation> 
+            <h4>{t('contactData.title')}</h4> 
             {form}
         </ContactDataContainer>
     );
@@ -242,9 +292,8 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading,
-        token: state.auth.token,
-        userId: state.auth.userId
+        authenticatedUser: state.auth.authenticatedUser,
+        countries: state.country.countries
     }
 };
 
@@ -254,4 +303,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactData);
+export default connect(mapStateToProps, mapDispatchToProps)(ErrorHandler(ContactData, axios));

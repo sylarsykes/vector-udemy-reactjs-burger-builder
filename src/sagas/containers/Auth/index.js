@@ -1,18 +1,16 @@
 import { put, call, delay } from 'redux-saga/effects';
-import { usersCreateGeneratorFuncService, usersVerifyGeneratorFuncService } from '../../../components/services';
+import { usersCreateGeneratorFuncService, usersVerifyGeneratorFuncService } from '../../../services/Users';
 import { 
     logoutSucceed, logout, authStart,
     authSuccess, checkAuthTimeout, authFail
 } from '../../../actions';
 
-const LOCAL_STORATEGE_SET_TOKEN = 'token';
 const LOCAL_STORATEGE_SET_EXPIRATION_DATE = 'expirationDate';
-const LOCAL_STORAGE_SET_USERID = 'userId';
+const LOCAL_STORAGE_SET_AUTHENTICATED_USER = 'authenticatedUser';
 
 export function* logoutSaga(action) {
-    yield call([localStorage, "removeItem"], LOCAL_STORATEGE_SET_TOKEN);
     yield call([localStorage, "removeItem"], LOCAL_STORATEGE_SET_EXPIRATION_DATE);
-    yield call([localStorage, "removeItem"], LOCAL_STORAGE_SET_USERID);
+    yield call([localStorage, "removeItem"], LOCAL_STORAGE_SET_AUTHENTICATED_USER);
     yield put(logoutSucceed());
 }
 
@@ -32,14 +30,16 @@ export function* authUserSaga(action) {
         },
         successFuncCB: function* (result) {
             yield call(function* (result) {
-                const expirationDate = yield new Date(new Date().getTime() + result.expiresIn * 1000);
+                const { authenticatedUser } = result;
+                const { expiresIn } = authenticatedUser;
 
-                yield localStorage.setItem(LOCAL_STORATEGE_SET_TOKEN, result.idToken);
+                const expirationDate = yield new Date(new Date().getTime() + expiresIn * 1000);
+
                 yield localStorage.setItem(LOCAL_STORATEGE_SET_EXPIRATION_DATE, expirationDate);
-                yield localStorage.setItem(LOCAL_STORAGE_SET_USERID, result.localId);
+                yield localStorage.setItem(LOCAL_STORAGE_SET_AUTHENTICATED_USER, authenticatedUser);
 
-                yield put(authSuccess(result.idToken, result.localId));
-                yield put(checkAuthTimeout(result.expiresIn));
+                yield put(authSuccess(authenticatedUser));
+                yield put(checkAuthTimeout(expiresIn));
             }, result);
         },
         errorFuncCB: function* (error) {
@@ -55,18 +55,17 @@ export function* authUserSaga(action) {
 }
 
 export function* authCheckStateSaga(action) {
-    const token = yield localStorage.getItem("token");
-    if (!token) {
+    const authenticatedUser = yield localStorage.getItem(LOCAL_STORAGE_SET_AUTHENTICATED_USER);
+    if (!authenticatedUser) {
         yield put(logout());
     } else {
         const expirationDate = yield new Date(
-            localStorage.getItem("expirationDate")
+            localStorage.getItem(LOCAL_STORATEGE_SET_EXPIRATION_DATE)
         );
         if (expirationDate <= new Date()) {
             yield put(logout());
         } else {
-            const userId = yield localStorage.getItem("userId");
-            yield put(authSuccess(token, userId));
+            yield put(authSuccess(authenticatedUser));
             yield put(checkAuthTimeout(
                     (expirationDate.getTime() - new Date().getTime()) / 1000
                 )

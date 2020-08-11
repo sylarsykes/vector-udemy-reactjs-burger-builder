@@ -1,4 +1,3 @@
-import OrderFC from './components';
-import { CheckoutSummaryFC } from './components/CheckoutSummary';
-
-export { OrderFC, CheckoutSummaryFC };
+export { CheckoutSummaryFC } from './components/CheckoutSummary';
+export { OrderSummaryComponent } from './components/OrderSummary';
+export { OrderFC } from './components';

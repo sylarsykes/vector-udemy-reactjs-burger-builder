@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
 import { Route, Redirect } from 'react-router-dom';
+import axios from '../../../../config/axios';
 import { CONTACT_DATA_ROUTE, BURGER_BUILDER_ROUTE } from '../../routes';
-import ChildrenContainer from '../../../hoc';
+import ChildrenContainer, { ErrorHandler } from '../../../hoc';
 import { CheckoutSummaryFC } from '../../../components/functional-components';
 import { ContactData } from '../';
+import { fetchCountries } from '../../../actions/components/Countries';
 
 /**
  * Checkout component
@@ -13,7 +16,17 @@ import { ContactData } from '../';
  *      - ingredients: List of burgerIngredients and a count of ingredient
  */
 const Checkout = (props) => {
-    const { history, ings, price, purchased } = props;
+    
+    const { onFetchCountries, history, ings, price, purchased, countries } = props;
+
+    /*useEffect(() => {
+        if (isEmpty(countries)) {
+            onFetchCountries();
+        }
+    }, [
+        onFetchCountries,
+        countries
+    ]);*/
 
     // Execute history back
     const checkoutCancelledHandler = () => history.goBack();
@@ -45,8 +58,16 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         purchased: state.order.purchased,
-        price: state.burgerBuilder.totalPrice
+        price: state.burgerBuilder.totalPrice,
+        loading: state.country.loading,
+        countries: state.country.countries
     };
 }
 
-export default connect(mapStateToProps)(Checkout);
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchCountries: () => dispatch(fetchCountries())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ErrorHandler(Checkout, axios));

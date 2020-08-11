@@ -9,16 +9,19 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from "redux-saga";
 import { 
-    authReducer, burgerBuilderReducer, ordersReducer 
+    authReducer, burgerBuilderReducer, ordersReducer, countriesReducer 
 } from '../reducers';
-import { watchAuth, watchBurgerBuilder, watchOrder } from '../sagas';
+import { 
+    watchAuth, watchBurgerBuilder, watchOrder, watchCountries 
+} from '../sagas';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     auth: authReducer,
     burgerBuilder: burgerBuilderReducer,
-    order: ordersReducer
+    order: ordersReducer,
+    country: countriesReducer
 });
 
 const sagaMiddleware = createSagaMiddleware();
@@ -29,6 +32,7 @@ const useBurgerBuilderStore = createStore(rootReducer, composeEnhancers(
 sagaMiddleware.run(watchAuth);
 sagaMiddleware.run(watchBurgerBuilder);
 sagaMiddleware.run(watchOrder);
+sagaMiddleware.run(watchCountries);
 
 /**
  * Custom Store Provider
