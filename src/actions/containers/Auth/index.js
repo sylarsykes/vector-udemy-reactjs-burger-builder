@@ -1,3 +1,5 @@
+import { createAction } from '../../utils';
+
 
 const AUTH_START = 'AUTH_START';
 const AUTH_SUCCESS = 'AUTH_SUCCESS';
@@ -13,54 +15,39 @@ const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
 /**
  * Start authentication action
  */
-const authStart = () => {
-    return {
+const authStart = () => createAction(
+    {
         type: AUTH_START
-    };
-};
+    }
+);
 
 /**
  * Authentication success action
  * 
- * @param {string} token
- *      Auth token 
- * @param {string} userId
- *      User UID 
+ * @param {object} authenticatedUser
+ *      AuthenticatedUsersModel
  */
-const authSuccess = (token, userId) => {
-    return {
-        type: AUTH_SUCCESS,
-        idToken: token,
-        userId
-    };
-};
+const authSuccess = (authenticatedUser) => createAction(AUTH_SUCCESS, {
+        authenticatedUser
+    }
+);
 
 /**
  * Error authentication action
  * 
  * @param {object} error 
  */
-const authFail = (error) => {
-    return {
-        type: AUTH_FAIL,
+const authFail = (error) => createAction(AUTH_FAIL, {
         error
-    };
-};
+    }
+);
 
 /**
  * Logout action
  */
-const logout = () => {
-    return {
-        type: AUTH_INITIATE_LOGOUT
-    };
-};
+const logout = () => createAction(AUTH_INITIATE_LOGOUT);
 
-const logoutSucceed = () => {
-    return {
-        type: AUTH_LOGOUT
-    };
-};
+const logoutSucceed = () => createAction(AUTH_LOGOUT);
 
 /**
  * Check authentication timeout
@@ -68,12 +55,10 @@ const logoutSucceed = () => {
  * @param {number} expirationTime
  *      Expiration time 
  */
-const checkAuthTimeout = (expirationTime) => {
-    return {
-        type: AUTH_CHECK_TIMEOUT,
+const checkAuthTimeout = (expirationTime) => createAction(AUTH_CHECK_TIMEOUT, {
         expirationTime
     }
-}
+);
 
 /**
  * Authentication
@@ -83,35 +68,27 @@ const checkAuthTimeout = (expirationTime) => {
  * @param {boolean} isSignup
  * 
  */
-const auth = (email, password, isSignup) => {
-    return {
-        type: AUTH_USER,
+const auth = (email, password, isSignup) => createAction(AUTH_USER, {
         email,
         password,
         isSignup
     }
-}
+);
 
 /**
  * Set authentication redirect path
  * 
  * @param {string} path 
  */
-const setAuthRedirectPath = (path) => {
-    return {
-        type: SET_AUTH_REDIRECT_PATH,
+const setAuthRedirectPath = (path) => createAction(SET_AUTH_REDIRECT_PATH, {
         path
-    };
-};
+    }
+);
 
 /**
  * Check authentication state
  */
-const authCheckState = () => {
-    return {
-        type: AUTH_CHECK_STATE
-    }
-}
+const authCheckState = () => createAction(AUTH_CHECK_STATE);
 
 export {
     // CONSTANTS

@@ -1,4 +1,4 @@
-import { takeEvery, all, takeLatest } from "redux-saga/effects";
+import { takeEvery, all, takeLatest } from 'redux-saga/effects';
 import {
     logoutSaga, checkAuthTimeoutSaga, authUserSaga,
     authCheckStateSaga

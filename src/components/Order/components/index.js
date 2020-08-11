@@ -1,14 +1,19 @@
 import React from 'react';
 import { OrderContainer, OrderIngredientSpanContainer} from '../styles';
+import { isEmpty } from 'lodash';
 
 /**
  * Order functional component
  * 
- * @param {*} props 
+ * @param {object} props
+ *      Json object with properties:
+ *          -   ingredients
+ *          -   price 
  */
-const OrderFC = (props) => {
+export const OrderFC = (props) => {
+    const { ingredients, price } = props;
 
-    const ingredientOutput = (props && props.ingredients) ? props.ingredients.map(ingredient => {
+    const ingredientOutput = (ingredients && !isEmpty(ingredients)) ? ingredients.map(ingredient => {
         return <OrderIngredientSpanContainer
             key={ingredient.label}>
                 {ingredient.label} ({ingredient.amount})
@@ -18,9 +23,7 @@ const OrderFC = (props) => {
     return (
         <OrderContainer>
             <p>Ingredients: {ingredientOutput}</p>
-            <p>Price: <strong>USD { props.price }</strong></p>
+            <p>Price: <strong>USD { price }</strong></p>
         </OrderContainer>
     )
 };
-
-export default OrderFC;

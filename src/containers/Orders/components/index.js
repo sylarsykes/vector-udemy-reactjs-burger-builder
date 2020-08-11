@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import ChildrenContainer, { ErrorHandler } from '../../../hoc';
 import { OrderFC, SpinnerFC } from '../../../components/functional-components';
 import axios from '../../../../config/axios';
-import { fetchOrders } from '../../../actions'
+import { fetchOrders } from '../../../actions/containers/Orders';
 
 /**
  * Orders component
@@ -14,15 +14,14 @@ import { fetchOrders } from '../../../actions'
  *      - loading: Show or hide SpinnerFC
  */
 const Orders = (props) => {
-    const { onFetchOrders, loading, orders, token, userId } = props;
+    const { onFetchOrders, loading, orders, authenticatedUser } = props;
 
     // Get user orders
     useEffect(() => {
-        onFetchOrders(token, userId);
+        onFetchOrders(authenticatedUser);
     }, [
         onFetchOrders,
-        token,
-        userId
+        authenticatedUser
     ]);
 
     const ordersOutput = (!loading) ? orders.map(order => (
@@ -45,14 +44,13 @@ const mapStateToProps = state => {
     return {
         orders: state.order.orders,
         loading: state.order.loading,
-        token: state.auth.token,
-        userId: state.auth.userId
+        authenticatedUser: state.auth.authenticatedUser
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchOrders: (token, userId) => dispatch(fetchOrders(token, userId))
+        onFetchOrders: (authenticatedUser) => dispatch(fetchOrders(authenticatedUser))
     };
 };
 

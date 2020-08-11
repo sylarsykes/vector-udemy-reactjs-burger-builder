@@ -1,23 +1,14 @@
-import { 
-    BurgerFC, BuildControlsFC, BuildControlFC,
+export { 
+    BurgerRenderBurgerIngredientsFC, BurgerFC, BuildControlsFC, BuildControlFC,
 } from './Burger';
-import { SwitchLanguageFC } from './Language';
-import { LogoFC } from './Logo';
-import {
+export { SwitchLanguageFC } from './Language';
+export { LogoFC } from './Logo';
+export {
     NavigationItemsFC, NavigationItemFC, SideDrawerFC,
     DrawerToggleFC, ToolbarFC
 } from './Navigation';
-import { OrderFC, CheckoutSummaryFC } from './Order'
-import { 
+export { OrderFC, CheckoutSummaryFC } from './Order'
+export { 
     BackdropFC, ButtonFC, ButtonGroupFC, 
     InputFC, SpinnerFC
 } from './UI';
-
-export {
-    BuildControlFC, BuildControlsFC, BurgerFC,
-    BackdropFC, ButtonFC, ButtonGroupFC,
-    CheckoutSummaryFC, DrawerToggleFC, InputFC, 
-    LogoFC, NavigationItemFC, NavigationItemsFC, 
-    OrderFC, SideDrawerFC, SpinnerFC, 
-    SwitchLanguageFC, ToolbarFC,
-};

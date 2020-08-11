@@ -1,0 +1,26 @@
+{
+  "name": "@sylarsykessoft/reactjs-burger-builder-api",
+  "description": "Api for Burger Builder application.",
+  "version": "0.1.0",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sylarsykes/reactjs-burger-builder.git"
+  },
+  "author": {
+    "name": "Juan Gonzalez Fernandez",
+    "email": "juan.gonzalez.fernandez@outlook.com",
+    "url": "https://github.com/sylarsykes"
+  },
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "main": "index.js",
+  "dependencies": {
+    "objectmodel": "^4.2.2"
+  }
+}

@@ -1,3 +1,1 @@
-import CheckoutSummaryFC from './components';
-
-export { CheckoutSummaryFC };
+export { CheckoutSummaryFC } from './components';

@@ -1,12 +1,13 @@
 
 const rootDir = '../../';
-const configDir = rootDir + 'config/';
+const configDir = '<rootDir>/config/';
 const configJestDir = configDir + 'jest/';
-const nodeModulesDir = rootDir + 'node_modules/';
-const sourceDir = rootDir + 'src/';
+const nodeModulesDir = '<rootDir>/node_modules';
+const sourceDir = '<rootDir>/src/';
 
 module.exports = {
     verbose: true,
+    rootDir: rootDir,
     // An array of glob patterns indicating a set of files for which coverage information should be collected. 
     // If a file matches the specified glob pattern, coverage information will be collected for it even if no tests exist 
     // for this file and it's never required in the test suite. 
@@ -39,7 +40,9 @@ module.exports = {
     // A transformer is a module that provides a synchronous function for transforming source files. 
     // https://jestjs.io/docs/en/configuration#transform-objectstring-pathtotransformer--pathtotransformer-object
     transform: {
-        '.js$': __dirname + '/babel-transformer.jest.js' 
+        '.js$': configJestDir + 'babel-transformer.jest.js',
+        "^.+\\.css$": configJestDir + "cssTransform.js",
+        "^(?!.*\\.(js|jsx|css|json)$)": configJestDir + "fileTransform.js" 
     },
     // An array of regexp pattern strings that are matched against all source file paths before transformation. 
     // If the test path matches any of the patterns, it will not be transformed.

@@ -8,7 +8,7 @@ import { BurgerFC, ButtonFC } from '../../../../functional-components';
  * 
  * @param {*} props 
  */
-const CheckoutSummaryFC = (props) => (
+export const CheckoutSummaryFC = (props) => (
     <CheckoutSummaryContainer>
         <h1>We hope it tastes well!</h1>
         <CheckoutSummaryBurgerContainer>
@@ -27,5 +27,3 @@ const CheckoutSummaryFC = (props) => (
         </ButtonFC> 
     </CheckoutSummaryContainer>
 );
-
-export default CheckoutSummaryFC;

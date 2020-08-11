@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
+import { isFunction } from 'lodash';
 import  ChildrenContainer from '../';
 import { SideDrawerFC, ToolbarFC } from '../../components/functional-components';
 
@@ -42,7 +43,9 @@ const Layout = (props) => {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.auth.token !== null
+        isAuthenticated: state.auth.authenticatedUser !== null
+            && isFunction(state.auth.authenticatedUser.isAuthenticated) 
+            && state.auth.authenticatedUser.isAuthenticated()
     };
 };
 

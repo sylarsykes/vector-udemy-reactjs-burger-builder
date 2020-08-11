@@ -6,12 +6,6 @@ export {
     baseFindAllService, baseFindAllGeneratorFuncService, baseFindByIdService
 } from './Common';
 export { 
-    burgerFindAllService, burgerFindByIdService, burgerIngredientFindAllService, 
-    burgerIngredientFindAllGeneratorFuncService, burgerIngredientFindByIdService, 
-    orderSummaryFindAllService, orderSummaryFindAllGeneratorFuncService,
-    orderSummaryFindByIdService, orderSummaryCreateService, orderSummaryCreateGeneratorFuncService
+    burgerIngredientFindAllService, burgerIngredientFindAllGeneratorFuncService, burgerIngredientFindByIdService
 } from './Burger';
-export {
-    usersCreateService, usersVerifyService,
-    usersCreateGeneratorFuncService, usersVerifyGeneratorFuncService
-} from './User';
+

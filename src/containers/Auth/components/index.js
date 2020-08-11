@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
+import { isFunction } from 'lodash';
 import { BURGER_BUILDER_ROUTE } from '../../routes';
 import { auth, setAuthRedirectPath } from '../../../actions';
 import { AvailableButtons } from '../../../components/constants';
@@ -156,7 +157,9 @@ const mapStateToProps = state => {
     return {
         loading: state.auth.loading,
         error: state.auth.error,
-        isAuthenticated: state.auth.token !== null,
+        isAuthenticated: state.auth.authenticatedUser !== null
+            && isFunction(state.auth.authenticatedUser.isAuthenticated) 
+            && state.auth.authenticatedUser.isAuthenticated(),
         buildingBurger: state.burgerBuilder.building,
         authRedirectPath: state.auth.authRedirectPath
     };

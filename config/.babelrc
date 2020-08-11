@@ -18,12 +18,25 @@
                 ] 
             }
         }],
-        "@babel/preset-react"
+        ["@babel/preset-react", {
+            "development": true
+        }]
     ],
     "plugins": [
         "@babel/plugin-syntax-dynamic-import",
-        "@babel/plugin-proposal-class-properties",
+        ["@babel/plugin-proposal-decorators", {
+            "legacy": true
+        }],
+        ["@babel/plugin-proposal-class-properties", {
+            "loose": true
+        }],
         "babel-plugin-styled-components",
-        "lodash"
+        "lodash",
+        ["transform-imports", {
+            "lodash": {
+                "transform": "lodash/${member}",
+                "preventFullImport": true
+            }
+        }]
     ]
 }

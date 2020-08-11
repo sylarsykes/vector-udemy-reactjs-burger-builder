@@ -3,8 +3,8 @@ const PURCHASE_BURGER = 'PURCHASE_BURGER';
 const PURCHASE_BURGER_START = 'PURCHASE_BURGER_START';
 const PURCHASE_BURGER_SUCCESS = 'PURCHASE_BURGER_SUCCESS';
 const PURCHASE_BURGER_FAIL = 'PURCHASE_BURGER_FAIL';
-const FETCH_ORDERS = 'FETCH_ORDERS';
 const PURCHASE_INIT = 'PURCHASE_INIT';
+const FETCH_ORDERS = 'FETCH_ORDERS';
 const FETCH_ORDERS_START = 'FETCH_ORDERS_START';
 const FETCH_ORDERS_SUCCESS = 'FETCH_ORDERS_SUCCESS';
 const FETCH_ORDERS_FAIL = 'FETCH_ORDERS_FAIL';
@@ -97,12 +97,14 @@ const fetchOrdersStart = () => {
 
 /**
  * Fetch all orders
+ * 
+ * @param {object} authenticatedUser
+ *      AuthenticatedUsersModel info of authenticatedUser
  */
-const fetchOrders = (token, userId) => {
+const fetchOrders = (authenticatedUser) => {
     return {
         type: FETCH_ORDERS,
-        token,
-        userId
+        authenticatedUser
     }
 };
 

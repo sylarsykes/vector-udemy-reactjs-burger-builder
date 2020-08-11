@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { isFunction } from 'lodash';
 import {
     BURGER_BUILDER_ROUTE, CHECKOUT_ROUTE, ORDERS_ROUTE,
     AUTH_ROUTE, LOGOUT_ROUTE
@@ -64,7 +65,9 @@ const App = (props) => {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.auth.token !== null
+        isAuthenticated: state.auth.authenticatedUser !== null
+            && isFunction(state.auth.authenticatedUser.isAuthenticated) 
+            && state.auth.authenticatedUser.isAuthenticated()
     };
 };
 
